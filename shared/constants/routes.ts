@@ -15,6 +15,7 @@ export const ROUTES = {
   SHOP: {
     CATALOG: '/products',
     PRODUCT_DETAIL: (id: string) => `/products/${id}` as const,
+    CATEGORY_DETAIL: (slug: string) => `/categories/${slug}` as const,
     SEARCH: '/search',
     CART: '/cart',
     CHECKOUT: '/checkout',

@@ -5,3 +5,8 @@ export * from './card';
 export * from './separator';
 export * from './alert';
 export * from './avatar';
+export * from './badge';
+export * from './checkbox';
+export * from './skeleton';
+export * from './slider';
+export * from './sheet';
