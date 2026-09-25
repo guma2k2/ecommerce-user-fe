@@ -51,7 +51,7 @@ export function FacetAttributeGroup({
                   >
                     {isSelected && (
                       <Check
-                        className={`size-2.5 stroke-[3] ${
+                        className={`size-2.5 stroke-3 ${
                           item.value.toLowerCase() === 'white'
                             ? 'text-black'
                             : 'text-white'
