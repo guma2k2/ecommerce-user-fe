@@ -16,6 +16,7 @@ export interface ProductSearchItem {
   maxPrice: number | null;
   brandName: string | null;
   categoryName: string | null;
+  defaultVariantId?: number | null;
 }
 
 export interface FacetAttributeValue {

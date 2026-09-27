@@ -3,6 +3,7 @@ import type { ApiResponse } from '@/shared/types';
 import type {
   ProductSearchParams,
   ProductSearchResult,
+  ProductSearchItem,
   ProductSuggestionItem,
   SearchFacets,
 } from '../types/searchTypes';
@@ -68,5 +69,19 @@ export const searchService = {
       `/public/products/category/${categoryId}/facets`
     );
     return response.data.data;
+  },
+
+  /**
+   * Fetch best-selling products for storefront showcase
+   * Endpoint: GET /api/v1/products/public/best-sellers?limit={limit}
+   */
+  getBestSellers: async (limit = 10): Promise<ProductSearchItem[]> => {
+    const response = await httpRequest.get<ApiResponse<ProductSearchItem[]>>(
+      '/products/public/best-sellers',
+      {
+        params: { limit },
+      }
+    );
+    return response.data.data || [];
   },
 };

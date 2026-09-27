@@ -14,7 +14,8 @@ interface SearchProductCardProps {
 }
 
 export function SearchProductCard({ product }: SearchProductCardProps) {
-  const detailUrl = ROUTES.SHOP.PRODUCT_DETAIL(product.slug || String(product.id));
+  const basePath = ROUTES.SHOP.PRODUCT_DETAIL(product.slug || String(product.id));
+  const detailUrl = product.defaultVariantId ? `${basePath}?variant=${product.defaultVariantId}` : basePath;
 
   return (
     <div
