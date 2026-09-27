@@ -7,10 +7,16 @@ export const queryKeys = {
     all: ['customer'] as const,
     profile: () => [...queryKeys.customer.all, 'profile'] as const,
   },
+  categories: {
+    all: ['categories'] as const,
+    parents: () => [...queryKeys.categories.all, 'parents'] as const,
+    byName: (name: string) => [...queryKeys.categories.all, 'byName', name] as const,
+  },
   products: {
     all: ['products'] as const,
     lists: () => [...queryKeys.products.all, 'list'] as const,
     list: (filters: Record<string, unknown>) => [...queryKeys.products.lists(), filters] as const,
+    bestSellers: (limit?: number) => [...queryKeys.products.all, 'bestSellers', limit ?? 10] as const,
     infinite: (filters: Record<string, unknown>) => [...queryKeys.products.all, 'infinite', filters] as const,
     detail: (id: string) => [...queryKeys.products.all, 'detail', id] as const,
   },
