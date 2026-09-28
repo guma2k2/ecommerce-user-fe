@@ -1,9 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ShoppingCart, Zap, CheckCircle2, AlertCircle, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
+import {
+  ShoppingCart,
+  Zap,
+  CheckCircle2,
+  AlertCircle,
+  ShieldCheck,
+  Truck,
+  RotateCcw,
+} from 'lucide-react';
 import { Button, Badge } from '@/components/ui';
-import type { ProductDetail, ProductVariant } from '../types';
+import type { ProductDetail, ProductVariant, OptionValueStatus } from '../types';
 import { ProductOptionPicker } from './ProductOptionPicker';
 
 interface ProductPurchasePanelProps {
@@ -11,7 +19,8 @@ interface ProductPurchasePanelProps {
   activeVariant: ProductVariant | null;
   selectedOptions: Record<number, number>;
   onSelectOption: (productOptionId: number, valueId: number) => void;
-  isAvailable: (productOptionId: number, valueId: number) => boolean;
+  getOptionStatus?: (productOptionId: number, valueId: number) => OptionValueStatus;
+  isAvailable?: (productOptionId: number, valueId: number) => boolean;
 }
 
 export function ProductPurchasePanel({
@@ -19,13 +28,16 @@ export function ProductPurchasePanel({
   activeVariant,
   selectedOptions,
   onSelectOption,
+  getOptionStatus,
   isAvailable,
 }: ProductPurchasePanelProps) {
   const [quantity, setQuantity] = useState(1);
 
   const price = activeVariant?.price ?? 0;
-  const isOutOfStock = !activeVariant || activeVariant.quantity <= 0;
+  const isUnavailable = !activeVariant;
+  const isOutOfStock = Boolean(activeVariant && activeVariant.quantity <= 0);
   const stockCount = activeVariant?.quantity ?? 0;
+  const isActionDisabled = isUnavailable || isOutOfStock;
 
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((prev) => prev - 1);
@@ -56,9 +68,13 @@ export function ProductPurchasePanel({
         <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight leading-snug">
           {product.name}
         </h1>
-        {activeVariant?.sku && (
+        {activeVariant?.sku ? (
           <p className="text-xs text-muted-foreground font-mono">
             SKU: {activeVariant.sku}
+          </p>
+        ) : (
+          <p className="text-xs text-amber-500 font-medium">
+            Please choose an available configuration
           </p>
         )}
       </div>
@@ -67,17 +83,30 @@ export function ProductPurchasePanel({
       <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 flex items-center justify-between">
         <div className="space-y-0.5">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-primary tracking-tight">
-              ${price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-            </span>
+            {isUnavailable ? (
+              <span className="text-2xl font-bold text-muted-foreground">
+                Unavailable
+              </span>
+            ) : (
+              <span className="text-3xl font-black text-primary tracking-tight">
+                ${price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              </span>
+            )}
           </div>
           <span className="text-[11px] text-muted-foreground">
-            Tax included. Free shipping on eligible orders.
+            {isUnavailable
+              ? 'Combination does not exist'
+              : 'Tax included. Free shipping on eligible orders.'}
           </span>
         </div>
 
         <div>
-          {isOutOfStock ? (
+          {isUnavailable ? (
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full">
+              <AlertCircle className="size-4" />
+              <span>Unavailable</span>
+            </div>
+          ) : isOutOfStock ? (
             <div className="flex items-center gap-1.5 text-xs font-semibold text-destructive bg-destructive/10 px-3 py-1.5 rounded-full">
               <AlertCircle className="size-4" />
               <span>Out of Stock</span>
@@ -96,8 +125,17 @@ export function ProductPurchasePanel({
         options={product.options}
         selectedOptions={selectedOptions}
         onSelectOption={onSelectOption}
+        getOptionStatus={getOptionStatus}
         isAvailable={isAvailable}
       />
+
+      {/* Unavailable combination alert */}
+      {isUnavailable && (
+        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-2">
+          <AlertCircle className="size-4 shrink-0" />
+          <span>This combination of options does not exist. Please select another variant.</span>
+        </div>
+      )}
 
       {/* Quantity & CTA Action Buttons */}
       <div className="space-y-4 pt-2">
@@ -106,7 +144,7 @@ export function ProductPurchasePanel({
           <div className="flex items-center rounded-xl border border-border/80 bg-card p-1 shadow-2xs">
             <button
               type="button"
-              disabled={quantity <= 1 || isOutOfStock}
+              disabled={quantity <= 1 || isActionDisabled}
               onClick={handleDecrease}
               className="flex size-8 items-center justify-center rounded-lg text-sm font-bold hover:bg-muted text-muted-foreground transition-colors disabled:opacity-40"
             >
@@ -115,7 +153,7 @@ export function ProductPurchasePanel({
             <span className="w-10 text-center text-sm font-semibold">{quantity}</span>
             <button
               type="button"
-              disabled={quantity >= stockCount || isOutOfStock}
+              disabled={quantity >= stockCount || isActionDisabled}
               onClick={handleIncrease}
               className="flex size-8 items-center justify-center rounded-lg text-sm font-bold hover:bg-muted text-muted-foreground transition-colors disabled:opacity-40"
             >
@@ -128,7 +166,7 @@ export function ProductPurchasePanel({
           <Button
             size="lg"
             variant="outline"
-            disabled={isOutOfStock}
+            disabled={isActionDisabled}
             className="flex-1 rounded-xl h-12 text-sm font-bold gap-2 shadow-2xs"
           >
             <ShoppingCart className="size-4" />
@@ -136,7 +174,7 @@ export function ProductPurchasePanel({
           </Button>
           <Button
             size="lg"
-            disabled={isOutOfStock}
+            disabled={isActionDisabled}
             className="flex-1 rounded-xl h-12 text-sm font-bold gap-2 shadow-md"
           >
             <Zap className="size-4" />

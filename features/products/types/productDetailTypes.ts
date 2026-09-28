@@ -60,5 +60,7 @@ export interface ProductDetail {
   options: ProductOption[];
   variants: ProductVariant[];
   createdAt?: string;
-  updatedAt?: string;
 }
+
+export type OptionValueStatus = 'selected' | 'available' | 'out_of_stock' | 'disabled';
+

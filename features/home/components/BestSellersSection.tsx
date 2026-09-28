@@ -38,41 +38,28 @@ export function BestSellersSection({ limit = 8, className = '' }: BestSellersSec
         </div>
 
         <Link href={ROUTES.SHOP.SEARCH}>
-          <Button variant="ghost" size="sm" className="gap-1.5 font-semibold text-primary">
+          <Button variant="ghost" size="sm" className="gap-1.5 text-xs font-semibold hover:text-primary">
             <span>View All</span>
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-3.5" />
           </Button>
         </Link>
       </div>
 
-      {/* Loading Skeleton */}
-      {isLoading && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      {/* Grid or Skeleton State */}
+      {isLoading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
           {Array.from({ length: limit }).map((_, idx) => (
             <SearchProductCardSkeleton key={idx} />
           ))}
         </div>
-      )}
-
-      {/* Error or Empty state */}
-      {!isLoading && (isError || !products || products.length === 0) && (
-        <div className="rounded-2xl border border-dashed border-border/80 p-8 text-center bg-card/40">
-          <p className="text-sm font-medium text-muted-foreground">
-            No best-selling products found at the moment.
-          </p>
-          <Link href={ROUTES.SHOP.SEARCH} className="inline-block mt-3">
-            <Button variant="outline" size="sm">
-              Explore All Products
-            </Button>
-          </Link>
+      ) : isError || !products || products.length === 0 ? (
+        <div className="py-12 text-center text-sm text-muted-foreground border border-dashed rounded-2xl bg-muted/10">
+          No best-selling products found at this moment.
         </div>
-      )}
-
-      {/* Product Cards Grid */}
-      {!isLoading && products && products.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {products.map((product) => (
-            <SearchProductCard key={product.id} product={product} />
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+          {products.map((item) => (
+            <SearchProductCard key={item.id} product={item} />
           ))}
         </div>
       )}

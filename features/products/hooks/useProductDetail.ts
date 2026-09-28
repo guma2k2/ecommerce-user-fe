@@ -1,15 +1,12 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/constants';
-import { productService } from '../services';
+import { productDetailQueryOptions } from './productQueries';
 
 export function useProductDetail(slug: string) {
   return useQuery({
-    queryKey: queryKeys.products.detail(slug),
-    queryFn: () => productService.getProductBySlug(slug),
+    ...productDetailQueryOptions(slug),
     enabled: Boolean(slug && slug.trim()),
-    staleTime: 5 * 60 * 1000,
-    gcTime: 15 * 60 * 1000,
   });
 }
+

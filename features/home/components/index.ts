@@ -1,2 +1,2 @@
-export * from './PromoBanner';
 export * from './BestSellersSection';
+export * from './PromoBanner';

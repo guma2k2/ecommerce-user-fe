@@ -18,7 +18,7 @@ export default function OAuthCallbackPage({ params }: CallbackPageProps) {
   const code = searchParams.get('code');
   const state = searchParams.get('state');
 
-  const { completeOutboundAuth, isCompleting, outboundError } = useSocialLogin();
+  const { completeOutboundAuth, outboundError } = useSocialLogin();
   const hasTriggered = useRef(false);
 
   useEffect(() => {

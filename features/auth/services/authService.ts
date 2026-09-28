@@ -60,13 +60,30 @@ export const authService = {
   },
 
   refreshToken: async (): Promise<string> => {
-    const response = await httpRequest.post<ApiResponse<string | { accessToken: string }>>(
+    const response = await httpRequest.post<ApiResponse<string | { accessToken?: string }>>(
       '/auth/public/refresh'
     );
+
+    if (response.data.status !== '200') {
+      throw new Error(response.data.message || 'Refresh token failed');
+    }
+
     const data = response.data.data;
-    if (typeof data === 'string') return data;
-    return data.accessToken;
+    let token = '';
+
+    if (typeof data === 'string' && (data.includes('.') || data.length > 30)) {
+      token = data;
+    } else if (data && typeof data === 'object' && 'accessToken' in data && data.accessToken) {
+      token = data.accessToken;
+    }
+
+    if (!token) {
+      throw new Error('Refresh token response missing access token');
+    }
+
+    return token;
   },
+
 
   signOut: async (): Promise<void> => {
     await httpRequest.post<ApiResponse<null>>('/auth/sign-out');

@@ -1,4 +1,5 @@
 import * as React from "react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface AvatarProps extends React.ComponentProps<"div"> {
@@ -20,9 +21,11 @@ function Avatar({ className, src, alt = "Avatar", fallback = "U", ...props }: Av
       {...props}
     >
       {src && !hasError ? (
-        <img
+        <Image
           src={src}
           alt={alt}
+          fill
+          unoptimized
           onError={() => setHasError(true)}
           className="aspect-square size-full object-cover"
         />
