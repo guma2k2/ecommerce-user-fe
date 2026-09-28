@@ -1,19 +1,21 @@
 'use client';
 
 import React from 'react';
-import type { ProductOption } from '../types';
+import type { ProductOption, OptionValueStatus } from '../types';
 
 interface ProductOptionPickerProps {
   options: ProductOption[];
   selectedOptions: Record<number, number>;
   onSelectOption: (productOptionId: number, valueId: number) => void;
-  isAvailable: (productOptionId: number, valueId: number) => boolean;
+  getOptionStatus?: (productOptionId: number, valueId: number) => OptionValueStatus;
+  isAvailable?: (productOptionId: number, valueId: number) => boolean;
 }
 
 export function ProductOptionPicker({
   options,
   selectedOptions,
   onSelectOption,
+  getOptionStatus,
   isAvailable,
 }: ProductOptionPickerProps) {
   if (!options || options.length === 0) return null;
@@ -38,21 +40,49 @@ export function ProductOptionPicker({
             <div className="flex flex-wrap gap-2.5">
               {option.values.map((val) => {
                 const isSelected = selectedValueId === val.id;
-                const available = isAvailable(option.productOptionId, val.id);
+                const status: OptionValueStatus = getOptionStatus
+                  ? getOptionStatus(option.productOptionId, val.id)
+                  : isSelected
+                  ? 'selected'
+                  : (isAvailable?.(option.productOptionId, val.id) ?? true)
+                  ? 'available'
+                  : 'disabled';
+
+                const isDisabled = status === 'disabled';
+
+                let styleClasses = '';
+                let statusTitle = '';
+
+                switch (status) {
+                  case 'selected':
+                    styleClasses =
+                      'border-primary bg-primary text-primary-foreground shadow-xs ring-2 ring-primary/20 font-bold';
+                    break;
+                  case 'available':
+                    styleClasses =
+                      'border-border/80 bg-card hover:bg-muted/70 hover:border-primary/50 text-foreground shadow-2xs';
+                    break;
+                  case 'out_of_stock':
+                    styleClasses =
+                      'border-amber-500/40 bg-amber-500/5 hover:border-amber-500/70 text-muted-foreground line-through decoration-amber-500/60';
+                    statusTitle = 'Out of Stock';
+                    break;
+                  case 'disabled':
+                  default:
+                    styleClasses =
+                      'border-border/30 bg-muted/15 text-muted-foreground/30 cursor-not-allowed line-through opacity-40 select-none';
+                    statusTitle = 'Combination not available';
+                    break;
+                }
 
                 return (
                   <button
                     key={val.id}
                     type="button"
-                    disabled={!available}
+                    disabled={isDisabled}
+                    title={statusTitle || undefined}
                     onClick={() => onSelectOption(option.productOptionId, val.id)}
-                    className={`relative rounded-xl border px-3.5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 focus-visible:outline-none ${
-                      isSelected
-                        ? 'border-primary bg-primary text-primary-foreground shadow-xs'
-                        : available
-                        ? 'border-border/80 bg-card hover:bg-muted/70 hover:border-primary/40 text-foreground'
-                        : 'border-border/40 bg-muted/20 text-muted-foreground/40 cursor-not-allowed line-through'
-                    }`}
+                    className={`relative rounded-xl border px-3.5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 focus-visible:outline-none ${styleClasses}`}
                   >
                     {val.value}
                   </button>

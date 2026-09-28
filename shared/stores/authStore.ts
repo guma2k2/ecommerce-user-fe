@@ -1,8 +1,23 @@
 import { create } from 'zustand';
+import { STORAGE_KEYS } from '@/shared/constants';
 import type { CustomerProfile } from '@/features/auth/types/customerTypes';
 
+const getStoredAccessToken = (): string | null => {
+  if (typeof window === 'undefined') return null;
+  return sessionStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+};
+
+const getStoredUserProfile = (): CustomerProfile | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEYS.USER_PROFILE);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
+
 interface AuthState {
-  accessToken: string | null;
   user: CustomerProfile | null;
   isAuthenticated: boolean;
   isInitializing: boolean;
@@ -13,29 +28,47 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  accessToken: null,
-  user: null,
-  isAuthenticated: false,
-  isInitializing: true,
+  user: getStoredUserProfile(),
+  isAuthenticated: Boolean(getStoredAccessToken()),
+  isInitializing: false,
 
-  setAccessToken: (token) =>
+  setAccessToken: (token) => {
+    if (typeof window !== 'undefined') {
+      if (token) {
+        sessionStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
+      } else {
+        sessionStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      }
+    }
     set({
-      accessToken: token,
       isAuthenticated: Boolean(token),
-    }),
+    });
+  },
 
-  setUserProfile: (profile) =>
+  setUserProfile: (profile) => {
+    if (typeof window !== 'undefined') {
+      if (profile) {
+        sessionStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(profile));
+      } else {
+        sessionStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
+      }
+    }
     set({
       user: profile,
-    }),
+    });
+  },
 
-  clearAuth: () =>
+  clearAuth: () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      sessionStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
+    }
     set({
-      accessToken: null,
       user: null,
       isAuthenticated: false,
       isInitializing: false,
-    }),
+    });
+  },
 
   setInitializing: (isInitializing) =>
     set({

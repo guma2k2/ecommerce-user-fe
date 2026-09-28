@@ -1,17 +1,22 @@
 'use client';
 
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import type { ProductDetail, ProductVariant } from '../types';
+import type { ProductDetail, ProductVariant, OptionValueStatus } from '../types';
+import {
+  findExactVariant,
+  findBestMatchingVariant,
+  getOptionValueStatus,
+} from '../utils';
 
-export function useVariantSelection(product: ProductDetail) {
+export function useVariantSelection(product?: ProductDetail | null) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const variantParam = searchParams.get('variant');
 
   // Find initial variant from URL param or default to first variant
   const initialVariant = useMemo(() => {
-    if (!product.variants || product.variants.length === 0) return null;
+    if (!product?.variants || product.variants.length === 0) return null;
 
     if (variantParam) {
       const match = product.variants.find((v) => String(v.id) === variantParam);
@@ -19,12 +24,12 @@ export function useVariantSelection(product: ProductDetail) {
     }
 
     return product.variants[0];
-  }, [product.variants, variantParam]);
+  }, [product, variantParam]);
 
   // Map optionId -> optionValueId
   const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>(() => {
     const initialMap: Record<number, number> = {};
-    if (initialVariant && product.options) {
+    if (initialVariant && product?.options) {
       initialVariant.productOptionValueIds.forEach((valId) => {
         // Find which option contains this valId
         for (const opt of product.options) {
@@ -38,9 +43,11 @@ export function useVariantSelection(product: ProductDetail) {
     return initialMap;
   });
 
-  // Keep selectedOptions in sync if variantParam changes externally
-  useEffect(() => {
-    if (variantParam && product.variants && product.options) {
+  // Keep selectedOptions in sync if variantParam changes externally without effect-driven cascading renders
+  const [prevVariantParam, setPrevVariantParam] = useState(variantParam);
+  if (variantParam !== prevVariantParam) {
+    setPrevVariantParam(variantParam);
+    if (variantParam && product?.variants && product?.options) {
       const matched = product.variants.find((v) => String(v.id) === variantParam);
       if (matched) {
         const newMap: Record<number, number> = {};
@@ -55,50 +62,63 @@ export function useVariantSelection(product: ProductDetail) {
         setSelectedOptions(newMap);
       }
     }
-  }, [variantParam, product.variants, product.options]);
+  }
 
   // Find current matching variant from selectedOptions
   const selectedVariant = useMemo<ProductVariant | null>(() => {
-    if (!product.variants || product.variants.length === 0) return null;
+    return findExactVariant(product, selectedOptions);
+  }, [product, selectedOptions]);
 
-    const selectedValueIds = Object.values(selectedOptions);
-    if (selectedValueIds.length === 0) return product.variants[0];
-
-    // Find variant that contains all selected values
-    const exactMatch = product.variants.find((v) =>
-      selectedValueIds.every((valId) => v.productOptionValueIds.includes(valId))
-    );
-
-    return exactMatch || product.variants[0];
-  }, [product.variants, selectedOptions]);
-
-  // Handle changing an option
+  // Handle changing an option with smart auto-switch for non-existent combinations
   const selectOptionValue = useCallback(
     (productOptionId: number, valueId: number) => {
-      const nextOptions = { ...selectedOptions, [productOptionId]: valueId };
-      setSelectedOptions(nextOptions);
+      if (!product?.variants || product.variants.length === 0) return;
 
-      // Find best matching variant for URL sync
-      const nextValues = Object.values(nextOptions);
-      const match = product.variants.find((v) =>
-        nextValues.every((valId) => v.productOptionValueIds.includes(valId))
+      const matchedVariant = findBestMatchingVariant(
+        product,
+        productOptionId,
+        valueId,
+        selectedOptions
       );
 
-      if (match) {
-        const nextUrl = `/products/${product.slug}?variant=${match.id}`;
+      if (matchedVariant) {
+        const newMap: Record<number, number> = {};
+        matchedVariant.productOptionValueIds.forEach((valId) => {
+          for (const opt of product.options) {
+            if (opt.values.some((v) => v.id === valId)) {
+              newMap[opt.productOptionId] = valId;
+              break;
+            }
+          }
+        });
+        setSelectedOptions(newMap);
+
+        const nextUrl = `/products/${product.slug}?variant=${matchedVariant.id}`;
         router.replace(nextUrl, { scroll: false });
+      } else {
+        // Fallback for options with zero variants
+        const nextOptions = { ...selectedOptions, [productOptionId]: valueId };
+        setSelectedOptions(nextOptions);
       }
     },
-    [selectedOptions, product.variants, product.slug, router]
+    [selectedOptions, product, router]
   );
 
-  // Check if a specific option value combination is available in any variant
+  // Computes granular option status: 'selected' | 'available' | 'out_of_stock' | 'disabled'
+  const getOptionStatus = useCallback(
+    (productOptionId: number, valueId: number): OptionValueStatus => {
+      return getOptionValueStatus(product, selectedOptions, productOptionId, valueId);
+    },
+    [product, selectedOptions]
+  );
+
+  // Boolean helper for backward compatibility
   const isOptionValueAvailable = useCallback(
     (productOptionId: number, valueId: number): boolean => {
-      // Check if there is any variant that contains this value
-      return product.variants.some((v) => v.productOptionValueIds.includes(valueId));
+      const status = getOptionValueStatus(product, selectedOptions, productOptionId, valueId);
+      return status !== 'disabled';
     },
-    [product.variants]
+    [product, selectedOptions]
   );
 
   return {
@@ -106,5 +126,6 @@ export function useVariantSelection(product: ProductDetail) {
     selectedVariant,
     selectOptionValue,
     isOptionValueAvailable,
+    getOptionStatus,
   };
 }

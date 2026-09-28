@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, Home, ArrowLeft } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
@@ -22,8 +21,10 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
     selectedOptions,
     selectedVariant,
     selectOptionValue,
+    getOptionStatus,
     isOptionValueAvailable,
-  } = useVariantSelection(product ?? ({} as any));
+  } = useVariantSelection(product);
+
 
   if (isLoading) {
     return <ProductDetailSkeleton />;
@@ -88,8 +89,10 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
           activeVariant={selectedVariant}
           selectedOptions={selectedOptions}
           onSelectOption={selectOptionValue}
+          getOptionStatus={getOptionStatus}
           isAvailable={isOptionValueAvailable}
         />
+
       </div>
 
       {/* Bottom Tabs: Description, Technical Specifications, Policy */}

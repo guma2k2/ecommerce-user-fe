@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Package } from 'lucide-react';
 import type { ProductMedia, ProductVariant } from '../types';
@@ -32,16 +32,24 @@ export function ProductMediaGallery({
     return list;
   }, [medias, activeVariant]);
 
-  const [selectedImage, setSelectedImage] = useState<string>(allImages[0] || '');
+  // User manual selection override
+  const [selectedImageOverride, setSelectedImageOverride] = useState<string | null>(null);
+  const [prevVariantMedia, setPrevVariantMedia] = useState<string | null | undefined>(activeVariant?.mediaUrl);
 
-  // Automatically update main preview when variant's media changes
-  useEffect(() => {
-    if (activeVariant?.mediaUrl) {
-      setSelectedImage(activeVariant.mediaUrl);
-    } else if (allImages.length > 0 && !allImages.includes(selectedImage)) {
-      setSelectedImage(allImages[0]);
-    }
-  }, [activeVariant?.mediaUrl, allImages, selectedImage]);
+  // When active variant's media changes, reset user override so variant media takes precedence
+  if (activeVariant?.mediaUrl !== prevVariantMedia) {
+    setPrevVariantMedia(activeVariant?.mediaUrl);
+    setSelectedImageOverride(null);
+  }
+
+  // Derive the active preview image
+  const selectedImage =
+    (selectedImageOverride && allImages.includes(selectedImageOverride)
+      ? selectedImageOverride
+      : null) ||
+    activeVariant?.mediaUrl ||
+    allImages[0] ||
+    '';
 
   return (
     <div className="flex flex-col gap-4">
@@ -72,7 +80,7 @@ export function ProductMediaGallery({
               <button
                 key={idx}
                 type="button"
-                onClick={() => setSelectedImage(url)}
+                onClick={() => setSelectedImageOverride(url)}
                 className={`relative size-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-200 focus-visible:outline-none ${
                   isSelected
                     ? 'border-primary ring-2 ring-primary/20 scale-102 shadow-xs'
