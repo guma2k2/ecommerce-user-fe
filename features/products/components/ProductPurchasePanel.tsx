@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   ShoppingCart,
   Zap,
@@ -9,8 +10,13 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
+  Loader2,
 } from 'lucide-react';
-import { Button, Badge } from '@/components/ui';
+import { Button, Badge, Alert, AlertDescription } from '@/components/ui';
+import { useAddToCart } from '@/features/cart';
+import { useAuthStore } from '@/shared/stores';
+import { ROUTES } from '@/shared/constants';
+import { getApiErrorMessage } from '@/shared/utils';
 import type { ProductDetail, ProductVariant, OptionValueStatus } from '../types';
 import { ProductOptionPicker } from './ProductOptionPicker';
 
@@ -21,6 +27,7 @@ interface ProductPurchasePanelProps {
   onSelectOption: (productOptionId: number, valueId: number) => void;
   getOptionStatus?: (productOptionId: number, valueId: number) => OptionValueStatus;
   isAvailable?: (productOptionId: number, valueId: number) => boolean;
+  onAddToCart?: (variant: ProductVariant, quantity: number) => void;
 }
 
 export function ProductPurchasePanel({
@@ -30,8 +37,18 @@ export function ProductPurchasePanel({
   onSelectOption,
   getOptionStatus,
   isAvailable,
+  onAddToCart,
 }: ProductPurchasePanelProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   const [quantity, setQuantity] = useState(1);
+  const [actionType, setActionType] = useState<'cart' | 'buy' | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { mutate: addToCart, isPending } = useAddToCart();
 
   const price = activeVariant?.price ?? 0;
   const isUnavailable = !activeVariant;
@@ -40,11 +57,92 @@ export function ProductPurchasePanel({
   const isActionDisabled = isUnavailable || isOutOfStock;
 
   const handleDecrease = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+      setSuccessMessage(null);
+      setErrorMessage(null);
+    }
   };
 
   const handleIncrease = () => {
-    if (quantity < stockCount) setQuantity((prev) => prev + 1);
+    if (quantity < stockCount) {
+      setQuantity((prev) => prev + 1);
+      setSuccessMessage(null);
+      setErrorMessage(null);
+    }
+  };
+
+  const handleOptionSelect = (productOptionId: number, valueId: number) => {
+    setSuccessMessage(null);
+    setErrorMessage(null);
+    onSelectOption(productOptionId, valueId);
+  };
+
+  const handleAddToCart = () => {
+    if (!activeVariant || isActionDisabled || isPending) return;
+
+    if (onAddToCart) {
+      onAddToCart(activeVariant, quantity);
+      return;
+    }
+
+    if (!isAuthenticated) {
+      router.push(`${ROUTES.AUTH.LOGIN}?returnUrl=${encodeURIComponent(pathname)}`);
+      return;
+    }
+
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    setActionType('cart');
+
+    addToCart(
+      {
+        productVariantId: activeVariant.id,
+        quantity,
+      },
+      {
+        onSuccess: () => {
+          setActionType(null);
+          setSuccessMessage(`Added ${quantity} ${quantity > 1 ? 'items' : 'item'} to cart!`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 3500);
+        },
+        onError: (err) => {
+          setActionType(null);
+          setErrorMessage(getApiErrorMessage(err, 'Failed to add item to cart. Please try again.'));
+        },
+      }
+    );
+  };
+
+  const handleBuyNow = () => {
+    if (!activeVariant || isActionDisabled || isPending) return;
+
+    if (!isAuthenticated) {
+      router.push(`${ROUTES.AUTH.LOGIN}?returnUrl=${encodeURIComponent(ROUTES.SHOP.CART)}`);
+      return;
+    }
+
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    setActionType('buy');
+
+    addToCart(
+      {
+        productVariantId: activeVariant.id,
+        quantity,
+      },
+      {
+        onSuccess: () => {
+          router.push(ROUTES.SHOP.CART);
+        },
+        onError: (err) => {
+          setActionType(null);
+          setErrorMessage(getApiErrorMessage(err, 'Failed to process request. Please try again.'));
+        },
+      }
+    );
   };
 
   return (
@@ -124,7 +222,7 @@ export function ProductPurchasePanel({
       <ProductOptionPicker
         options={product.options}
         selectedOptions={selectedOptions}
-        onSelectOption={onSelectOption}
+        onSelectOption={handleOptionSelect}
         getOptionStatus={getOptionStatus}
         isAvailable={isAvailable}
       />
@@ -144,7 +242,7 @@ export function ProductPurchasePanel({
           <div className="flex items-center rounded-xl border border-border/80 bg-card p-1 shadow-2xs">
             <button
               type="button"
-              disabled={quantity <= 1 || isActionDisabled}
+              disabled={quantity <= 1 || isActionDisabled || isPending}
               onClick={handleDecrease}
               className="flex size-8 items-center justify-center rounded-lg text-sm font-bold hover:bg-muted text-muted-foreground transition-colors disabled:opacity-40"
             >
@@ -153,7 +251,7 @@ export function ProductPurchasePanel({
             <span className="w-10 text-center text-sm font-semibold">{quantity}</span>
             <button
               type="button"
-              disabled={quantity >= stockCount || isActionDisabled}
+              disabled={quantity >= stockCount || isActionDisabled || isPending}
               onClick={handleIncrease}
               className="flex size-8 items-center justify-center rounded-lg text-sm font-bold hover:bg-muted text-muted-foreground transition-colors disabled:opacity-40"
             >
@@ -166,21 +264,57 @@ export function ProductPurchasePanel({
           <Button
             size="lg"
             variant="outline"
-            disabled={isActionDisabled}
+            disabled={isActionDisabled || isPending}
+            onClick={handleAddToCart}
             className="flex-1 rounded-xl h-12 text-sm font-bold gap-2 shadow-2xs"
           >
-            <ShoppingCart className="size-4" />
-            Add to Cart
+            {isPending && actionType === 'cart' ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span>Adding...</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="size-4" />
+                <span>Add to Cart</span>
+              </>
+            )}
           </Button>
           <Button
             size="lg"
-            disabled={isActionDisabled}
+            disabled={isActionDisabled || isPending}
+            onClick={handleBuyNow}
             className="flex-1 rounded-xl h-12 text-sm font-bold gap-2 shadow-md"
           >
-            <Zap className="size-4" />
-            Buy Now
+            {isPending && actionType === 'buy' ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span>Processing...</span>
+              </>
+            ) : (
+              <>
+                <Zap className="size-4" />
+                <span>Buy Now</span>
+              </>
+            )}
           </Button>
         </div>
+
+        {/* Success Alert */}
+        {successMessage && (
+          <Alert variant="success" className="animate-in fade-in slide-in-from-top-1 duration-200">
+            <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
+            <AlertDescription className="font-medium">{successMessage}</AlertDescription>
+          </Alert>
+        )}
+
+        {/* Error Alert */}
+        {errorMessage && (
+          <Alert variant="destructive" className="animate-in fade-in slide-in-from-top-1 duration-200">
+            <AlertCircle className="size-4" />
+            <AlertDescription className="font-medium">{errorMessage}</AlertDescription>
+          </Alert>
+        )}
       </div>
 
       {/* Value Proposition & Guarantees */}
@@ -201,3 +335,4 @@ export function ProductPurchasePanel({
     </div>
   );
 }
+

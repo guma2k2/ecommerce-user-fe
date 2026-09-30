@@ -2,19 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShoppingCart } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
 import { useAuthStore } from '@/shared/stores';
 import { UserNav } from '@/features/auth';
 import { SearchBar } from '@/features/search';
-import { Button } from '@/components/ui';
+import { CartPopover } from '@/features/cart';
 
 interface HeaderProps {
   className?: string;
-  cartItemCount?: number;
 }
 
-export function Header({ className = '', cartItemCount = 0 }: HeaderProps) {
+export function Header({ className = '' }: HeaderProps) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   return (
@@ -42,23 +40,8 @@ export function Header({ className = '', cartItemCount = 0 }: HeaderProps) {
 
         {/* Navigation & User Actions */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Cart Icon Button - Displayed only when logged in */}
-          {isAuthenticated && (
-            <Link href={ROUTES.SHOP.CART} aria-label="Shopping Cart">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative rounded-full hover:bg-muted text-foreground transition-colors"
-              >
-                <ShoppingCart className="size-5" />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground shadow-xs animate-in zoom-in-50">
-                    {cartItemCount > 99 ? '99+' : cartItemCount}
-                  </span>
-                )}
-              </Button>
-            </Link>
-          )}
+          {/* Cart Icon Popover - Shopee style dropdown */}
+          {isAuthenticated && <CartPopover />}
 
           {/* User Nav: Sign In/Register when logged out, Profile Dropdown when logged in */}
           <UserNav />
