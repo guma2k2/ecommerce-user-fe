@@ -166,7 +166,13 @@ httpRequest.interceptors.response.use(
       }
 
       const businessStatus = response.data.status ? String(response.data.status) : '';
-      if (businessStatus && businessStatus !== '200') {
+      const isSuccessStatus =
+        businessStatus === '200' ||
+        businessStatus === '201' ||
+        businessStatus === '204' ||
+        (businessStatus.startsWith('2') && businessStatus.length === 3);
+
+      if (businessStatus && !isSuccessStatus) {
         const businessCode = Number(businessStatus) || 400;
         const error = new AxiosError<ApiResponse<unknown>>(
           response.data.message || 'Business Error',

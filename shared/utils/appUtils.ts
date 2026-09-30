@@ -58,3 +58,26 @@ export function formatCurrency(amount: number, currency = 'VND', locale = 'vi-VN
     currency,
   }).format(amount);
 }
+
+/**
+ * Safely extracts user-friendly error message from API or Axios errors
+ */
+export function getApiErrorMessage(
+  error: unknown,
+  fallbackMessage = 'An unexpected error occurred. Please try again.'
+): string {
+  if (error && typeof error === 'object') {
+    const errorObj = error as { response?: { data?: { message?: string } }; message?: string };
+    if (errorObj.response?.data?.message) {
+      return errorObj.response.data.message;
+    }
+    if (errorObj.message) {
+      return errorObj.message;
+    }
+  }
+  if (typeof error === 'string') {
+    return error;
+  }
+  return fallbackMessage;
+}
+
