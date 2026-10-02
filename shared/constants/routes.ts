@@ -11,6 +11,7 @@ export const ROUTES = {
   ACCOUNT: {
     PROFILE: '/profile',
     ORDERS: '/orders',
+    ORDER_DETAIL: (id: string) => `/orders/${id}` as const,
   },
   SHOP: {
     CATALOG: '/products',
@@ -19,5 +20,6 @@ export const ROUTES = {
     SEARCH: '/search',
     CART: '/cart',
     CHECKOUT: '/checkout',
+    CHECKOUT_SUCCESS: '/checkout/success',
   },
 } as const;

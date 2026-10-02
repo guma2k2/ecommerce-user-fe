@@ -32,4 +32,14 @@ export const queryKeys = {
     facets: (categoryId: number) =>
       [...queryKeys.search.all, 'facets', categoryId] as const,
   },
+  orders: {
+    all: ['orders'] as const,
+    lists: () => [...queryKeys.orders.all, 'list'] as const,
+    list: (filters?: Record<string, unknown>) => [...queryKeys.orders.lists(), filters] as const,
+    detail: (id: string) => [...queryKeys.orders.all, 'detail', id] as const,
+  },
+  payments: {
+    all: ['payments'] as const,
+    detail: (id: number | string) => [...queryKeys.payments.all, 'detail', id] as const,
+  },
 } as const;
