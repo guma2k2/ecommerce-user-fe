@@ -11,4 +11,4 @@ export * from './skeleton';
 export * from './slider';
 export * from './sheet';
 export * from './popover';
-
+export * from './dialog';
