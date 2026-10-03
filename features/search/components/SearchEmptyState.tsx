@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { PackageSearch, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 
 interface SearchEmptyStateProps {
   keyword?: string;
@@ -24,11 +24,11 @@ export function SearchEmptyState({
         <PackageSearch className="size-8" />
       </div>
 
-      <h3 className="text-xl font-bold text-foreground tracking-tight">
+      <Typography.H3 className="text-xl font-bold tracking-tight">
         No products found
-      </h3>
+      </Typography.H3>
 
-      <p className="mt-2 max-w-md text-sm text-muted-foreground">
+      <Typography.Muted className="mt-2 max-w-md text-sm block">
         {keyword ? (
           <>
             We couldn&apos;t find any items matching &ldquo;
@@ -38,7 +38,7 @@ export function SearchEmptyState({
         ) : (
           'There are no products matching your selected filter criteria. Try clearing some filters to explore more products.'
         )}
-      </p>
+      </Typography.Muted>
 
       {hasActiveFilters && (
         <div className="mt-6">

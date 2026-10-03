@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Flame, ArrowRight } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
-import { Button } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 import {
   SearchProductCard,
   SearchProductCardSkeleton,
@@ -28,13 +28,13 @@ export function BestSellersSection({ limit = 8, className = '' }: BestSellersSec
             <div className="flex size-7 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
               <Flame className="size-4 fill-orange-500" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
+            <Typography.H2 className="text-xl sm:text-2xl font-extrabold">
               Best Sellers
-            </h2>
+            </Typography.H2>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground">
+          <Typography.Muted className="text-xs sm:text-sm">
             Top trending products chosen by thousands of happy customers this week.
-          </p>
+          </Typography.Muted>
         </div>
 
         <Link href={ROUTES.SHOP.SEARCH}>

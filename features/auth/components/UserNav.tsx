@@ -11,6 +11,7 @@ export function UserNav() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isInitializing = useAuthStore((state) => state.isInitializing);
   const user = useAuthStore((state) => state.user);
   const { mutate: signOut, isPending: isSigningOut } = useSignOut();
 
@@ -23,6 +24,14 @@ export function UserNav() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  if (isInitializing) {
+    return (
+      <div className="flex items-center gap-2">
+        <div className="size-8 rounded-full bg-muted/60 animate-pulse" />
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return (

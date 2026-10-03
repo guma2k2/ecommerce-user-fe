@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Check, Clock, Package, Truck, CheckCircle2, XCircle } from 'lucide-react';
+import { Typography } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import type { OrderStatus } from '../types';
 
@@ -32,10 +33,12 @@ export function OrderTrackingStepper({ status }: OrderTrackingStepperProps) {
       <div className="flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-destructive">
         <XCircle className="size-6 shrink-0" />
         <div>
-          <p className="font-semibold text-sm">Order Cancelled</p>
-          <p className="text-xs text-muted-foreground mt-0.5">
+          <Typography.Label as="p" className="text-destructive font-semibold">
+            Order Cancelled
+          </Typography.Label>
+          <Typography.Caption as="p" className="mt-0.5 block">
             This order was cancelled and inventory reservations were restored.
-          </p>
+          </Typography.Caption>
         </div>
       </div>
     );
@@ -78,9 +81,9 @@ export function OrderTrackingStepper({ status }: OrderTrackingStepperProps) {
               >
                 <Icon className="size-4.5 stroke-[2.5]" />
               </div>
-              <span
+              <Typography.Caption
                 className={cn(
-                  'text-xs text-center max-w-[80px] font-medium transition-colors',
+                  'text-center max-w-[80px] font-medium transition-colors block',
                   isCurrent
                     ? 'text-primary font-semibold'
                     : isCompleted
@@ -89,7 +92,7 @@ export function OrderTrackingStepper({ status }: OrderTrackingStepperProps) {
                 )}
               >
                 {step.label}
-              </span>
+              </Typography.Caption>
             </div>
           );
         })}

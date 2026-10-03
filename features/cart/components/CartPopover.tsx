@@ -11,7 +11,7 @@ import {
   Button,
   buttonVariants,
 } from '@/components/ui';
-import { cn } from 'cn';
+import { cn } from '@/lib/utils';
 import { useCart } from '../hooks';
 import { ROUTES } from '@/shared/constants';
 import { formatCurrency } from '@/shared/utils';

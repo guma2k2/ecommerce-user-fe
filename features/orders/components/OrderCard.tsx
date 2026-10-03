@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Calendar, Package, ArrowRight, XCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, Button, buttonVariants } from '@/components/ui';
+import { Card, CardContent, CardHeader, Button, buttonVariants, Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { formatCurrency } from '@/shared/utils/appUtils';
 import { cn } from '@/lib/utils';
@@ -36,14 +36,14 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="font-mono font-bold text-sm text-foreground">
+                <Typography.Tabular className="font-mono font-bold text-sm text-foreground">
                   {order.orderCode}
-                </span>
+                </Typography.Tabular>
                 <span className="text-xs text-muted-foreground">•</span>
-                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <Typography.Caption className="flex items-center gap-1">
                   <Calendar className="size-3" />
                   {formattedDate}
-                </span>
+                </Typography.Caption>
               </div>
             </div>
 
@@ -67,9 +67,9 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
               </div>
               <div>
                 <span>Total: </span>
-                <span className="font-semibold text-sm text-primary">
-                  {formatCurrency(order.totalAmount, 'USD', 'en-US')}
-                </span>
+                <Typography.Tabular className="font-semibold text-sm text-primary">
+                  {formatCurrency(order.totalAmount)}
+                </Typography.Tabular>
               </div>
             </div>
 

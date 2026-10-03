@@ -12,11 +12,11 @@ import {
   RotateCcw,
   Loader2,
 } from 'lucide-react';
-import { Button, Badge, Alert, AlertDescription } from '@/components/ui';
+import { Button, Badge, Alert, AlertDescription, Typography } from '@/components/ui';
 import { useAddToCart } from '@/features/cart';
 import { useAuthStore } from '@/shared/stores';
 import { ROUTES } from '@/shared/constants';
-import { getApiErrorMessage } from '@/shared/utils';
+import { getApiErrorMessage, formatCurrency } from '@/shared/utils';
 import type { ProductDetail, ProductVariant, OptionValueStatus } from '../types';
 import { ProductOptionPicker } from './ProductOptionPicker';
 
@@ -163,17 +163,17 @@ export function ProductPurchasePanel({
 
       {/* Product Title */}
       <div className="space-y-1.5">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight leading-snug">
+        <Typography.H1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
           {product.name}
-        </h1>
+        </Typography.H1>
         {activeVariant?.sku ? (
-          <p className="text-xs text-muted-foreground font-mono">
+          <Typography.Muted className="text-xs font-mono">
             SKU: {activeVariant.sku}
-          </p>
+          </Typography.Muted>
         ) : (
-          <p className="text-xs text-amber-500 font-medium">
+          <Typography.Muted className="text-xs text-amber-500 font-medium">
             Please choose an available configuration
-          </p>
+          </Typography.Muted>
         )}
       </div>
 
@@ -182,20 +182,20 @@ export function ProductPurchasePanel({
         <div className="space-y-0.5">
           <div className="flex items-baseline gap-2">
             {isUnavailable ? (
-              <span className="text-2xl font-bold text-muted-foreground">
+              <Typography.Large className="text-2xl font-bold text-muted-foreground">
                 Unavailable
-              </span>
+              </Typography.Large>
             ) : (
-              <span className="text-3xl font-black text-primary tracking-tight">
-                ${price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-              </span>
+              <Typography.Tabular className="text-3xl font-black text-primary tracking-tight">
+                {formatCurrency(price)}
+              </Typography.Tabular>
             )}
           </div>
-          <span className="text-[11px] text-muted-foreground">
+          <Typography.Muted className="text-[11px] block">
             {isUnavailable
               ? 'Combination does not exist'
               : 'Tax included. Free shipping on eligible orders.'}
-          </span>
+          </Typography.Muted>
         </div>
 
         <div>

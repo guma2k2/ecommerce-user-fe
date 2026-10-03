@@ -59,11 +59,11 @@ export function serializeAttributesMap(map: Map<number, string[]>): string[] {
 }
 
 /**
- * Format price using USD or VND depending on currency format
+ * Format price using USD currency format
  */
 export function formatPriceValue(price: number | null | undefined): string {
   if (price === null || price === undefined || isNaN(price)) return '—';
-  return formatCurrency(price, 'USD', 'en-US');
+  return formatCurrency(price);
 }
 
 /**

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 import { CartItemRow } from './CartItemRow';
 import { ClearCartModal } from './ClearCartModal';
 import { useClearCart } from '../hooks';
@@ -29,9 +29,9 @@ export function CartItemList({ items, totalQuantity }: CartItemListProps) {
     <div className="space-y-4">
       {/* Header bar */}
       <div className="flex items-center justify-between pb-2 border-b border-border/60">
-        <h2 className="text-base sm:text-lg font-bold text-foreground">
+        <Typography.H2 className="text-base sm:text-lg font-bold">
           Cart Items ({totalQuantity})
-        </h2>
+        </Typography.H2>
         <Button
           type="button"
           variant="ghost"

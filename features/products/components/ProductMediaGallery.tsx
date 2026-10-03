@@ -1,8 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { Package } from 'lucide-react';
+import { Package, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from '@/components/ui';
 import type { ProductMedia, ProductVariant } from '../types';
 
 interface ProductMediaGalleryProps {
@@ -16,8 +24,10 @@ export function ProductMediaGallery({
   activeVariant,
   productName,
 }: ProductMediaGalleryProps) {
+  const [api, setApi] = useState<CarouselApi>();
+
   // Combine product medias and active variant media
-  const allImages = React.useMemo(() => {
+  const allImages = useMemo(() => {
     const list: string[] = [];
     if (activeVariant?.mediaUrl) {
       list.push(activeVariant.mediaUrl);
@@ -51,6 +61,20 @@ export function ProductMediaGallery({
     allImages[0] ||
     '';
 
+  // Smoothly scroll carousel when selected image changes
+  useEffect(() => {
+    if (!api || !selectedImage) return;
+    const targetIndex = allImages.indexOf(selectedImage);
+    if (targetIndex !== -1) {
+      api.scrollTo(targetIndex);
+    }
+  }, [api, selectedImage, allImages]);
+
+  const handleSelectThumbnail = (url: string, index: number) => {
+    setSelectedImageOverride(url);
+    api?.scrollTo(index);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {/* Main Image Frame */}
@@ -71,33 +95,62 @@ export function ProductMediaGallery({
         )}
       </div>
 
-      {/* Thumbnails Row */}
+      {/* Thumbnails Carousel Row using Shadcn UI Carousel */}
       {allImages.length > 1 && (
-        <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
-          {allImages.map((url, idx) => {
-            const isSelected = selectedImage === url;
-            return (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => setSelectedImageOverride(url)}
-                className={`relative size-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-200 focus-visible:outline-none ${
-                  isSelected
-                    ? 'border-primary ring-2 ring-primary/20 scale-102 shadow-xs'
-                    : 'border-border/60 hover:border-primary/40 opacity-75 hover:opacity-100'
-                }`}
-              >
-                <Image
-                  src={url}
-                  alt={`${productName} thumbnail ${idx + 1}`}
-                  fill
-                  sizes="80px"
-                  className="object-contain p-1.5"
-                />
-              </button>
-            );
-          })}
-        </div>
+        <Carousel
+          setApi={setApi}
+          opts={{
+            align: 'start',
+            containScroll: 'trimSnaps',
+            dragFree: true,
+          }}
+          className="relative group w-full overflow-hidden rounded-2xl"
+        >
+          {/* Scrollable Carousel Track */}
+          <CarouselContent className="-ml-3">
+            {allImages.map((url, idx) => {
+              const isSelected = selectedImage === url;
+              return (
+                <CarouselItem key={idx} className="pl-3 basis-auto">
+                  <button
+                    type="button"
+                    onMouseEnter={() => setSelectedImageOverride(url)}
+                    onClick={() => handleSelectThumbnail(url, idx)}
+                    className={`relative size-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-200 focus-visible:outline-none cursor-pointer ${
+                      isSelected
+                        ? 'border-primary ring-2 ring-primary/20 scale-102 shadow-xs'
+                        : 'border-border/60 hover:border-primary/50 opacity-75 hover:opacity-100'
+                    }`}
+                  >
+                    <Image
+                      src={url}
+                      alt={`${productName} thumbnail ${idx + 1}`}
+                      fill
+                      sizes="80px"
+                      className="object-contain p-1.5"
+                    />
+                  </button>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+
+          {/* Left Arrow Button */}
+          <CarouselPrevious
+            variant="ghost"
+            className="absolute left-0 top-0 bottom-0 h-full w-7 rounded-l-2xl rounded-r-none translate-y-0 bg-black/35 hover:bg-black/60 text-white border-none z-20 backdrop-blur-[2px] transition-all disabled:opacity-0 disabled:pointer-events-none cursor-pointer"
+          >
+            <ChevronLeft className="size-5 stroke-[2.5]" />
+          </CarouselPrevious>
+
+          {/* Right Arrow Button */}
+          <CarouselNext
+            variant="ghost"
+            className="absolute right-0 top-0 bottom-0 h-full w-7 rounded-r-2xl rounded-l-none translate-y-0 bg-black/35 hover:bg-black/60 text-white border-none z-20 backdrop-blur-[2px] transition-all disabled:opacity-0 disabled:pointer-events-none cursor-pointer"
+          >
+            <ChevronRight className="size-5 stroke-[2.5]" />
+          </CarouselNext>
+        </Carousel>
       )}
     </div>
   );

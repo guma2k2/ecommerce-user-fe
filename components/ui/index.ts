@@ -12,3 +12,6 @@ export * from './slider';
 export * from './sheet';
 export * from './popover';
 export * from './dialog';
+export * from './tabs';
+export * from './carousel';
+export * from './typography';

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { CheckCircle2, PackageCheck, ShoppingBag, ArrowRight } from 'lucide-react';
-import { Card, CardContent, buttonVariants } from '@/components/ui';
+import { Card, CardContent, buttonVariants, Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { cn } from '@/lib/utils';
 
@@ -28,12 +28,12 @@ export function CheckoutSuccessContainer({
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            <Typography.H1 className="text-2xl sm:text-3xl font-bold">
               Thank You For Your Order!
-            </h1>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto">
+            </Typography.H1>
+            <Typography.Muted className="text-sm max-w-md mx-auto block">
               Your order has been received and is being processed by our fulfillment team.
-            </p>
+            </Typography.Muted>
           </div>
 
           {/* Reference Details */}
@@ -42,9 +42,9 @@ export function CheckoutSuccessContainer({
               {orderCode && (
                 <div className="flex justify-between items-center py-1">
                   <span className="text-muted-foreground">Order Reference:</span>
-                  <span className="font-mono font-bold text-foreground text-sm">
+                  <Typography.Tabular className="font-mono font-bold text-foreground text-sm">
                     {orderCode}
-                  </span>
+                  </Typography.Tabular>
                 </div>
               )}
               {orderId && (

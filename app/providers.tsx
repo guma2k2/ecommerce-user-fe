@@ -6,11 +6,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useAuthStore } from '@/shared/stores';
 
 function AuthInitializer({ children }: { children: React.ReactNode }) {
-  const setInitializing = useAuthStore((state) => state.setInitializing);
+  const initAuth = useAuthStore((state) => state.initAuth);
 
   useEffect(() => {
-    setInitializing(false);
-  }, [setInitializing]);
+    initAuth();
+  }, [initAuth]);
 
   return <>{children}</>;
 }
