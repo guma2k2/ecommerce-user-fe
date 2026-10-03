@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Lock, Truck } from 'lucide-react';
 import { Button, buttonVariants, Card, CardContent, CardHeader, CardTitle, Separator } from '@/components/ui';
-import { cn } from 'cn';
+import { cn } from '@/lib/utils';
 import { formatCurrency } from '@/shared/utils';
 import { ROUTES } from '@/shared/constants';
 import type { CartItem } from '../types';
@@ -24,8 +24,8 @@ export function CartSummary({
   const hasExceededItems = items.some((item) => item.quantity > item.variant.stockQuantity);
   const isCheckoutDisabled = hasOutOfStockItems || hasExceededItems || totalQuantity === 0;
 
-  // Shipping calculation logic: Free shipping for orders > 500,000 VND (or $50)
-  const shippingFee = totalPrice > 500000 || totalPrice === 0 ? 0 : 30000;
+  // Shipping calculation logic: Free shipping for orders > $100 (or $0 when empty), otherwise $10
+  const shippingFee = totalPrice > 100 || totalPrice === 0 ? 0 : 10;
   const finalTotal = totalPrice + shippingFee;
 
   return (

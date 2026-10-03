@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 
 interface ClearCartModalProps {
   isOpen: boolean;
@@ -32,12 +32,12 @@ export function ClearCartModal({
             <AlertTriangle className="size-5" />
           </div>
           <div>
-            <h3 id="clear-cart-title" className="text-base font-bold text-foreground">
+            <Typography.H3 id="clear-cart-title" className="text-base font-bold">
               Clear Shopping Cart?
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            </Typography.H3>
+            <Typography.Caption className="text-xs mt-0.5 block">
               This action cannot be undone. All items will be removed.
-            </p>
+            </Typography.Caption>
           </div>
         </div>
 

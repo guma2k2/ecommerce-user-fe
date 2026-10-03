@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MapPin, CreditCard, ArrowLeft, AlertCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, Alert, AlertDescription, buttonVariants } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Alert, AlertDescription, buttonVariants, Typography } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/shared/stores/authStore';
 import { ROUTES } from '@/shared/constants';
@@ -77,10 +77,10 @@ export function CheckoutContainer({
   if (items.length === 0 && !isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 space-y-4">
-        <h2 className="text-xl font-bold text-foreground">Your cart is empty</h2>
-        <p className="text-sm text-muted-foreground max-w-md">
+        <Typography.H2 className="text-xl font-bold">Your cart is empty</Typography.H2>
+        <Typography.Muted className="text-sm max-w-md block">
           You don&apos;t have any items in your cart to checkout. Browse our catalog to find products you love!
-        </p>
+        </Typography.Muted>
         <Link
           href={ROUTES.SHOP.CATALOG}
           className={cn(buttonVariants(), 'mt-2')}
@@ -102,7 +102,7 @@ export function CheckoutContainer({
           <ArrowLeft className="size-4" />
           <span>Back to Cart</span>
         </Link>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">Checkout</h1>
+        <Typography.H1 className="text-2xl font-bold">Checkout</Typography.H1>
       </div>
 
       {errorMessage && (

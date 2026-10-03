@@ -11,6 +11,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  Typography,
 } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { formatCurrency } from '@/shared/utils/appUtils';
@@ -36,10 +37,10 @@ export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
   if (isError || !order) {
     return (
       <div className="max-w-2xl mx-auto py-16 text-center space-y-4">
-        <h2 className="text-xl font-bold text-foreground">Order Not Found</h2>
-        <p className="text-sm text-muted-foreground">
+        <Typography.H2 className="text-xl font-bold">Order Not Found</Typography.H2>
+        <Typography.Muted className="text-sm">
           The requested order does not exist or you do not have permission to view it.
-        </p>
+        </Typography.Muted>
         <Link
           href={ROUTES.ACCOUNT.ORDERS}
           className={buttonVariants()}
@@ -74,15 +75,15 @@ export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold tracking-tight text-foreground font-mono">
+              <Typography.H1 className="text-xl font-bold tracking-tight font-mono">
                 {order.orderCode}
-              </h1>
+              </Typography.H1>
               <OrderStatusBadge status={order.status} />
             </div>
-            <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+            <Typography.Caption className="flex items-center gap-1.5 mt-0.5">
               <Calendar className="size-3" />
               <span>Placed on {formattedDate}</span>
-            </p>
+            </Typography.Caption>
           </div>
         </div>
 
@@ -155,9 +156,9 @@ export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
             </div>
             <div className="flex justify-between items-center pt-2 border-t border-border/40">
               <span className="font-semibold text-foreground">Order Total:</span>
-              <span className="font-bold text-base text-primary">
+              <Typography.Tabular className="font-bold text-base text-primary">
                 {formatCurrency(order.totalAmount, 'USD', 'en-US')}
-              </span>
+              </Typography.Tabular>
             </div>
           </CardContent>
         </Card>
@@ -199,12 +200,12 @@ export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-semibold text-sm text-foreground">
-                  {formatCurrency(item.totalPrice, 'USD', 'en-US')}
-                </p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">
-                  {formatCurrency(item.unitPrice, 'USD', 'en-US')} each
-                </p>
+                <Typography.Tabular className="font-semibold text-sm block">
+                  {formatCurrency(item.totalPrice)}
+                </Typography.Tabular>
+                <Typography.Caption className="text-[11px] mt-0.5 block">
+                  {formatCurrency(item.unitPrice)} each
+                </Typography.Caption>
               </div>
             </div>
           ))}
@@ -213,21 +214,21 @@ export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
           <div className="pt-4 space-y-2 text-xs">
             <div className="flex justify-between text-muted-foreground">
               <span>Subtotal</span>
-              <span className="font-medium text-foreground">
-                {formatCurrency(order.totalAmount - (order.shippingFee || 0), 'USD', 'en-US')}
-              </span>
+              <Typography.Tabular className="font-medium text-foreground">
+                {formatCurrency(order.totalAmount - (order.shippingFee || 0))}
+              </Typography.Tabular>
             </div>
             <div className="flex justify-between text-muted-foreground">
               <span>Shipping Fee</span>
-              <span className="font-medium text-foreground">
-                {order.shippingFee ? formatCurrency(order.shippingFee, 'USD', 'en-US') : 'Free'}
-              </span>
+              <Typography.Tabular className="font-medium text-foreground">
+                {order.shippingFee ? formatCurrency(order.shippingFee) : 'Free'}
+              </Typography.Tabular>
             </div>
             <div className="flex justify-between pt-2 border-t border-border/60 text-sm font-bold text-foreground">
               <span>Total Paid</span>
-              <span className="text-base text-primary">
-                {formatCurrency(order.totalAmount, 'USD', 'en-US')}
-              </span>
+              <Typography.Tabular className="text-base text-primary">
+                {formatCurrency(order.totalAmount)}
+              </Typography.Tabular>
             </div>
           </div>
         </CardContent>

@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Zap, ShieldCheck } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
-import { Button } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 
 interface PromoBannerProps {
   className?: string;
@@ -32,13 +32,13 @@ export function PromoBanner({ className = '' }: PromoBannerProps) {
 
       {/* Hero Headline & Description */}
       <div className="relative z-10 my-4 max-w-xl space-y-3">
-        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight drop-shadow-xs">
+        <Typography.H2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight drop-shadow-xs text-primary-foreground">
           Next-Gen Tech, <br className="hidden sm:inline" />
           Unbeatable Value.
-        </h2>
-        <p className="text-sm sm:text-base text-primary-foreground/90 max-w-md font-medium leading-relaxed">
+        </Typography.H2>
+        <Typography.P affects="removeMargin" className="text-sm sm:text-base text-primary-foreground/90 max-w-md font-medium leading-relaxed">
           Upgrade your workspace with flagship laptops, smartphones, and audio gear. Authentic warranty and fast delivery guaranteed.
-        </p>
+        </Typography.P>
       </div>
 
       {/* Action CTA & Highlights */}

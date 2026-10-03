@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
   Separator,
+  Typography,
 } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { useAuthStore } from '@/shared/stores';
@@ -75,10 +76,10 @@ export default function ProfilePage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Customer Profile</h1>
-        <p className="text-muted-foreground text-sm">
+        <Typography.H1 className="text-3xl font-bold">Customer Profile</Typography.H1>
+        <Typography.Muted className="text-sm">
           View your personal information and account settings
-        </p>
+        </Typography.Muted>
       </div>
 
       <Card>
@@ -95,8 +96,8 @@ export default function ProfilePage() {
               className="size-20 border-2 border-primary/20"
             />
             <div>
-              <h2 className="text-xl font-bold text-foreground">{profile?.name}</h2>
-              <p className="text-sm text-muted-foreground">{profile?.email}</p>
+              <Typography.H2 className="text-xl font-bold">{profile?.name}</Typography.H2>
+              <Typography.Muted className="text-sm">{profile?.email}</Typography.Muted>
               <span className="inline-flex items-center mt-2 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
                 Customer Account
               </span>

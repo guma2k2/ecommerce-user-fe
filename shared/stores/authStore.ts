@@ -21,6 +21,7 @@ interface AuthState {
   user: CustomerProfile | null;
   isAuthenticated: boolean;
   isInitializing: boolean;
+  initAuth: () => void;
   setAccessToken: (token: string | null) => void;
   setUserProfile: (profile: CustomerProfile | null) => void;
   clearAuth: () => void;
@@ -28,9 +29,19 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: getStoredUserProfile(),
-  isAuthenticated: Boolean(getStoredAccessToken()),
-  isInitializing: false,
+  user: null,
+  isAuthenticated: false,
+  isInitializing: true,
+
+  initAuth: () => {
+    const token = getStoredAccessToken();
+    const profile = getStoredUserProfile();
+    set({
+      user: profile,
+      isAuthenticated: Boolean(token),
+      isInitializing: false,
+    });
+  },
 
   setAccessToken: (token) => {
     if (typeof window !== 'undefined') {

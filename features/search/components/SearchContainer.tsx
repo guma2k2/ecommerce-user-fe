@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, Home, Sparkles } from 'lucide-react';
+import { Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { useSearchFilters, useProductSearch } from '../hooks';
 import { SearchBar } from './SearchBar';
@@ -94,18 +95,18 @@ export function SearchContainer({
               <span>{isCategoryMode ? 'Category Store' : 'Discovery Engine'}</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground capitalize">
+            <Typography.H1 className="text-2xl sm:text-3xl font-extrabold capitalize">
               {isCategoryMode
                 ? categoryTitle || fixedCategorySlug || 'Products'
                 : params.keyword
                 ? `Results for "${params.keyword}"`
                 : 'All Products'}
-            </h1>
+            </Typography.H1>
 
             {categoryDescription && (
-              <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl">
+              <Typography.Muted className="text-xs sm:text-sm mt-1 max-w-2xl block">
                 {categoryDescription}
-              </p>
+              </Typography.Muted>
             )}
           </div>
 

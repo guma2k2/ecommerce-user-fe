@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Package, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button, buttonVariants } from '@/components/ui';
+import { Button, buttonVariants, Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { cn } from '@/lib/utils';
 import { useOrders } from '../hooks';
@@ -42,10 +42,10 @@ export function OrderListContainer() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">Order History</h1>
-        <p className="text-xs text-muted-foreground mt-1">
+        <Typography.H1 className="text-2xl font-bold">Order History</Typography.H1>
+        <Typography.Muted className="text-xs mt-1">
           Track, manage, and review all your purchases and delivery statuses.
-        </p>
+        </Typography.Muted>
       </div>
 
       {/* Filter Tabs */}
@@ -86,12 +86,12 @@ export function OrderListContainer() {
             <Package className="size-7" />
           </div>
           <div className="space-y-1">
-            <h3 className="font-semibold text-base text-foreground">No orders found</h3>
-            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+            <Typography.H3 className="font-semibold text-base">No orders found</Typography.H3>
+            <Typography.Muted className="text-xs max-w-sm mx-auto block">
               {activeStatus === 'ALL'
                 ? "You haven't placed any orders yet. Discover our catalog to get started!"
                 : `You don't have any orders with status "${activeStatus}".`}
-            </p>
+            </Typography.Muted>
           </div>
           {activeStatus === 'ALL' ? (
             <Link

@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/constants';
-import { useAuthStore } from '@/shared/stores';
 import { UserNav } from '@/features/auth';
 import { SearchBar } from '@/features/search';
 import { CartPopover } from '@/features/cart';
@@ -13,8 +12,6 @@ interface HeaderProps {
 }
 
 export function Header({ className = '' }: HeaderProps) {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-
   return (
     <header
       className={`sticky top-0 z-50 w-full border-b border-border/70 bg-background/95 backdrop-blur-md transition-all duration-200 ${className}`}
@@ -41,7 +38,7 @@ export function Header({ className = '' }: HeaderProps) {
         {/* Navigation & User Actions */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* Cart Icon Popover - Shopee style dropdown */}
-          {isAuthenticated && <CartPopover />}
+          <CartPopover />
 
           {/* User Nav: Sign In/Register when logged out, Profile Dropdown when logged in */}
           <UserNav />

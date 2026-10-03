@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
-import { Button, buttonVariants } from '@/components/ui';
-import { cn } from 'cn';
+import { Button, buttonVariants, Typography } from '@/components/ui';
+import { cn } from '@/lib/utils';
 import { ROUTES } from '@/shared/constants';
 import { useCart } from '../hooks';
 import { CartSkeleton } from './CartSkeleton';
@@ -40,10 +40,10 @@ export function CartPageContent() {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-center">
         <div className="max-w-md mx-auto space-y-4">
-          <h2 className="text-xl font-bold text-foreground">Failed to load shopping cart</h2>
-          <p className="text-sm text-muted-foreground">
+          <Typography.H2 className="text-xl font-bold">Failed to load shopping cart</Typography.H2>
+          <Typography.Muted className="text-sm">
             An unexpected error occurred while fetching your cart details.
-          </p>
+          </Typography.Muted>
           <Button onClick={() => refetch()} variant="outline" className="rounded-xl">
             Try Again
           </Button>
@@ -85,9 +85,9 @@ export function CartPageContent() {
         </Link>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mb-8">
+      <Typography.H1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-8">
         Shopping Cart
-      </h1>
+      </Typography.H1>
 
       {/* Main 2-column grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

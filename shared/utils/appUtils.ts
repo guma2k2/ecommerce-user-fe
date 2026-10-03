@@ -50,14 +50,28 @@ export function keysToCamelCase<T>(obj: unknown): T {
 }
 
 /**
- * Format currency in VND / USD format
+ * Format currency in USD (default) / international formats without trailing .00 for whole amounts
  */
-export function formatCurrency(amount: number, currency = 'VND', locale = 'vi-VN'): string {
+export function formatCurrency(
+  amount: number,
+  currency = 'USD',
+  locale = 'en-US',
+  options?: Intl.NumberFormatOptions
+): string {
+  const isWholeNumber = amount % 1 === 0;
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
+    minimumFractionDigits: isWholeNumber ? 0 : 2,
+    maximumFractionDigits: 2,
+    ...options,
   }).format(amount);
 }
+
+/**
+ * Alias for formatCurrency
+ */
+export const formatPrice = formatCurrency;
 
 /**
  * Safely extracts user-friendly error message from API or Axios errors

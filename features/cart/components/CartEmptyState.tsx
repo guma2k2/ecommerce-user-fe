@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShoppingBag, ArrowRight } from 'lucide-react';
-import { buttonVariants } from '@/components/ui';
-import { cn } from 'cn';
+import { buttonVariants, Typography } from '@/components/ui';
+import { cn } from '@/lib/utils';
 import { ROUTES } from '@/shared/constants';
 
 interface CartEmptyStateProps {
@@ -16,15 +16,15 @@ export function CartEmptyState({ isGuest = false }: CartEmptyStateProps) {
         <ShoppingBag className="size-10 stroke-[1.5]" />
       </div>
 
-      <h2 className="text-2xl font-bold tracking-tight text-foreground mb-2">
+      <Typography.H2 className="text-2xl font-bold tracking-tight mb-2">
         {isGuest ? 'Sign in to view your cart' : 'Your shopping cart is empty'}
-      </h2>
+      </Typography.H2>
 
-      <p className="text-sm text-muted-foreground mb-8">
+      <Typography.Muted className="text-sm mb-8">
         {isGuest
           ? 'Log in to your account to view saved cart items, synchronize across devices, and checkout smoothly.'
           : "Looks like you haven't added any items to your cart yet. Explore our latest arrivals and top-rated products!"}
-      </p>
+      </Typography.Muted>
 
       {isGuest ? (
         <div className="flex flex-col sm:flex-row gap-3 w-full">
