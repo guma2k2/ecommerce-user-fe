@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, AlertDescription, Button, Input, Label } from '@/components/ui';
+import { Alert, AlertDescription, Button } from '@/components/ui';
+import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useSignIn } from '../hooks/useSignIn';
 import { signInSchema, type SignInFormValues } from '../validator';
@@ -14,11 +15,7 @@ import { SocialLoginButtons } from './SocialLoginButtons';
 export function SignInForm() {
   const { mutate: signIn, isPending, error } = useSignIn();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInFormValues>({
+  const { control, handleSubmit } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
@@ -49,24 +46,19 @@ export function SignInForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="email">Email address</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="customer@example.com"
-            autoComplete="email"
-            disabled={isPending}
-            {...register('email')}
-          />
-          {errors.email && (
-            <p className="text-xs text-destructive">{errors.email.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="email"
+          label="Email address"
+          type="email"
+          placeholder="customer@example.com"
+          autoComplete="email"
+          disabled={isPending}
+        />
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
+            <span className="text-sm font-medium">Password</span>
             <Link
               href={ROUTES.AUTH.FORGOT_PASSWORD}
               className="text-xs text-primary hover:underline"
@@ -74,17 +66,14 @@ export function SignInForm() {
               Forgot password?
             </Link>
           </div>
-          <Input
-            id="password"
+          <FormInput
+            control={control}
+            name="password"
             type="password"
             placeholder="••••••••"
             autoComplete="current-password"
             disabled={isPending}
-            {...register('password')}
           />
-          {errors.password && (
-            <p className="text-xs text-destructive">{errors.password.message}</p>
-          )}
         </div>
 
         <Button type="submit" disabled={isPending} className="w-full">

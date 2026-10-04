@@ -2,8 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronRight, Home, Sparkles } from 'lucide-react';
-import { Typography } from '@/components/ui';
+import { Home, Sparkles } from 'lucide-react';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  Typography,
+} from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { useSearchFilters, useProductSearch } from '../hooks';
 import { SearchBar } from './SearchBar';
@@ -57,35 +65,50 @@ export function SearchContainer({
       {/* 1. Breadcrumbs & Page Header */}
       <div className="space-y-3">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <Link
-            href={ROUTES.HOME}
-            className="flex items-center gap-1 hover:text-foreground transition-colors"
-          >
-            <Home className="size-3.5" />
-            <span>Home</span>
-          </Link>
-          <ChevronRight className="size-3 text-muted-foreground/60" />
-
-          {isCategoryMode ? (
-            <>
-              <Link
-                href={ROUTES.SHOP.CATALOG}
-                className="hover:text-foreground transition-colors"
+        <Breadcrumb>
+          <BreadcrumbList className="text-xs">
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                render={
+                  <Link
+                    href={ROUTES.HOME}
+                    className="flex items-center gap-1"
+                  />
+                }
               >
-                Categories
-              </Link>
-              <ChevronRight className="size-3 text-muted-foreground/60" />
-              <span className="font-semibold text-foreground capitalize">
-                {categoryTitle || fixedCategorySlug || 'Category'}
-              </span>
-            </>
-          ) : (
-            <span className="font-semibold text-foreground">
-              {params.keyword ? 'Search' : 'Catalog'}
-            </span>
-          )}
-        </nav>
+                <Home className="size-3.5" />
+                <span>Home</span>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+
+            {isCategoryMode ? (
+              <>
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    render={
+                      <Link href={ROUTES.SHOP.CATALOG} />
+                    }
+                  >
+                    Categories
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="font-semibold text-foreground capitalize">
+                    {categoryTitle || fixedCategorySlug || 'Category'}
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            ) : (
+              <BreadcrumbItem>
+                <BreadcrumbPage className="font-semibold text-foreground">
+                  {params.keyword ? 'Search' : 'Catalog'}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            )}
+          </BreadcrumbList>
+        </Breadcrumb>
 
         {/* Title & Search bar row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-1">

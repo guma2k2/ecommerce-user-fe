@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, AlertDescription, Button, Input, Label } from '@/components/ui';
+import { Alert, AlertDescription, Button } from '@/components/ui';
+import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useForgotPassword } from '../hooks/useForgotPassword';
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from '../validator';
@@ -13,11 +14,7 @@ export function ForgotPasswordForm() {
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const { mutate: sendResetLink, isPending, error } = useForgotPassword();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordFormValues>({
+  const { control, handleSubmit } = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: '',
@@ -80,19 +77,14 @@ export function ForgotPasswordForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="email">Email address</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="customer@example.com"
-            disabled={isPending}
-            {...register('email')}
-          />
-          {errors.email && (
-            <p className="text-xs text-destructive">{errors.email.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="email"
+          label="Email address"
+          type="email"
+          placeholder="customer@example.com"
+          disabled={isPending}
+        />
 
         <Button type="submit" disabled={isPending} className="w-full">
           {isPending ? 'Sending link...' : 'Send Reset Link'}
