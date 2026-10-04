@@ -3,7 +3,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, AlertDescription, Button, Input, Label } from '@/components/ui';
+import { Alert, AlertDescription, Button, SelectItem } from '@/components/ui';
+import { FormInput, FormSelect } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useSignUp } from '../hooks/useSignUp';
 import { signUpSchema, type SignUpFormValues } from '../validator';
@@ -13,11 +14,7 @@ import { SocialLoginButtons } from './SocialLoginButtons';
 export function SignUpForm() {
   const { mutate: signUp, isPending, error } = useSignUp();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignUpFormValues>({
+  const { control, handleSubmit } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
@@ -56,78 +53,50 @@ export function SignUpForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
-        <div className="space-y-1.5">
-          <Label htmlFor="name">Full Name</Label>
-          <Input
-            id="name"
-            placeholder="Jane Doe"
-            disabled={isPending}
-            {...register('name')}
-          />
-          {errors.name && (
-            <p className="text-xs text-destructive">{errors.name.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="name"
+          label="Full Name"
+          placeholder="Jane Doe"
+          disabled={isPending}
+        />
 
-        <div className="space-y-1.5">
-          <Label htmlFor="email">Email address</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="customer@example.com"
-            disabled={isPending}
-            {...register('email')}
-          />
-          {errors.email && (
-            <p className="text-xs text-destructive">{errors.email.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="email"
+          label="Email address"
+          type="email"
+          placeholder="customer@example.com"
+          disabled={isPending}
+        />
 
-        <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder="Min 8 chars, 1 uppercase, 1 special..."
-            disabled={isPending}
-            {...register('password')}
-          />
-          {errors.password && (
-            <p className="text-xs text-destructive">{errors.password.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="Min 8 chars, 1 uppercase, 1 special..."
+          disabled={isPending}
+        />
 
-        <div className="space-y-1.5">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            id="confirmPassword"
-            type="password"
-            placeholder="Re-enter your password"
-            disabled={isPending}
-            {...register('confirmPassword')}
-          />
-          {errors.confirmPassword && (
-            <p className="text-xs text-destructive">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          placeholder="Re-enter your password"
+          disabled={isPending}
+        />
 
-        <div className="space-y-1.5">
-          <Label htmlFor="language">Preferred Language</Label>
-          <select
-            id="language"
-            disabled={isPending}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            {...register('language')}
-          >
-            <option value="EN">English (EN)</option>
-            <option value="VI">Tiếng Việt (VI)</option>
-          </select>
-          {errors.language && (
-            <p className="text-xs text-destructive">{errors.language.message}</p>
-          )}
-        </div>
+        <FormSelect
+          control={control}
+          name="language"
+          label="Preferred Language"
+          disabled={isPending}
+        >
+          <SelectItem value="EN">English (EN)</SelectItem>
+          <SelectItem value="VI">Tiếng Việt (VI)</SelectItem>
+        </FormSelect>
 
         <Button type="submit" disabled={isPending} className="w-full mt-2">
           {isPending ? 'Creating account...' : 'Create Account'}

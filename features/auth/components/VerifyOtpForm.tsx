@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, AlertDescription, Button, Input, Label } from '@/components/ui';
+import { Alert, AlertDescription, Button } from '@/components/ui';
+import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useVerifyEmail } from '../hooks/useVerifyEmail';
 import { useResendVerification } from '../hooks/useResendVerification';
@@ -20,11 +21,7 @@ export function VerifyOtpForm() {
   const { mutate: verifyEmail, isPending: isVerifying, error: verifyError } = useVerifyEmail();
   const { mutate: resendCode, isPending: isResending } = useResendVerification();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<VerifyOtpFormValues>({
+  const { control, handleSubmit } = useForm<VerifyOtpFormValues>({
     resolver: zodResolver(verifyOtpSchema),
     defaultValues: {
       code: '',
@@ -81,20 +78,15 @@ export function VerifyOtpForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="code">6-Digit Verification Code</Label>
-          <Input
-            id="code"
-            placeholder="123456"
-            maxLength={6}
-            className="text-center text-xl tracking-widest font-mono"
-            disabled={isVerifying}
-            {...register('code')}
-          />
-          {errors.code && (
-            <p className="text-xs text-destructive text-center">{errors.code.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="code"
+          label="6-Digit Verification Code"
+          placeholder="123456"
+          maxLength={6}
+          className="text-center text-xl tracking-widest font-mono"
+          disabled={isVerifying}
+        />
 
         <Button type="submit" disabled={isVerifying} className="w-full">
           {isVerifying ? 'Verifying...' : 'Verify Code'}

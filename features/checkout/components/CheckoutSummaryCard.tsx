@@ -4,7 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { UseFormReturn } from 'react-hook-form';
 import { Loader2, ShoppingBag, ShieldCheck } from 'lucide-react';
-import { Button, Card, CardContent, CardHeader, CardTitle, CardFooter, Label } from '@/components/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui';
+import { FormTextarea } from '@/shared/components';
 import { formatCurrency } from '@/shared/utils/appUtils';
 import type { CheckoutCartItem } from '../types';
 import type { CheckoutFormInput } from '../validator';
@@ -28,7 +29,7 @@ export function CheckoutSummaryCard({
   isSubmitting,
   onSubmit,
 }: CheckoutSummaryCardProps) {
-  const { register } = form;
+  const { control } = form;
   const paymentMethod = form.watch('paymentMethod');
 
   return (
@@ -79,16 +80,14 @@ export function CheckoutSummaryCard({
         </div>
 
         {/* Delivery Note */}
-        <div className="space-y-1.5 pt-2 border-t border-border/60">
-          <Label htmlFor="checkoutNote" className="text-xs">
-            Delivery Note (Optional)
-          </Label>
-          <textarea
-            id="checkoutNote"
+        <div className="pt-2 border-t border-border/60">
+          <FormTextarea
+            control={control}
+            name="note"
+            label="Delivery Note (Optional)"
             rows={2}
             placeholder="e.g. Leave with security guard, call before delivery"
-            className="border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground flex w-full min-w-0 rounded-md border bg-transparent px-3 py-1.5 text-xs shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:opacity-50"
-            {...register('note')}
+            className="text-xs"
           />
         </div>
 

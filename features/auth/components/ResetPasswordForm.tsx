@@ -4,7 +4,8 @@ import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, AlertDescription, Button, Input, Label } from '@/components/ui';
+import { Alert, AlertDescription, Button } from '@/components/ui';
+import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useResetPassword } from '../hooks/useResetPassword';
 import { resetPasswordSchema, type ResetPasswordFormValues } from '../validator';
@@ -16,11 +17,7 @@ export function ResetPasswordForm() {
 
   const { mutate: resetPassword, isPending, error } = useResetPassword();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ResetPasswordFormValues>({
+  const { control, handleSubmit, register } = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       token,
@@ -73,37 +70,26 @@ export function ResetPasswordForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Hidden token field - not rendered as a visible form control */}
         <input type="hidden" {...register('token')} value={token} />
 
-        <div className="space-y-1.5">
-          <Label htmlFor="password">New Password</Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder="Min 8 chars, 1 uppercase, 1 special..."
-            disabled={isPending}
-            {...register('password')}
-          />
-          {errors.password && (
-            <p className="text-xs text-destructive">{errors.password.message}</p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="password"
+          label="New Password"
+          type="password"
+          placeholder="Min 8 chars, 1 uppercase, 1 special..."
+          disabled={isPending}
+        />
 
-        <div className="space-y-1.5">
-          <Label htmlFor="confirmPassword">Confirm New Password</Label>
-          <Input
-            id="confirmPassword"
-            type="password"
-            placeholder="Re-enter your new password"
-            disabled={isPending}
-            {...register('confirmPassword')}
-          />
-          {errors.confirmPassword && (
-            <p className="text-xs text-destructive">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          name="confirmPassword"
+          label="Confirm New Password"
+          type="password"
+          placeholder="Re-enter your new password"
+          disabled={isPending}
+        />
 
         <Button type="submit" disabled={isPending} className="w-full">
           {isPending ? 'Updating password...' : 'Reset Password'}

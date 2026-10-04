@@ -1,9 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { ChevronRight, Home, ArrowLeft } from 'lucide-react';
+import { Home, ArrowLeft } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
-import { Button } from '@/components/ui';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  Button,
+} from '@/components/ui';
 import { useProductDetail, useVariantSelection } from '../hooks';
 import { ProductMediaGallery } from './ProductMediaGallery';
 import { ProductPurchasePanel } from './ProductPurchasePanel';
@@ -50,29 +58,47 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-10 max-w-7xl">
       {/* Breadcrumb Navigation */}
-      <nav className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground overflow-x-auto whitespace-nowrap pb-1">
-        <Link href={ROUTES.HOME} className="flex items-center gap-1 hover:text-foreground transition-colors">
-          <Home className="size-3.5" />
-          <span>Home</span>
-        </Link>
-        <ChevronRight className="size-3.5 text-muted-foreground/60 shrink-0" />
-
-        {product.category?.name && (
-          <>
-            <Link
-              href={`${ROUTES.SHOP.SEARCH}?category_id=${product.category.id}`}
-              className="hover:text-foreground transition-colors"
+      <Breadcrumb className="pb-1">
+        <BreadcrumbList className="flex-nowrap overflow-x-auto whitespace-nowrap text-xs sm:text-sm">
+          <BreadcrumbItem>
+            <BreadcrumbLink
+              render={
+                <Link
+                  href={ROUTES.HOME}
+                  className="flex items-center gap-1.5"
+                />
+              }
             >
-              {product.category.name}
-            </Link>
-            <ChevronRight className="size-3.5 text-muted-foreground/60 shrink-0" />
-          </>
-        )}
+              <Home className="size-3.5" />
+              <span>Home</span>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
 
-        <span className="font-semibold text-foreground truncate max-w-xs sm:max-w-md">
-          {product.name}
-        </span>
-      </nav>
+          {product.category?.name && (
+            <>
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  render={
+                    <Link
+                      href={`${ROUTES.SHOP.SEARCH}?category_id=${product.category.id}`}
+                    />
+                  }
+                >
+                  {product.category.name}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+            </>
+          )}
+
+          <BreadcrumbItem className="min-w-0">
+            <BreadcrumbPage className="font-semibold text-foreground truncate max-w-xs sm:max-w-md block">
+              {product.name}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       {/* Top 2-Column Showcase */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
