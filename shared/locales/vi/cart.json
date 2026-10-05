@@ -1,0 +1,78 @@
+{
+  "title": "Giỏ hàng",
+  "error": {
+    "title": "Không thể tải giỏ hàng",
+    "description": "Đã xảy ra lỗi ngoài ý muốn khi tải chi tiết giỏ hàng của bạn.",
+    "retry": "Thử lại"
+  },
+  "empty": {
+    "title": "Giỏ hàng của bạn đang trống",
+    "description": "Có vẻ như bạn chưa thêm sản phẩm nào vào giỏ hàng. Hãy khám phá các sản phẩm mới và nổi bật nhất!",
+    "action": "Bắt đầu mua sắm",
+    "guestTitle": "Đăng nhập để xem giỏ hàng",
+    "guestDescription": "Đăng nhập vào tài khoản của bạn để xem các sản phẩm đã lưu, đồng bộ hóa giữa các thiết bị và thanh toán dễ dàng.",
+    "signIn": "Đăng nhập",
+    "continueBrowsing": "Tiếp tục xem hàng"
+  },
+  "popover": {
+    "title": "Sản phẩm mới thêm",
+    "viewCart": "Xem giỏ hàng",
+    "itemsCount": "{{count}} sản phẩm",
+    "itemsCount_plural": "{{count}} sản phẩm",
+    "emptySubtext": "Duyệt qua danh mục thịnh hành và khám phá ưu đãi tuyệt vời ngay hôm nay!",
+    "exploreProducts": "Khám phá sản phẩm",
+    "moreProducts": "Còn {{count}} sản phẩm khác trong giỏ",
+    "total": "Tổng tiền:"
+  },
+  "table": {
+    "product": "Sản phẩm",
+    "unitPrice": "Đơn giá",
+    "quantity": "Số lượng",
+    "totalPrice": "Số tiền",
+    "actions": "Thao tác",
+    "itemsCount": "Sản phẩm trong giỏ ({{count}})"
+  },
+  "item": {
+    "noImage": "Không có ảnh",
+    "sku": "Mã SP: {{sku}}",
+    "outOfStock": "Hết hàng",
+    "onlyAvailable": "Chỉ còn {{count}} sản phẩm",
+    "onlyLeft": "Chỉ còn lại {{count}}",
+    "removeAria": "Xóa {{name}} khỏi giỏ hàng"
+  },
+  "stepper": {
+    "decrease": "Giảm số lượng",
+    "increase": "Tăng số lượng"
+  },
+  "summary": {
+    "title": "Tóm tắt đơn hàng",
+    "subtotal": "Tạm tính",
+    "subtotalWithCount": "Tạm tính ({{count}} {{unit}})",
+    "unitItem": "sản phẩm",
+    "unitItems": "sản phẩm",
+    "shipping": "Phí vận chuyển ước tính",
+    "freeShipping": "MIỄN PHÍ",
+    "discount": "Giảm giá",
+    "total": "Tổng thanh toán",
+    "checkout": "Tiến hành thanh toán",
+    "continueShopping": "Tiếp tục mua hàng",
+    "outOfStockWarning": "Vui lòng xóa các sản phẩm đã hết hàng trước khi tiến hành thanh toán.",
+    "exceededWarning": "Một số sản phẩm vượt quá số lượng hiện có. Vui lòng điều chỉnh số lượng.",
+    "guaranteeEncrypted": "Thanh toán an toàn mã hóa 256-bit",
+    "guaranteeFastDelivery": "Giao hàng nhanh toàn quốc",
+    "guaranteeGenuine": "Cam kết 100% hàng chính hãng"
+  },
+  "clear": {
+    "button": "Xóa tất cả",
+    "title": "Xóa giỏ hàng?",
+    "description": "Thao tác này không thể hoàn tác. Toàn bộ sản phẩm sẽ bị xóa.",
+    "cancel": "Hủy",
+    "confirm": "Xóa giỏ hàng",
+    "clearing": "Đang xóa..."
+  },
+  "messages": {
+    "added": "Đã thêm vào giỏ hàng thành công",
+    "removed": "Đã xóa sản phẩm khỏi giỏ hàng",
+    "updated": "Đã cập nhật số lượng"
+  }
+}

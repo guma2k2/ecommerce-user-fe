@@ -2,8 +2,10 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { Search, X, Loader2 } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
+import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { useProductSuggestions } from '../hooks';
 import { SearchSuggestionDropdown } from './SearchSuggestionDropdown';
@@ -20,12 +22,13 @@ interface SearchBarProps {
 
 export function SearchBar({
   className,
-  placeholder = 'Search products, brands, categories...',
+  placeholder,
   initialValue = '',
   size = 'default',
   autoFocus = false,
   onSearch,
 }: SearchBarProps) {
+  const { t } = useTranslation('products');
   const router = useRouter();
   const [keyword, setKeyword] = useState(initialValue);
   const [isOpen, setIsOpen] = useState(false);
@@ -118,6 +121,8 @@ export function SearchBar({
     }
   };
 
+  const resolvedPlaceholder = placeholder || t('search.inputPlaceholder');
+
   return (
     <div
       ref={containerRef}
@@ -156,7 +161,7 @@ export function SearchBar({
             }
           }}
           onKeyDown={handleKeyDown}
-          placeholder={placeholder}
+          placeholder={resolvedPlaceholder}
           className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none"
         />
 
@@ -167,14 +172,16 @@ export function SearchBar({
           )}
 
           {keyword && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-2xs"
               onClick={handleClear}
-              className="rounded-full p-1 text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
-              title="Clear search"
+              className="text-muted-foreground hover:text-foreground hover:bg-muted/80"
+              title={t('search.filters.clearAll')}
             >
               <X className="size-3.5" />
-            </button>
+            </Button>
           )}
         </div>
       </div>

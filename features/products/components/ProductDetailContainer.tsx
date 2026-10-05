@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Home, ArrowLeft } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
 import {
@@ -23,6 +24,8 @@ interface ProductDetailContainerProps {
 }
 
 export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
+  const { t } = useTranslation('products');
+  const { t: tCommon } = useTranslation('common');
   const { data: product, isLoading, isError } = useProductDetail(slug);
 
   const {
@@ -33,7 +36,6 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
     isOptionValueAvailable,
   } = useVariantSelection(product);
 
-
   if (isLoading) {
     return <ProductDetailSkeleton />;
   }
@@ -41,14 +43,14 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
   if (isError || !product) {
     return (
       <div className="container mx-auto px-4 py-20 text-center max-w-xl space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Product Not Found</h2>
+        <h2 className="text-2xl font-bold text-foreground">{t('notFound.title')}</h2>
         <p className="text-sm text-muted-foreground">
-          The product you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+          {t('notFound.description')}
         </p>
         <Link href={ROUTES.SHOP.SEARCH}>
           <Button className="rounded-xl mt-2 gap-2">
             <ArrowLeft className="size-4" />
-            Back to Catalog
+            {t('notFound.backToCatalog')}
           </Button>
         </Link>
       </div>
@@ -70,7 +72,7 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
               }
             >
               <Home className="size-3.5" />
-              <span>Home</span>
+              <span>{tCommon('nav.home')}</span>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -118,7 +120,6 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
           getOptionStatus={getOptionStatus}
           isAvailable={isOptionValueAvailable}
         />
-
       </div>
 
       {/* Bottom Tabs: Description, Technical Specifications, Policy */}

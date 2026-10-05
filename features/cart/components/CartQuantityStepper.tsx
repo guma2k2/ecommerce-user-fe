@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui';
 
@@ -17,6 +18,7 @@ export function CartQuantityStepper({
   disabled = false,
   onQuantityChange,
 }: CartQuantityStepperProps) {
+  const { t } = useTranslation('cart');
   const isMin = quantity <= 1;
   const isMax = quantity >= maxStock;
 
@@ -42,7 +44,7 @@ export function CartQuantityStepper({
         size="icon"
         disabled={isMin || disabled}
         onClick={handleDecrease}
-        aria-label="Decrease quantity"
+        aria-label={t('stepper.decrease')}
         className="size-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/80 disabled:opacity-40"
       >
         <Minus className="size-3.5" />
@@ -61,7 +63,7 @@ export function CartQuantityStepper({
         size="icon"
         disabled={isMax || disabled}
         onClick={handleIncrease}
-        aria-label="Increase quantity"
+        aria-label={t('stepper.increase')}
         className="size-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/80 disabled:opacity-40"
       >
         <Plus className="size-3.5" />

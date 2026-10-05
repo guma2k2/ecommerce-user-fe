@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { PackageSearch, RotateCcw } from 'lucide-react';
 import { Button, Typography } from '@/components/ui';
 
@@ -15,6 +16,8 @@ export function SearchEmptyState({
   hasActiveFilters,
   onResetFilters,
 }: SearchEmptyStateProps) {
+  const { t } = useTranslation('products');
+
   return (
     <div
       data-slot="search-empty-state"
@@ -25,18 +28,21 @@ export function SearchEmptyState({
       </div>
 
       <Typography.H3 className="text-xl font-bold tracking-tight">
-        No products found
+        {t('search.empty.title')}
       </Typography.H3>
 
       <Typography.Muted className="mt-2 max-w-md text-sm block">
         {keyword ? (
-          <>
-            We couldn&apos;t find any items matching &ldquo;
-            <span className="font-semibold text-foreground">{keyword}</span>
-            &rdquo;. Check your spelling or try broader search terms.
-          </>
+          <Trans
+            ns="products"
+            i18nKey="search.empty.withKeyword"
+            values={{ keyword }}
+            components={{
+              span: <span className="font-semibold text-foreground" />,
+            }}
+          />
         ) : (
-          'There are no products matching your selected filter criteria. Try clearing some filters to explore more products.'
+          t('search.empty.noKeyword')
         )}
       </Typography.Muted>
 
@@ -49,7 +55,7 @@ export function SearchEmptyState({
             className="gap-2 rounded-xl font-semibold shadow-xs"
           >
             <RotateCcw className="size-4" />
-            Reset all filters
+            {t('search.empty.resetAll')}
           </Button>
         </div>
       )}

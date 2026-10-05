@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { Package, ArrowUpRight } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
 import { Badge } from '@/components/ui';
@@ -14,6 +15,7 @@ interface SearchProductCardProps {
 }
 
 export function SearchProductCard({ product }: SearchProductCardProps) {
+  const { t } = useTranslation('products');
   const basePath = ROUTES.SHOP.PRODUCT_DETAIL(product.slug || String(product.id));
   const detailUrl = product.defaultVariantId ? `${basePath}?variant=${product.defaultVariantId}` : basePath;
 
@@ -71,7 +73,7 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
       {/* Footer Price & Action */}
       <div className="p-4 pt-0 flex items-center justify-between border-t border-border/40 mt-3 pt-3">
         <div>
-          <span className="text-[11px] text-muted-foreground block font-medium">Price</span>
+          <span className="text-[11px] text-muted-foreground block font-medium">{t('search.card.price')}</span>
           <p className="font-bold text-sm sm:text-base text-primary">
             {formatPriceRange(product.minPrice, product.maxPrice)}
           </p>
@@ -80,7 +82,7 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
         <Link
           href={detailUrl}
           className="flex size-8.5 items-center justify-center rounded-xl bg-muted/80 text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-200"
-          aria-label={`View details for ${product.name}`}
+          aria-label={t('search.card.viewDetails', { name: product.name })}
         >
           <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>

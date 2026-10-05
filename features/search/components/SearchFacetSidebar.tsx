@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronDown, SlidersHorizontal, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { FacetBrandGroup } from './FacetBrandGroup';
@@ -36,6 +37,7 @@ export function SearchFacetSidebar({
   onClearAll,
   className,
 }: SearchFacetSidebarProps) {
+  const { t } = useTranslation('products');
   // Collapsible accordion state: default all open
   const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
 
@@ -70,7 +72,7 @@ export function SearchFacetSidebar({
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="size-4 text-primary" />
           <h2 className="font-bold text-base tracking-tight text-foreground">
-            Filters
+            {t('search.filters.title')}
           </h2>
         </div>
 
@@ -83,7 +85,7 @@ export function SearchFacetSidebar({
             className="h-7 text-xs text-muted-foreground hover:text-destructive gap-1 px-2"
           >
             <RotateCcw className="size-3" />
-            Reset all
+            {t('search.filters.resetAll')}
           </Button>
         )}
       </div>
@@ -91,18 +93,20 @@ export function SearchFacetSidebar({
       <div className="space-y-6 divide-y divide-border/40">
         {/* 1. Price Range Section */}
         <div className="pt-2 first:pt-0">
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="unstyled"
             onClick={() => toggleSection('price')}
             className="flex w-full items-center justify-between py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
           >
-            <span>Price Range</span>
+            <span>{t('search.filters.priceRange')}</span>
             <ChevronDown
               className={`size-4 text-muted-foreground transition-transform duration-200 ${
                 collapsedSections['price'] ? '-rotate-90' : ''
               }`}
             />
-          </button>
+          </Button>
 
           {!collapsedSections['price'] && (
             <div className="pt-2">
@@ -119,13 +123,15 @@ export function SearchFacetSidebar({
         {/* 2. Brands Section */}
         {facets.brands && facets.brands.length > 0 && (
           <div className="pt-5">
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="unstyled"
               onClick={() => toggleSection('brands')}
               className="flex w-full items-center justify-between py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
             >
               <div className="flex items-center gap-1.5">
-                <span>Brands</span>
+                <span>{t('search.filters.brands')}</span>
                 {selectedBrandIds.length > 0 && (
                   <span className="flex size-4.5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                     {selectedBrandIds.length}
@@ -137,7 +143,7 @@ export function SearchFacetSidebar({
                   collapsedSections['brands'] ? '-rotate-90' : ''
                 }`}
               />
-            </button>
+            </Button>
 
             {!collapsedSections['brands'] && (
               <div className="pt-2">
@@ -160,8 +166,10 @@ export function SearchFacetSidebar({
 
             return (
               <div key={attr.id} className="pt-5">
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="unstyled"
                   onClick={() => toggleSection(sectionKey)}
                   className="flex w-full items-center justify-between py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
@@ -178,7 +186,7 @@ export function SearchFacetSidebar({
                       isCollapsed ? '-rotate-90' : ''
                     }`}
                   />
-                </button>
+                </Button>
 
                 {!isCollapsed && (
                   <div className="pt-2">

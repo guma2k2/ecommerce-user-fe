@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Check } from 'lucide-react';
-import { Checkbox } from '@/components/ui';
+import { Button, Checkbox } from '@/components/ui';
 import { getSwatchColor } from '../utils';
 import type { FacetAttribute } from '../types';
 
@@ -33,14 +33,16 @@ export function FacetAttributeGroup({
             const hexColor = getSwatchColor(item.value);
 
             return (
-              <button
+              <Button
                 key={item.value}
                 type="button"
+                variant={isSelected ? 'default' : 'pill'}
+                size="unstyled"
                 onClick={() => onToggleValue(attribute.id, item.value)}
                 title={`${item.value} (${item.count})`}
-                className={`group relative flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs transition-all border ${
+                className={`group relative flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs transition-all h-auto font-normal ${
                   isSelected
-                    ? 'border-primary bg-primary/10 text-primary font-semibold shadow-xs ring-2 ring-primary/20'
+                    ? 'border-primary bg-primary/10 text-primary font-semibold shadow-xs ring-2 ring-primary/20 hover:bg-primary/20 hover:text-primary'
                     : 'border-border/80 bg-background text-foreground hover:border-foreground/40 hover:bg-muted/40'
                 }`}
               >
@@ -64,7 +66,7 @@ export function FacetAttributeGroup({
                 <span className="text-[10px] text-muted-foreground/80 font-mono">
                   ({item.count})
                 </span>
-              </button>
+              </Button>
             );
           })}
         </div>

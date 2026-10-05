@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, AlertDescription, Button } from '@/components/ui';
@@ -11,6 +12,7 @@ import { forgotPasswordSchema, type ForgotPasswordFormValues } from '../validato
 import { AuthCardWrapper } from './AuthCardWrapper';
 
 export function ForgotPasswordForm() {
+  const { t } = useTranslation('auth');
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const { mutate: sendResetLink, isPending, error } = useForgotPassword();
 
@@ -34,21 +36,19 @@ export function ForgotPasswordForm() {
 
   const errorMessage =
     (error as { response?: { data?: { message?: string } } })?.response?.data
-      ?.message || (error ? 'Failed to send reset link. User may not exist.' : null);
+      ?.message || (error ? t('forgotPassword.errorFallback') : null);
 
   if (submittedEmail) {
     return (
       <AuthCardWrapper
-        title="Check Your Inbox"
-        description={`We've dispatched a password reset link to ${submittedEmail}`}
-        footerText="Remembered your password?"
-        footerLinkText="Sign in"
+        title={t('forgotPassword.inboxTitle')}
+        description={t('forgotPassword.inboxSubtitle', { email: submittedEmail })}
+        footerText={t('forgotPassword.backTo')}
+        footerLinkText={t('forgotPassword.backLink')}
         footerLinkHref={ROUTES.AUTH.LOGIN}
       >
         <Alert variant="success">
-          <AlertDescription>
-            Please check your email and click the link to reset your password. The link is valid for 5 minutes.
-          </AlertDescription>
+          <AlertDescription>{t('forgotPassword.inboxMessage')}</AlertDescription>
         </Alert>
 
         <Button
@@ -56,7 +56,7 @@ export function ForgotPasswordForm() {
           className="w-full mt-4"
           onClick={() => setSubmittedEmail(null)}
         >
-          Try another email
+          {t('forgotPassword.tryAnother')}
         </Button>
       </AuthCardWrapper>
     );
@@ -64,10 +64,10 @@ export function ForgotPasswordForm() {
 
   return (
     <AuthCardWrapper
-      title="Forgot Password?"
-      description="Enter your registered email address and we'll send you a password reset link"
-      footerText="Remembered your password?"
-      footerLinkText="Sign in"
+      title={t('forgotPassword.title')}
+      description={t('forgotPassword.subtitle')}
+      footerText={t('forgotPassword.backTo')}
+      footerLinkText={t('forgotPassword.backLink')}
       footerLinkHref={ROUTES.AUTH.LOGIN}
     >
       {errorMessage && (
@@ -80,14 +80,14 @@ export function ForgotPasswordForm() {
         <FormInput
           control={control}
           name="email"
-          label="Email address"
+          label={t('fields.email')}
           type="email"
-          placeholder="customer@example.com"
+          placeholder={t('fields.emailPlaceholder')}
           disabled={isPending}
         />
 
         <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? 'Sending link...' : 'Send Reset Link'}
+          {isPending ? t('forgotPassword.submitting') : t('forgotPassword.submit')}
         </Button>
       </form>
     </AuthCardWrapper>

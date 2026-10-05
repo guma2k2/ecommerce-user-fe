@@ -1,0 +1,36 @@
+{
+  "checkout": {
+    "title": "Thanh toán",
+    "shippingAddress": "Địa chỉ giao hàng",
+    "deliveryMethod": "Phương thức vận chuyển",
+    "paymentMethod": "Phương thức thanh toán",
+    "placeOrder": "Đặt hàng",
+    "processing": "Đang xử lý đơn hàng của bạn..."
+  },
+  "success": {
+    "title": "Cảm ơn bạn đã đặt hàng!",
+    "subtitle": "Đơn hàng của bạn đã được tiếp nhận và đang được đội ngũ chuẩn bị xử lý.",
+    "orderReference": "Mã tham chiếu đơn hàng:",
+    "sessionId": "Mã phiên:",
+    "nextSteps": "Các bước tiếp theo",
+    "step1": "Bạn sẽ nhận được email xác nhận kèm thông tin chi tiết đơn hàng.",
+    "step2": "Kho sẽ kiểm tra và đóng gói kiện hàng của bạn.",
+    "step3": "Bạn có thể theo dõi tiến độ giao hàng bất cứ lúc nào trong tài khoản.",
+    "viewOrder": "Xem lịch sử đơn hàng",
+    "continueShopping": "Tiếp tục mua sắm"
+  },
+  "history": {
+    "title": "Lịch sử đơn hàng",
+    "empty": "Chưa có đơn hàng nào",
+    "orderCode": "Đơn hàng #{{code}}",
+    "date": "Đặt ngày {{date}}",
+    "status": {
+      "pending": "Chờ xử lý",
+      "processing": "Đang xử lý",
+      "shipped": "Đang giao",
+      "delivered": "Đã giao",
+      "cancelled": "Đã hủy"
+    },
+    "viewDetails": "Xem chi tiết"
+  }
+}

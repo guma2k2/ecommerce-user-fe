@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import {
   ShoppingCart,
   Zap,
@@ -39,6 +40,7 @@ export function ProductPurchasePanel({
   isAvailable,
   onAddToCart,
 }: ProductPurchasePanelProps) {
+  const { t } = useTranslation('products');
   const router = useRouter();
   const pathname = usePathname();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -103,14 +105,19 @@ export function ProductPurchasePanel({
       {
         onSuccess: () => {
           setActionType(null);
-          setSuccessMessage(`Added ${quantity} ${quantity > 1 ? 'items' : 'item'} to cart!`);
+          setSuccessMessage(
+            t('detail.addedSuccess', {
+              count: quantity,
+              item: quantity > 1 ? t('detail.unitItems') : t('detail.unitItem'),
+            })
+          );
           setTimeout(() => {
             setSuccessMessage(null);
           }, 3500);
         },
         onError: (err) => {
           setActionType(null);
-          setErrorMessage(getApiErrorMessage(err, 'Failed to add item to cart. Please try again.'));
+          setErrorMessage(getApiErrorMessage(err, t('detail.errorAdd')));
         },
       }
     );
@@ -139,7 +146,7 @@ export function ProductPurchasePanel({
         },
         onError: (err) => {
           setActionType(null);
-          setErrorMessage(getApiErrorMessage(err, 'Failed to process request. Please try again.'));
+          setErrorMessage(getApiErrorMessage(err, t('detail.errorProcess')));
         },
       }
     );
@@ -168,11 +175,11 @@ export function ProductPurchasePanel({
         </Typography.H1>
         {activeVariant?.sku ? (
           <Typography.Muted className="text-xs font-mono">
-            SKU: {activeVariant.sku}
+            {t('detail.sku', { sku: activeVariant.sku })}
           </Typography.Muted>
         ) : (
           <Typography.Muted className="text-xs text-amber-500 font-medium">
-            Please choose an available configuration
+            {t('detail.chooseConfiguration')}
           </Typography.Muted>
         )}
       </div>
@@ -183,7 +190,7 @@ export function ProductPurchasePanel({
           <div className="flex items-baseline gap-2">
             {isUnavailable ? (
               <Typography.Large className="text-2xl font-bold text-muted-foreground">
-                Unavailable
+                {t('detail.unavailable')}
               </Typography.Large>
             ) : (
               <Typography.Tabular className="text-3xl font-black text-primary tracking-tight">
@@ -193,8 +200,8 @@ export function ProductPurchasePanel({
           </div>
           <Typography.Muted className="text-[11px] block">
             {isUnavailable
-              ? 'Combination does not exist'
-              : 'Tax included. Free shipping on eligible orders.'}
+              ? t('detail.combinationNotExists')
+              : t('detail.taxAndShipping')}
           </Typography.Muted>
         </div>
 
@@ -202,17 +209,17 @@ export function ProductPurchasePanel({
           {isUnavailable ? (
             <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full">
               <AlertCircle className="size-4" />
-              <span>Unavailable</span>
+              <span>{t('detail.unavailable')}</span>
             </div>
           ) : isOutOfStock ? (
             <div className="flex items-center gap-1.5 text-xs font-semibold text-destructive bg-destructive/10 px-3 py-1.5 rounded-full">
               <AlertCircle className="size-4" />
-              <span>Out of Stock</span>
+              <span>{t('detail.outOfStock')}</span>
             </div>
           ) : (
             <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full">
               <CheckCircle2 className="size-4" />
-              <span>In Stock ({stockCount})</span>
+              <span>{t('detail.inStock', { count: stockCount })}</span>
             </div>
           )}
         </div>
@@ -231,32 +238,36 @@ export function ProductPurchasePanel({
       {isUnavailable && (
         <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-2">
           <AlertCircle className="size-4 shrink-0" />
-          <span>This combination of options does not exist. Please select another variant.</span>
+          <span>{t('detail.combinationNotExistsWarning')}</span>
         </div>
       )}
 
       {/* Quantity & CTA Action Buttons */}
       <div className="space-y-4 pt-2">
         <div className="flex items-center gap-4">
-          <span className="text-sm font-semibold text-foreground">Quantity:</span>
+          <span className="text-sm font-semibold text-foreground">{t('detail.quantity')}</span>
           <div className="flex items-center rounded-xl border border-border/80 bg-card p-1 shadow-2xs">
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               disabled={quantity <= 1 || isActionDisabled || isPending}
               onClick={handleDecrease}
-              className="flex size-8 items-center justify-center rounded-lg text-sm font-bold hover:bg-muted text-muted-foreground transition-colors disabled:opacity-40"
+              className="size-8 rounded-lg text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted"
             >
               -
-            </button>
+            </Button>
             <span className="w-10 text-center text-sm font-semibold">{quantity}</span>
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               disabled={quantity >= stockCount || isActionDisabled || isPending}
               onClick={handleIncrease}
-              className="flex size-8 items-center justify-center rounded-lg text-sm font-bold hover:bg-muted text-muted-foreground transition-colors disabled:opacity-40"
+              className="size-8 rounded-lg text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted"
             >
               +
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -271,12 +282,12 @@ export function ProductPurchasePanel({
             {isPending && actionType === 'cart' ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                <span>Adding...</span>
+                <span>{t('detail.adding')}</span>
               </>
             ) : (
               <>
                 <ShoppingCart className="size-4" />
-                <span>Add to Cart</span>
+                <span>{t('detail.addToCart')}</span>
               </>
             )}
           </Button>
@@ -289,12 +300,12 @@ export function ProductPurchasePanel({
             {isPending && actionType === 'buy' ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                <span>Processing...</span>
+                <span>{t('detail.processing')}</span>
               </>
             ) : (
               <>
                 <Zap className="size-4" />
-                <span>Buy Now</span>
+                <span>{t('detail.buyNow')}</span>
               </>
             )}
           </Button>
@@ -321,18 +332,17 @@ export function ProductPurchasePanel({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-border/60 text-xs text-muted-foreground">
         <div className="flex items-center gap-2">
           <ShieldCheck className="size-4 text-primary shrink-0" />
-          <span>100% Genuine Guarantee</span>
+          <span>{t('detail.guaranteeGenuine')}</span>
         </div>
         <div className="flex items-center gap-2">
           <Truck className="size-4 text-primary shrink-0" />
-          <span>Fast & Free Delivery</span>
+          <span>{t('detail.guaranteeFastShipping')}</span>
         </div>
         <div className="flex items-center gap-2">
           <RotateCcw className="size-4 text-primary shrink-0" />
-          <span>30-Day Hassle-Free Return</span>
+          <span>{t('detail.guaranteeReturn')}</span>
         </div>
       </div>
     </div>
   );
 }
-

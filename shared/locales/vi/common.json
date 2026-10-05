@@ -1,0 +1,56 @@
+{
+  "app": {
+    "name": "Storefront",
+    "tagline": "Điểm đến hàng đầu cho các sản phẩm chất lượng"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "products": "Sản phẩm",
+    "categories": "Danh mục",
+    "cart": "Giỏ hàng",
+    "account": "Tài khoản",
+    "orders": "Đơn hàng",
+    "search": "Tìm kiếm"
+  },
+  "search": {
+    "placeholder": "Tìm kiếm sản phẩm chính hãng, thương hiệu, danh mục...",
+    "mobilePlaceholder": "Tìm kiếm sản phẩm...",
+    "noResults": "Không tìm thấy sản phẩm",
+    "resultsFor": "Kết quả tìm kiếm cho \"{{query}}\""
+  },
+  "actions": {
+    "continue": "Tiếp tục",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "save": "Lưu",
+    "back": "Quay lại",
+    "viewAll": "Xem tất cả",
+    "filter": "Bộ lọc",
+    "clearAll": "Xóa tất cả",
+    "apply": "Áp dụng",
+    "close": "Đóng",
+    "loading": "Đang tải..."
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt"
+  },
+  "status": {
+    "success": "Thành công",
+    "error": "Lỗi",
+    "warning": "Cảnh báo",
+    "info": "Thông tin"
+  },
+  "currency": {
+    "symbol": "$",
+    "code": "USD"
+  },
+  "footer": {
+    "copyright": "© {{year}} Storefront eCommerce. Bảo lưu mọi quyền.",
+    "authentic": "Sản phẩm chính hãng",
+    "fastShipping": "Giao hàng nhanh",
+    "support247": "Hỗ trợ 24/7"
+  }
+}

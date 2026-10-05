@@ -3,9 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation, Trans } from 'react-i18next';
 import { ArrowRight, Package, Search } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
-import { Badge, Skeleton } from '@/components/ui';
+import { Badge, Button, Skeleton } from '@/components/ui';
 import { formatPriceValue } from '../utils';
 import type { ProductSuggestionItem } from '../types';
 
@@ -26,6 +27,8 @@ export function SearchSuggestionDropdown({
   onSelectSuggestion,
   onSubmitSearch,
 }: SearchSuggestionDropdownProps) {
+  const { t } = useTranslation('products');
+
   if (!keyword.trim()) return null;
 
   return (
@@ -36,9 +39,17 @@ export function SearchSuggestionDropdown({
       {/* Header bar */}
       <div className="flex items-center justify-between border-b border-border/50 px-4 py-2.5 text-xs text-muted-foreground bg-muted/30">
         <span className="font-medium tracking-wide uppercase">
-          Product Suggestions
+          {t('search.suggestions.title')}
         </span>
-        <span>Press <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] text-foreground">↵</kbd> to search</span>
+        <span>
+          <Trans
+            ns="products"
+            i18nKey="search.suggestions.pressEnter"
+            components={{
+              kbd: <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] text-foreground" />,
+            }}
+          />
+        </span>
       </div>
 
       {/* Content list */}
@@ -108,24 +119,44 @@ export function SearchSuggestionDropdown({
         ) : (
           <div className="p-6 text-center text-sm text-muted-foreground">
             <Search className="size-8 mx-auto mb-2 opacity-30" />
-            <p>No product suggestions found for &ldquo;<span className="font-semibold text-foreground">{keyword}</span>&rdquo;</p>
-            <p className="text-xs mt-1">Press Enter to view all general search results</p>
+            <p>
+              <Trans
+                ns="products"
+                i18nKey="search.suggestions.noSuggestions"
+                values={{ keyword }}
+                components={{
+                  span: <span className="font-semibold text-foreground" />,
+                }}
+              />
+            </p>
+            <p className="text-xs mt-1">{t('search.suggestions.pressEnterGeneral')}</p>
           </div>
         )}
       </div>
 
       {/* Footer CTA */}
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="unstyled"
         onClick={onSubmitSearch}
-        className="flex w-full items-center justify-between border-t border-border/50 bg-muted/40 px-4 py-3 text-xs font-medium text-foreground hover:bg-muted/80 transition-colors"
+        className="flex w-full items-center justify-between border-t border-border/50 bg-muted/40 px-4 py-3 text-xs font-medium text-foreground hover:bg-muted/80 rounded-none transition-colors cursor-pointer"
       >
         <span className="flex items-center gap-2">
           <Search className="size-3.5 text-primary" />
-          <span>View all search results for &ldquo;<strong className="text-primary">{keyword}</strong>&rdquo;</span>
+          <span>
+            <Trans
+              ns="products"
+              i18nKey="search.suggestions.viewAllResults"
+              values={{ keyword }}
+              components={{
+                strong: <strong className="text-primary" />,
+              }}
+            />
+          </span>
         </span>
         <ArrowRight className="size-4 text-muted-foreground" />
-      </button>
+      </Button>
     </div>
   );
 }

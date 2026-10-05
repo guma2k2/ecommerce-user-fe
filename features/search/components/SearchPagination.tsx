@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui';
 
@@ -15,6 +16,7 @@ export function SearchPagination({
   totalPages,
   onPageChange,
 }: SearchPaginationProps) {
+  const { t } = useTranslation('products');
   if (totalPages <= 1) return null;
 
   // Generate pagination page numbers with smart ellipsis
@@ -62,10 +64,10 @@ export function SearchPagination({
         disabled={currentPage <= 1}
         onClick={() => onPageChange(currentPage - 1)}
         className="h-9 gap-1 rounded-xl px-3 border-border/80"
-        aria-label="Go to previous page"
+        aria-label={t('search.pagination.ariaPrev')}
       >
         <ChevronLeft className="size-4" />
-        <span className="hidden sm:inline text-xs">Previous</span>
+        <span className="hidden sm:inline text-xs">{t('search.pagination.previous')}</span>
       </Button>
 
       {/* Numbered Page Buttons */}
@@ -109,9 +111,9 @@ export function SearchPagination({
         disabled={currentPage >= totalPages}
         onClick={() => onPageChange(currentPage + 1)}
         className="h-9 gap-1 rounded-xl px-3 border-border/80"
-        aria-label="Go to next page"
+        aria-label={t('search.pagination.ariaNext')}
       >
-        <span className="hidden sm:inline text-xs">Next</span>
+        <span className="hidden sm:inline text-xs">{t('search.pagination.next')}</span>
         <ChevronRight className="size-4" />
       </Button>
     </nav>

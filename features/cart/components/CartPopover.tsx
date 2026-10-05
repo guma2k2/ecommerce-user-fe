@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { ShoppingCart, ShoppingBag, ArrowRight } from 'lucide-react';
 import {
   Popover,
@@ -21,6 +22,7 @@ interface CartPopoverProps {
 }
 
 export function CartPopover({ className = '' }: CartPopoverProps) {
+  const { t } = useTranslation('cart');
   const { items, totalQuantity, totalPrice } = useCart();
   const [open, setOpen] = useState(false);
 
@@ -38,7 +40,7 @@ export function CartPopover({ className = '' }: CartPopoverProps) {
         render={
           <Link
             href={ROUTES.SHOP.CART}
-            aria-label="Shopping Cart"
+            aria-label={t('title')}
             className={cn(
               buttonVariants({ variant: 'ghost', size: 'icon' }),
               'relative rounded-full hover:bg-muted text-foreground transition-colors cursor-pointer',
@@ -65,11 +67,11 @@ export function CartPopover({ className = '' }: CartPopoverProps) {
         {/* Shopee-style Header */}
         <div className="bg-muted/30 px-4 py-2.5 border-b border-border/60 flex items-center justify-between">
           <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Recently Added Products
+            {t('popover.title')}
           </span>
           {totalQuantity > 0 && (
             <span className="text-[11px] font-semibold text-muted-foreground">
-              {totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}
+              {t('popover.itemsCount', { count: totalQuantity })}
             </span>
           )}
         </div>
@@ -81,14 +83,14 @@ export function CartPopover({ className = '' }: CartPopoverProps) {
               <ShoppingBag className="size-8 stroke-[1.5]" />
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-semibold text-foreground">Your shopping cart is empty</p>
+              <p className="text-sm font-semibold text-foreground">{t('empty.title')}</p>
               <p className="text-xs text-muted-foreground max-w-[240px]">
-                Browse our trending catalog and discover great deals today!
+                {t('popover.emptySubtext')}
               </p>
             </div>
             <Link href={ROUTES.SHOP.CATALOG} onClick={() => setOpen(false)}>
               <Button size="sm" variant="outline" className="rounded-xl text-xs font-semibold mt-1">
-                Explore Products
+                {t('popover.exploreProducts')}
               </Button>
             </Link>
           </div>
@@ -119,7 +121,7 @@ export function CartPopover({ className = '' }: CartPopoverProps) {
                         />
                       ) : (
                         <div className="size-full flex items-center justify-center text-[10px] text-muted-foreground">
-                          No image
+                          {t('item.noImage')}
                         </div>
                       )}
                     </div>
@@ -135,7 +137,7 @@ export function CartPopover({ className = '' }: CartPopoverProps) {
                         </p>
                       ) : item.variant.sku ? (
                         <p className="text-[10px] text-muted-foreground font-mono truncate">
-                          SKU: {item.variant.sku}
+                          {t('item.sku', { sku: item.variant.sku })}
                         </p>
                       ) : null}
                     </div>
@@ -158,17 +160,17 @@ export function CartPopover({ className = '' }: CartPopoverProps) {
             <div className="p-3 bg-muted/20 border-t border-border/60 flex items-center justify-between gap-3">
               <div className="text-xs text-muted-foreground truncate">
                 {remainingCount > 0 ? (
-                  <span>{remainingCount} more products in cart</span>
+                  <span>{t('popover.moreProducts', { count: remainingCount })}</span>
                 ) : (
                   <span>
-                    Total: <strong className="text-foreground font-bold">{formatCurrency(totalPrice)}</strong>
+                    {t('popover.total')} <strong className="text-foreground font-bold">{formatCurrency(totalPrice)}</strong>
                   </span>
                 )}
               </div>
 
               <Link href={ROUTES.SHOP.CART} onClick={() => setOpen(false)}>
                 <Button size="sm" className="rounded-xl text-xs font-bold px-3.5 gap-1.5 shadow-xs">
-                  <span>View Cart</span>
+                  <span>{t('popover.viewCart')}</span>
                   <ArrowRight className="size-3.5" />
                 </Button>
               </Link>

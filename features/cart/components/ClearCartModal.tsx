@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertTriangle } from 'lucide-react';
 import { Button, Typography } from '@/components/ui';
 
@@ -17,6 +18,8 @@ export function ClearCartModal({
   onConfirm,
   onCancel,
 }: ClearCartModalProps) {
+  const { t } = useTranslation('cart');
+
   if (!isOpen) return null;
 
   return (
@@ -33,10 +36,10 @@ export function ClearCartModal({
           </div>
           <div>
             <Typography.H3 id="clear-cart-title" className="text-base font-bold">
-              Clear Shopping Cart?
+              {t('clear.title')}
             </Typography.H3>
             <Typography.Caption className="text-xs mt-0.5 block">
-              This action cannot be undone. All items will be removed.
+              {t('clear.description')}
             </Typography.Caption>
           </div>
         </div>
@@ -50,7 +53,7 @@ export function ClearCartModal({
             onClick={onCancel}
             className="rounded-xl font-medium"
           >
-            Cancel
+            {t('clear.cancel')}
           </Button>
           <Button
             type="button"
@@ -60,7 +63,7 @@ export function ClearCartModal({
             onClick={onConfirm}
             className="rounded-xl font-semibold shadow-xs"
           >
-            {isLoading ? 'Clearing...' : 'Clear Cart'}
+            {isLoading ? t('clear.clearing') : t('clear.confirm')}
           </Button>
         </div>
       </div>

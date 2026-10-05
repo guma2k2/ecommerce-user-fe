@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Input, Slider } from '@/components/ui';
 import { formatPriceValue } from '../utils';
 import type { PriceRangeFacet } from '../types';
@@ -18,6 +19,7 @@ export function FacetPriceRange({
   currentMaxPrice,
   onApplyPriceRange,
 }: FacetPriceRangeProps) {
+  const { t } = useTranslation('products');
   const globalMin = Math.floor(priceRange?.minPrice ?? 0);
   const globalMax = Math.ceil(priceRange?.maxPrice ?? 5000);
 
@@ -69,10 +71,10 @@ export function FacetPriceRange({
 
   // Preset brackets based on available price range
   const presets = [
-    { label: 'Under $500', min: undefined, max: 500 },
+    { label: t('search.filters.under', { price: '$500' }), min: undefined, max: 500 },
     { label: '$500 - $1,000', min: 500, max: 1000 },
     { label: '$1,000 - $2,000', min: 1000, max: 2000 },
-    { label: 'Over $2,000', min: 2000, max: undefined },
+    { label: t('search.filters.over', { price: '$2,000' }), min: 2000, max: undefined },
   ];
 
   return (
@@ -103,7 +105,7 @@ export function FacetPriceRange({
       <div className="grid grid-cols-2 gap-2 items-center">
         <div>
           <label className="text-[11px] text-muted-foreground font-medium mb-1 block">
-            Min Price
+            {t('search.filters.minPrice')}
           </label>
           <div className="relative">
             <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
@@ -121,7 +123,7 @@ export function FacetPriceRange({
 
         <div>
           <label className="text-[11px] text-muted-foreground font-medium mb-1 block">
-            Max Price
+            {t('search.filters.maxPrice')}
           </label>
           <div className="relative">
             <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
@@ -145,7 +147,7 @@ export function FacetPriceRange({
           onClick={handleApply}
           className="flex-1 h-8 text-xs font-semibold"
         >
-          Apply Price
+          {t('search.filters.applyPrice')}
         </Button>
         {hasFilter && (
           <Button
@@ -155,7 +157,7 @@ export function FacetPriceRange({
             onClick={() => handlePreset(undefined, undefined)}
             className="h-8 text-xs px-2.5"
           >
-            Reset
+            {t('search.filters.reset')}
           </Button>
         )}
       </div>
@@ -163,25 +165,27 @@ export function FacetPriceRange({
       {/* Quick Presets */}
       <div className="space-y-1.5 pt-1 border-t border-border/50">
         <span className="text-[11px] font-medium text-muted-foreground block mb-1">
-          Quick Ranges
+          {t('search.filters.quickRanges')}
         </span>
         <div className="grid grid-cols-2 gap-1.5">
           {presets.map((p) => {
             const isSelected =
               currentMinPrice === p.min && currentMaxPrice === p.max;
             return (
-              <button
+              <Button
                 key={p.label}
                 type="button"
+                variant={isSelected ? 'default' : 'outline'}
+                size="xs"
                 onClick={() => handlePreset(p.min, p.max)}
-                className={`text-left truncate px-2 py-1 rounded-md text-[11px] transition-colors border ${
+                className={`justify-start text-left truncate px-2 rounded-md text-[11px] h-7 font-normal ${
                   isSelected
-                    ? 'border-primary bg-primary/10 text-primary font-medium'
+                    ? 'border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary font-medium shadow-none'
                     : 'border-border/60 hover:bg-muted/60 text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {p.label}
-              </button>
+              </Button>
             );
           })}
         </div>

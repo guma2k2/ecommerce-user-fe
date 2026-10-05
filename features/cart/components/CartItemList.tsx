@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Trash2 } from 'lucide-react';
 import { Button, Typography } from '@/components/ui';
 import { CartItemRow } from './CartItemRow';
@@ -14,6 +15,7 @@ interface CartItemListProps {
 }
 
 export function CartItemList({ items, totalQuantity }: CartItemListProps) {
+  const { t } = useTranslation('cart');
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
   const clearCartMutation = useClearCart();
 
@@ -30,7 +32,7 @@ export function CartItemList({ items, totalQuantity }: CartItemListProps) {
       {/* Header bar */}
       <div className="flex items-center justify-between pb-2 border-b border-border/60">
         <Typography.H2 className="text-base sm:text-lg font-bold">
-          Cart Items ({totalQuantity})
+          {t('table.itemsCount', { count: totalQuantity })}
         </Typography.H2>
         <Button
           type="button"
@@ -40,7 +42,7 @@ export function CartItemList({ items, totalQuantity }: CartItemListProps) {
           className="text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg gap-1.5 h-8 px-2.5"
         >
           <Trash2 className="size-3.5" />
-          Clear Cart
+          {t('clear.button')}
         </Button>
       </div>
 
