@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,6 +13,7 @@ import { resetPasswordSchema, type ResetPasswordFormValues } from '../validator'
 import { AuthCardWrapper } from './AuthCardWrapper';
 
 export function ResetPasswordForm() {
+  const { t } = useTranslation('auth');
   const searchParams = useSearchParams();
   const token = searchParams.get('token') || '';
 
@@ -35,21 +37,19 @@ export function ResetPasswordForm() {
 
   const errorMessage =
     (error as { response?: { data?: { message?: string } } })?.response?.data
-      ?.message || (error ? 'Failed to reset password. The link may have expired.' : null);
+      ?.message || (error ? t('resetPassword.errorFallback') : null);
 
   if (!token) {
     return (
       <AuthCardWrapper
-        title="Invalid Reset Link"
-        description="The password reset link is missing a valid token."
-        footerText="Need a new link?"
-        footerLinkText="Request reset"
+        title={t('resetPassword.invalidTitle')}
+        description={t('resetPassword.invalidSubtitle')}
+        footerText={t('resetPassword.needNewLink')}
+        footerLinkText={t('resetPassword.requestReset')}
         footerLinkHref={ROUTES.AUTH.FORGOT_PASSWORD}
       >
         <Alert variant="destructive">
-          <AlertDescription>
-            No reset token was found in the URL. Please request a new password reset link.
-          </AlertDescription>
+          <AlertDescription>{t('resetPassword.invalidMessage')}</AlertDescription>
         </Alert>
       </AuthCardWrapper>
     );
@@ -57,10 +57,10 @@ export function ResetPasswordForm() {
 
   return (
     <AuthCardWrapper
-      title="Reset Password"
-      description="Create a strong, unique new password for your account"
-      footerText="Back to"
-      footerLinkText="Sign in"
+      title={t('resetPassword.title')}
+      description={t('resetPassword.subtitle')}
+      footerText={t('resetPassword.backTo')}
+      footerLinkText={t('resetPassword.backLink')}
       footerLinkHref={ROUTES.AUTH.LOGIN}
     >
       {errorMessage && (
@@ -76,23 +76,23 @@ export function ResetPasswordForm() {
         <FormInput
           control={control}
           name="password"
-          label="New Password"
+          label={t('fields.newPassword')}
           type="password"
-          placeholder="Min 8 chars, 1 uppercase, 1 special..."
+          placeholder={t('fields.newPasswordPlaceholder')}
           disabled={isPending}
         />
 
         <FormInput
           control={control}
           name="confirmPassword"
-          label="Confirm New Password"
+          label={t('fields.confirmPassword')}
           type="password"
-          placeholder="Re-enter your new password"
+          placeholder={t('fields.confirmNewPasswordPlaceholder')}
           disabled={isPending}
         />
 
         <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? 'Updating password...' : 'Reset Password'}
+          {isPending ? t('resetPassword.submitting') : t('resetPassword.submit')}
         </Button>
       </form>
     </AuthCardWrapper>

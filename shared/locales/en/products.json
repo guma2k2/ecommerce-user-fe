@@ -1,0 +1,110 @@
+{
+  "notFound": {
+    "title": "Product Not Found",
+    "description": "The product you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "backToCatalog": "Back to Catalog"
+  },
+  "detail": {
+    "quantity": "Quantity:",
+    "available": "{{count}} available",
+    "buyNow": "Buy Now",
+    "addToCart": "Add to Cart",
+    "adding": "Adding...",
+    "processing": "Processing...",
+    "description": "Description",
+    "specifications": "Specifications",
+    "warranty": "Warranty & Policy",
+    "noDescription": "No detailed product description available.",
+    "noSpecifications": "No technical specifications available for this product.",
+    "hardwareConfig": "Hardware Configuration",
+    "selectedVariant": "Selected: {{title}}",
+    "generalSpecs": "General Specifications",
+    "brand": "Brand",
+    "category": "Category",
+    "genuineWarrantyTitle": "Genuine Official Warranty",
+    "genuineWarrantyDesc": "This product is guaranteed 100% authentic and comes with a 12-month manufacturer warranty directly handled by authorized service centers.",
+    "returnPolicyTitle": "Return & Replacement Policy",
+    "returnPolicyDesc": "Free 30-day return policy for any manufacturer defects. The item must be returned in its original condition with complete packaging and accessories.",
+    "sku": "SKU: {{sku}}",
+    "chooseConfiguration": "Please choose an available configuration",
+    "unavailable": "Unavailable",
+    "combinationNotExists": "Combination does not exist",
+    "taxAndShipping": "Tax included. Free shipping on eligible orders.",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock ({{count}})",
+    "combinationNotExistsWarning": "This combination of options does not exist. Please select another variant.",
+    "addedSuccess": "Added {{count}} {{item}} to cart!",
+    "unitItem": "item",
+    "unitItems": "items",
+    "errorAdd": "Failed to add item to cart. Please try again.",
+    "errorProcess": "Failed to process request. Please try again.",
+    "guaranteeGenuine": "100% Genuine Guarantee",
+    "guaranteeFastShipping": "Fast & Free Delivery",
+    "guaranteeReturn": "30-Day Hassle-Free Return"
+  },
+  "optionPicker": {
+    "outOfStock": "Out of Stock",
+    "notAvailable": "Combination not available"
+  },
+  "search": {
+    "discoveryEngine": "Discovery Engine",
+    "categoryStore": "Category Store",
+    "allProducts": "All Products",
+    "catalog": "Catalog",
+    "resultsFor": "Results for \"{{keyword}}\"",
+    "refinePlaceholder": "Refine search...",
+    "inputPlaceholder": "Search products, brands, categories...",
+    "loadingProducts": "Loading products...",
+    "showingResults": "Showing <strong class=\"text-foreground\">{{count}}</strong> of <strong class=\"text-foreground\">{{total}}</strong> items",
+    "noMatch": "No products match your criteria",
+    "sortBy": "Sort by:",
+    "filters": {
+      "title": "Filters",
+      "resetAll": "Reset all",
+      "reset": "Reset",
+      "activeFilters": "Active Filters:",
+      "clearAll": "Clear all",
+      "priceRange": "Price Range",
+      "minPrice": "Min Price",
+      "maxPrice": "Max Price",
+      "applyPrice": "Apply Price",
+      "quickRanges": "Quick Ranges",
+      "under": "Under {{price}}",
+      "over": "Over {{price}}",
+      "brands": "Brands",
+      "searchBrands": "Search brands...",
+      "noBrands": "No brands found",
+      "showResults": "Show {{count}} Results",
+      "showResultsGeneric": "Show Results"
+    },
+    "sort": {
+      "relevance": "Most Relevant",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low",
+      "newest": "Newest Arrivals"
+    },
+    "empty": {
+      "title": "No products found",
+      "withKeyword": "We couldn't find any items matching \"<span class=\"font-semibold text-foreground\">{{keyword}}</span>\". Check your spelling or try broader search terms.",
+      "noKeyword": "There are no products matching your selected filter criteria. Try clearing some filters to explore more products.",
+      "resetAll": "Reset all filters"
+    },
+    "card": {
+      "price": "Price",
+      "viewDetails": "View details for {{name}}"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "ariaPrev": "Go to previous page",
+      "ariaNext": "Go to next page"
+    },
+    "suggestions": {
+      "title": "Product Suggestions",
+      "pressEnter": "Press ↵ to search",
+      "noSuggestions": "No product suggestions found for \"{{keyword}}\"",
+      "pressEnterGeneral": "Press Enter to view all general search results",
+      "viewAllResults": "View all search results for \"{{keyword}}\""
+    }
+  }
+}

@@ -17,6 +17,12 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        menuItem:
+          "w-full justify-start text-left font-normal rounded-lg px-2.5 py-2 text-xs hover:bg-muted/80 text-foreground transition-colors",
+        pill:
+          "rounded-full border border-border/80 bg-background text-foreground text-xs hover:border-foreground/40 hover:bg-muted/40",
+        unstyled:
+          "border-0 bg-transparent p-0 shadow-none hover:bg-transparent rounded-none",
       },
       size: {
         default:
@@ -27,9 +33,11 @@ const buttonVariants = cva(
         icon: "size-9",
         "icon-xs":
           "size-6 rounded-[min(var(--radius-md),8px)] in-data-[slot=button-group]:rounded-md [&_svg:not([class*='size-'])]:size-3",
+        "icon-2xs": "size-5 p-0 rounded-full [&_svg]:size-3",
         "icon-sm":
           "size-8 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md",
         "icon-lg": "size-10",
+        unstyled: "h-auto p-0",
       },
     },
     defaultVariants: {

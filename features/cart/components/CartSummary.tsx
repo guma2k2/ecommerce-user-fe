@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, ShieldCheck, Lock, Truck } from 'lucide-react';
 import { Button, buttonVariants, Card, CardContent, CardHeader, CardTitle, Separator } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -20,6 +21,7 @@ export function CartSummary({
   totalQuantity,
   items,
 }: CartSummaryProps) {
+  const { t } = useTranslation('cart');
   const hasOutOfStockItems = items.some((item) => item.variant.stockQuantity <= 0);
   const hasExceededItems = items.some((item) => item.quantity > item.variant.stockQuantity);
   const isCheckoutDisabled = hasOutOfStockItems || hasExceededItems || totalQuantity === 0;
@@ -31,21 +33,26 @@ export function CartSummary({
   return (
     <Card className="rounded-2xl border-border/70 bg-card/80 backdrop-blur-xs shadow-xs sticky top-24">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-bold">Order Summary</CardTitle>
+        <CardTitle className="text-lg font-bold">{t('summary.title')}</CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-5">
         <div className="space-y-3 text-sm">
           <div className="flex items-center justify-between text-muted-foreground">
-            <span>Subtotal ({totalQuantity} {totalQuantity === 1 ? 'item' : 'items'})</span>
+            <span>
+              {t('summary.subtotalWithCount', {
+                count: totalQuantity,
+                unit: totalQuantity === 1 ? t('summary.unitItem') : t('summary.unitItems'),
+              })}
+            </span>
             <span className="font-semibold text-foreground">{formatCurrency(totalPrice)}</span>
           </div>
 
           <div className="flex items-center justify-between text-muted-foreground">
-            <span>Estimated Shipping</span>
+            <span>{t('summary.shipping')}</span>
             <span className="font-semibold text-foreground">
               {shippingFee === 0 ? (
-                <span className="text-emerald-600 font-bold">FREE</span>
+                <span className="text-emerald-600 font-bold">{t('summary.freeShipping')}</span>
               ) : (
                 formatCurrency(shippingFee)
               )}
@@ -55,7 +62,7 @@ export function CartSummary({
           <Separator className="my-2 bg-border/60" />
 
           <div className="flex items-center justify-between text-base font-bold">
-            <span className="text-foreground">Total</span>
+            <span className="text-foreground">{t('summary.total')}</span>
             <span className="text-xl font-extrabold text-primary tracking-tight">
               {formatCurrency(finalTotal)}
             </span>
@@ -65,12 +72,12 @@ export function CartSummary({
         {/* Warning if stock issues exist */}
         {hasOutOfStockItems && (
           <p className="text-xs text-destructive font-medium bg-destructive/10 p-2.5 rounded-lg">
-            Please remove out-of-stock items before proceeding to checkout.
+            {t('summary.outOfStockWarning')}
           </p>
         )}
         {!hasOutOfStockItems && hasExceededItems && (
           <p className="text-xs text-destructive font-medium bg-destructive/10 p-2.5 rounded-lg">
-            Some items exceed current available stock. Please adjust quantities.
+            {t('summary.exceededWarning')}
           </p>
         )}
 
@@ -81,7 +88,7 @@ export function CartSummary({
             size="lg"
             className="w-full rounded-xl font-bold h-12 gap-2 shadow-sm"
           >
-            Proceed to Checkout
+            {t('summary.checkout')}
             <ArrowRight className="size-4" />
           </Button>
         ) : (
@@ -92,7 +99,7 @@ export function CartSummary({
               'w-full rounded-xl font-bold h-12 gap-2 shadow-sm flex items-center justify-center'
             )}
           >
-            Proceed to Checkout
+            {t('summary.checkout')}
             <ArrowRight className="size-4" />
           </Link>
         )}
@@ -101,15 +108,15 @@ export function CartSummary({
         <div className="pt-2 border-t border-border/50 space-y-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <Lock className="size-3.5 text-primary shrink-0" />
-            <span>Bank-grade 256-bit encrypted checkout</span>
+            <span>{t('summary.guaranteeEncrypted')}</span>
           </div>
           <div className="flex items-center gap-2">
             <Truck className="size-3.5 text-primary shrink-0" />
-            <span>Fast nationwide delivery</span>
+            <span>{t('summary.guaranteeFastDelivery')}</span>
           </div>
           <div className="flex items-center gap-2">
             <ShieldCheck className="size-3.5 text-primary shrink-0" />
-            <span>100% Genuine product warranty</span>
+            <span>{t('summary.guaranteeGenuine')}</span>
           </div>
         </div>
       </CardContent>

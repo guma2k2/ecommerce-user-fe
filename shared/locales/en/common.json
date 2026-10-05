@@ -1,0 +1,56 @@
+{
+  "app": {
+    "name": "Storefront",
+    "tagline": "Your premier destination for quality products"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "cart": "Cart",
+    "account": "Account",
+    "orders": "Orders",
+    "search": "Search"
+  },
+  "search": {
+    "placeholder": "Search genuine products, brands, categories...",
+    "mobilePlaceholder": "Search products...",
+    "noResults": "No products found",
+    "resultsFor": "Search results for \"{{query}}\""
+  },
+  "actions": {
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "back": "Back",
+    "viewAll": "View All",
+    "filter": "Filter",
+    "clearAll": "Clear All",
+    "apply": "Apply",
+    "close": "Close",
+    "loading": "Loading..."
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt"
+  },
+  "status": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "currency": {
+    "symbol": "$",
+    "code": "USD"
+  },
+  "footer": {
+    "copyright": "© {{year}} Storefront eCommerce. All rights reserved.",
+    "authentic": "Authentic Products",
+    "fastShipping": "Fast Shipping",
+    "support247": "24/7 Support"
+  }
+}

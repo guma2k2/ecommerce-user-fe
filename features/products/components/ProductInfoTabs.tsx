@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileText, SlidersHorizontal, ShieldCheck } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent, Typography } from '@/components/ui';
 import type { ProductDetail, ProductVariant } from '../types';
@@ -12,6 +13,8 @@ interface ProductInfoTabsProps {
 }
 
 export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps) {
+  const { t } = useTranslation('products');
+
   return (
     <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-xs">
       <Tabs defaultValue="description" className="space-y-6">
@@ -23,7 +26,7 @@ export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-xs transition-all"
             >
               <FileText className="size-4" />
-              <span>Description</span>
+              <span>{t('detail.description')}</span>
             </TabsTrigger>
 
             <TabsTrigger
@@ -31,7 +34,7 @@ export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-xs transition-all"
             >
               <SlidersHorizontal className="size-4" />
-              <span>Specifications</span>
+              <span>{t('detail.specifications')}</span>
             </TabsTrigger>
 
             <TabsTrigger
@@ -39,7 +42,7 @@ export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-xs transition-all"
             >
               <ShieldCheck className="size-4" />
-              <span>Warranty & Policy</span>
+              <span>{t('detail.warranty')}</span>
             </TabsTrigger>
           </TabsList>
         </div>
@@ -53,7 +56,7 @@ export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps
             />
           ) : (
             <Typography.Muted>
-              No detailed product description available.
+              {t('detail.noDescription')}
             </Typography.Muted>
           )}
         </TabsContent>
@@ -69,18 +72,18 @@ export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps
             <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 space-y-2">
               <Typography.H4 className="text-base font-bold text-foreground flex items-center gap-2">
                 <ShieldCheck className="size-4 text-primary" />
-                Genuine Official Warranty
+                {t('detail.genuineWarrantyTitle')}
               </Typography.H4>
               <Typography.P affects="removeMargin">
-                This product is guaranteed 100% authentic and comes with a 12-month manufacturer warranty directly handled by authorized service centers.
+                {t('detail.genuineWarrantyDesc')}
               </Typography.P>
             </div>
             <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 space-y-2">
               <Typography.H4 className="text-base font-bold text-foreground">
-                Return & Replacement Policy
+                {t('detail.returnPolicyTitle')}
               </Typography.H4>
               <Typography.P affects="removeMargin">
-                Free 30-day return policy for any manufacturer defects. The item must be returned in its original condition with complete packaging and accessories.
+                {t('detail.returnPolicyDesc')}
               </Typography.P>
             </div>
           </div>

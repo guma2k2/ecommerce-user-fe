@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { Trash2, AlertCircle } from 'lucide-react';
 import { Button, Badge } from '@/components/ui';
 import { formatCurrency } from '@/shared/utils';
@@ -16,6 +17,7 @@ interface CartItemRowProps {
 }
 
 export function CartItemRow({ item }: CartItemRowProps) {
+  const { t } = useTranslation('cart');
   const { variant, quantity, subtotal, cartId } = item;
   const updateQuantityMutation = useUpdateCartQuantity();
   const deleteItemMutation = useDeleteCartItem();
@@ -60,7 +62,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
             />
           ) : (
             <div className="size-full flex items-center justify-center text-xs text-muted-foreground">
-              No Image
+              {t('item.noImage')}
             </div>
           )}
         </Link>
@@ -89,7 +91,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
           )}
 
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-            {variant.sku && <span>SKU: {variant.sku}</span>}
+            {variant.sku && <span>{t('item.sku', { sku: variant.sku })}</span>}
             <span>•</span>
             <span className="font-medium text-foreground">{formatCurrency(variant.price)}</span>
           </div>
@@ -98,16 +100,16 @@ export function CartItemRow({ item }: CartItemRowProps) {
           <div className="pt-0.5">
             {isOutOfStock ? (
               <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
-                Out of Stock
+                {t('item.outOfStock')}
               </Badge>
             ) : isExceeded ? (
               <Badge variant="destructive" className="text-[10px] px-1.5 py-0 flex items-center gap-1">
                 <AlertCircle className="size-3" />
-                Only {variant.stockQuantity} available
+                {t('item.onlyAvailable', { count: variant.stockQuantity })}
               </Badge>
             ) : isLowStock ? (
               <Badge variant="secondary" className="text-[10px] px-1.5 py-0 text-amber-600 bg-amber-500/10 border-amber-500/20">
-                Only {variant.stockQuantity} left
+                {t('item.onlyLeft', { count: variant.stockQuantity })}
               </Badge>
             ) : null}
           </div>
@@ -137,7 +139,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
           size="icon"
           disabled={isActionDisabled}
           onClick={handleDelete}
-          aria-label={`Remove ${variant.productName} from cart`}
+          aria-label={t('item.removeAria', { name: variant.productName })}
           className="size-8 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
         >
           <Trash2 className="size-4" />

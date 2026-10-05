@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 import { Checkbox } from '@/components/ui';
 import type { FacetBrand } from '../types';
@@ -16,6 +17,7 @@ export function FacetBrandGroup({
   selectedBrandIds = [],
   onToggleBrand,
 }: FacetBrandGroupProps) {
+  const { t } = useTranslation('products');
   const [filterText, setFilterText] = useState('');
 
   const filteredBrands = useMemo(() => {
@@ -36,7 +38,7 @@ export function FacetBrandGroup({
             type="text"
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
-            placeholder="Search brands..."
+            placeholder={t('search.filters.searchBrands')}
             className="w-full h-8 pl-8 pr-3 text-xs rounded-lg border border-border/70 bg-muted/30 placeholder:text-muted-foreground/60 focus:bg-background focus:border-primary focus:outline-none transition-colors"
           />
         </div>
@@ -75,7 +77,7 @@ export function FacetBrandGroup({
           })
         ) : (
           <p className="text-xs text-muted-foreground py-2 text-center">
-            No brands found
+            {t('search.filters.noBrands')}
           </p>
         )}
       </div>

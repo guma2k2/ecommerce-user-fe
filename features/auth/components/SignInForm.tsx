@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, AlertDescription, Button } from '@/components/ui';
@@ -13,6 +14,7 @@ import { AuthCardWrapper } from './AuthCardWrapper';
 import { SocialLoginButtons } from './SocialLoginButtons';
 
 export function SignInForm() {
+  const { t } = useTranslation('auth');
   const { mutate: signIn, isPending, error } = useSignIn();
 
   const { control, handleSubmit } = useForm<SignInFormValues>({
@@ -29,14 +31,14 @@ export function SignInForm() {
 
   const errorMessage =
     (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-    (error ? 'Sign in failed. Please check your credentials.' : null);
+    (error ? t('login.errorFallback') : null);
 
   return (
     <AuthCardWrapper
-      title="Welcome Back"
-      description="Enter your email and password to access your account"
-      footerText="Don't have an account?"
-      footerLinkText="Sign up"
+      title={t('login.title')}
+      description={t('login.subtitle')}
+      footerText={t('login.noAccount')}
+      footerLinkText={t('login.registerLink')}
       footerLinkHref={ROUTES.AUTH.REGISTER}
     >
       {errorMessage && (
@@ -49,35 +51,35 @@ export function SignInForm() {
         <FormInput
           control={control}
           name="email"
-          label="Email address"
+          label={t('fields.email')}
           type="email"
-          placeholder="customer@example.com"
+          placeholder={t('fields.emailPlaceholder')}
           autoComplete="email"
           disabled={isPending}
         />
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Password</span>
+            <span className="text-sm font-medium">{t('fields.password')}</span>
             <Link
               href={ROUTES.AUTH.FORGOT_PASSWORD}
               className="text-xs text-primary hover:underline"
             >
-              Forgot password?
+              {t('login.forgotPassword')}
             </Link>
           </div>
           <FormInput
             control={control}
             name="password"
             type="password"
-            placeholder="••••••••"
+            placeholder={t('fields.passwordPlaceholder')}
             autoComplete="current-password"
             disabled={isPending}
           />
         </div>
 
         <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? 'Signing in...' : 'Sign In'}
+          {isPending ? t('login.submitting') : t('login.submit')}
         </Button>
       </form>
 

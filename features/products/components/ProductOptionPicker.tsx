@@ -1,6 +1,9 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui';
+import { cn } from '@/lib/utils';
 import type { ProductOption, OptionValueStatus } from '../types';
 
 interface ProductOptionPickerProps {
@@ -18,6 +21,8 @@ export function ProductOptionPicker({
   getOptionStatus,
   isAvailable,
 }: ProductOptionPickerProps) {
+  const { t } = useTranslation('products');
+
   if (!options || options.length === 0) return null;
 
   return (
@@ -65,27 +70,32 @@ export function ProductOptionPicker({
                   case 'out_of_stock':
                     styleClasses =
                       'border-amber-500/40 bg-amber-500/5 hover:border-amber-500/70 text-muted-foreground line-through decoration-amber-500/60';
-                    statusTitle = 'Out of Stock';
+                    statusTitle = t('optionPicker.outOfStock');
                     break;
                   case 'disabled':
                   default:
                     styleClasses =
                       'border-border/30 bg-muted/15 text-muted-foreground/30 cursor-not-allowed line-through opacity-40 select-none';
-                    statusTitle = 'Combination not available';
+                    statusTitle = t('optionPicker.notAvailable');
                     break;
                 }
 
                 return (
-                  <button
+                  <Button
                     key={val.id}
                     type="button"
+                    variant={status === 'selected' ? 'default' : 'outline'}
+                    size="sm"
                     disabled={isDisabled}
                     title={statusTitle || undefined}
                     onClick={() => onSelectOption(option.productOptionId, val.id)}
-                    className={`relative rounded-xl border px-3.5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 focus-visible:outline-none ${styleClasses}`}
+                    className={cn(
+                      'relative rounded-xl px-3.5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 h-auto',
+                      styleClasses
+                    )}
                   >
                     {val.value}
-                  </button>
+                  </Button>
                 );
               })}
             </div>

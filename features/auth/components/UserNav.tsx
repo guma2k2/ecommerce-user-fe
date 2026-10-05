@@ -2,12 +2,14 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Avatar, Button } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
 import { useAuthStore } from '@/shared/stores';
 import { useSignOut } from '../hooks/useSignOut';
 
 export function UserNav() {
+  const { t } = useTranslation('auth');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -37,10 +39,10 @@ export function UserNav() {
     return (
       <div className="flex items-center gap-2">
         <Link href={ROUTES.AUTH.LOGIN}>
-          <Button variant="ghost" size="sm">Sign In</Button>
+          <Button variant="ghost" size="sm">{t('userNav.signIn')}</Button>
         </Link>
         <Link href={ROUTES.AUTH.REGISTER}>
-          <Button size="sm">Register</Button>
+          <Button size="sm">{t('userNav.register')}</Button>
         </Link>
       </div>
     );
@@ -48,21 +50,24 @@ export function UserNav() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="unstyled"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-muted"
+        aria-expanded={isOpen}
       >
         <Avatar
           src={user?.avatar}
-          alt={user?.name || 'Customer'}
+          alt={user?.name || t('userNav.customer')}
           fallback={user?.name?.[0] || 'U'}
           className="size-8"
         />
         <span className="hidden text-sm font-medium md:inline-block max-w-[120px] truncate">
-          {user?.name || 'Customer'}
+          {user?.name || t('userNav.customer')}
         </span>
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="absolute right-0 mt-2 w-56 rounded-md border border-border bg-card p-1 shadow-md z-50 text-sm">
@@ -77,29 +82,31 @@ export function UserNav() {
               onClick={() => setIsOpen(false)}
               className="flex w-full items-center px-3 py-1.5 rounded-sm hover:bg-muted text-foreground transition-colors"
             >
-              My Profile
+              {t('userNav.profile')}
             </Link>
             <Link
               href={ROUTES.ACCOUNT.ORDERS}
               onClick={() => setIsOpen(false)}
               className="flex w-full items-center px-3 py-1.5 rounded-sm hover:bg-muted text-foreground transition-colors"
             >
-              Order History
+              {t('userNav.orders')}
             </Link>
           </div>
 
           <div className="border-t border-border/50 pt-1">
-            <button
+            <Button
               type="button"
+              variant="menuItem"
+              size="unstyled"
               disabled={isSigningOut}
               onClick={() => {
                 setIsOpen(false);
                 signOut();
               }}
-              className="flex w-full items-center px-3 py-1.5 rounded-sm text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
+              className="flex w-full items-center px-3 py-1.5 rounded-sm text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors disabled:opacity-50"
             >
-              {isSigningOut ? 'Signing out...' : 'Sign Out'}
-            </button>
+              {isSigningOut ? t('userNav.loggingOut') : t('userNav.logout')}
+            </Button>
           </div>
         </div>
       )}

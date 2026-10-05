@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { SlidersHorizontal, Cpu, Sparkles } from 'lucide-react';
 import type { ProductDetail, ProductVariant } from '../types';
 
@@ -13,13 +14,14 @@ export function ProductSpecificationsTable({
   product,
   activeVariant,
 }: ProductSpecificationsTableProps) {
+  const { t } = useTranslation('products');
   const hasBaseAttributes = product.attributes && product.attributes.length > 0;
   const hasVariantAttributes = activeVariant?.attributeValues && activeVariant.attributeValues.length > 0;
 
   if (!hasBaseAttributes && !hasVariantAttributes) {
     return (
       <div className="p-8 text-center text-sm text-muted-foreground bg-muted/20 rounded-2xl border border-dashed border-border/70">
-        No technical specifications available for this product.
+        {t('detail.noSpecifications')}
       </div>
     );
   }
@@ -35,12 +37,12 @@ export function ProductSpecificationsTable({
                 <Cpu className="size-4" />
               </div>
               <h3 className="text-base font-bold text-foreground">
-                Hardware Configuration
+                {t('detail.hardwareConfig')}
               </h3>
             </div>
             <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
               <Sparkles className="size-3" />
-              Selected: {activeVariant?.title}
+              {t('detail.selectedVariant', { title: activeVariant?.title })}
             </span>
           </div>
 
@@ -72,7 +74,7 @@ export function ProductSpecificationsTable({
               <SlidersHorizontal className="size-4" />
             </div>
             <h3 className="text-base font-bold text-foreground">
-              General Specifications
+              {t('detail.generalSpecs')}
             </h3>
           </div>
 
@@ -80,7 +82,7 @@ export function ProductSpecificationsTable({
             {/* Brand & Category entries */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 text-sm bg-background">
               <span className="font-medium text-muted-foreground w-full sm:w-1/3">
-                Brand
+                {t('detail.brand')}
               </span>
               <span className="font-semibold text-foreground w-full sm:w-2/3">
                 {product.brand?.name || 'N/A'}
@@ -89,7 +91,7 @@ export function ProductSpecificationsTable({
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-3 text-sm bg-muted/20">
               <span className="font-medium text-muted-foreground w-full sm:w-1/3">
-                Category
+                {t('detail.category')}
               </span>
               <span className="font-semibold text-foreground w-full sm:w-2/3">
                 {product.category?.name || 'N/A'}

@@ -1,0 +1,110 @@
+{
+  "notFound": {
+    "title": "Không tìm thấy sản phẩm",
+    "description": "Sản phẩm bạn đang tìm kiếm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng.",
+    "backToCatalog": "Quay lại danh mục"
+  },
+  "detail": {
+    "quantity": "Số lượng:",
+    "available": "Còn {{count}} sản phẩm",
+    "buyNow": "Mua ngay",
+    "addToCart": "Thêm vào giỏ hàng",
+    "adding": "Đang thêm...",
+    "processing": "Đang xử lý...",
+    "description": "Mô tả",
+    "specifications": "Thông số kỹ thuật",
+    "warranty": "Bảo hành & Chính sách",
+    "noDescription": "Chưa có mô tả chi tiết cho sản phẩm này.",
+    "noSpecifications": "Không có thông số kỹ thuật cho sản phẩm này.",
+    "hardwareConfig": "Cấu hình phần cứng",
+    "selectedVariant": "Đã chọn: {{title}}",
+    "generalSpecs": "Thông số chung",
+    "brand": "Thương hiệu",
+    "category": "Danh mục",
+    "genuineWarrantyTitle": "Bảo hành chính hãng",
+    "genuineWarrantyDesc": "Sản phẩm cam kết chính hãng 100% và được bảo hành 12 tháng từ nhà sản xuất tại các trung tâm dịch vụ ủy quyền.",
+    "returnPolicyTitle": "Chính sách đổi trả",
+    "returnPolicyDesc": "Miễn phí đổi trả trong 30 ngày đối với lỗi từ nhà sản xuất. Sản phẩm phải còn nguyên vẹn kèm hộp và phụ kiện đầy đủ.",
+    "sku": "Mã SP: {{sku}}",
+    "chooseConfiguration": "Vui lòng chọn cấu hình khả dụng",
+    "unavailable": "Không khả dụng",
+    "combinationNotExists": "Phiên bản không tồn tại",
+    "taxAndShipping": "Đã bao gồm thuế. Miễn phí vận chuyển cho đơn hàng đủ điều kiện.",
+    "outOfStock": "Hết hàng",
+    "inStock": "Còn hàng ({{count}})",
+    "combinationNotExistsWarning": "Phiên bản lựa chọn này không tồn tại. Vui lòng chọn phiên bản khác.",
+    "addedSuccess": "Đã thêm {{count}} {{item}} vào giỏ hàng!",
+    "unitItem": "sản phẩm",
+    "unitItems": "sản phẩm",
+    "errorAdd": "Không thể thêm vào giỏ hàng. Vui lòng thử lại.",
+    "errorProcess": "Không thể xử lý yêu cầu. Vui lòng thử lại.",
+    "guaranteeGenuine": "Cam kết chính hãng 100%",
+    "guaranteeFastShipping": "Giao hàng nhanh & miễn phí",
+    "guaranteeReturn": "Đổi trả dễ dàng trong 30 ngày"
+  },
+  "optionPicker": {
+    "outOfStock": "Hết hàng",
+    "notAvailable": "Phiên bản không khả dụng"
+  },
+  "search": {
+    "discoveryEngine": "Khám phá sản phẩm",
+    "categoryStore": "Cửa hàng danh mục",
+    "allProducts": "Tất cả sản phẩm",
+    "catalog": "Danh mục",
+    "resultsFor": "Kết quả tìm kiếm cho \"{{keyword}}\"",
+    "refinePlaceholder": "Tìm kiếm thêm...",
+    "inputPlaceholder": "Tìm sản phẩm, thương hiệu, danh mục...",
+    "loadingProducts": "Đang tải sản phẩm...",
+    "showingResults": "Hiển thị <strong class=\"text-foreground\">{{count}}</strong> trên <strong class=\"text-foreground\">{{total}}</strong> sản phẩm",
+    "noMatch": "Không có sản phẩm nào phù hợp",
+    "sortBy": "Sắp xếp theo:",
+    "filters": {
+      "title": "Bộ lọc",
+      "resetAll": "Đặt lại",
+      "reset": "Đặt lại",
+      "activeFilters": "Bộ lọc đang chọn:",
+      "clearAll": "Xóa tất cả",
+      "priceRange": "Khoảng giá",
+      "minPrice": "Giá tối thiểu",
+      "maxPrice": "Giá tối đa",
+      "applyPrice": "Áp dụng giá",
+      "quickRanges": "Khoảng giá nhanh",
+      "under": "Dưới {{price}}",
+      "over": "Trên {{price}}",
+      "brands": "Thương hiệu",
+      "searchBrands": "Tìm thương hiệu...",
+      "noBrands": "Không tìm thấy thương hiệu",
+      "showResults": "Hiển thị {{count}} kết quả",
+      "showResultsGeneric": "Xem kết quả"
+    },
+    "sort": {
+      "relevance": "Liên quan nhất",
+      "priceAsc": "Giá: Thấp đến Cao",
+      "priceDesc": "Giá: Cao đến Thấp",
+      "newest": "Mới nhất"
+    },
+    "empty": {
+      "title": "Không tìm thấy sản phẩm",
+      "withKeyword": "Không tìm thấy sản phẩm nào phù hợp với \"<span class=\"font-semibold text-foreground\">{{keyword}}</span>\". Vui lòng kiểm tra lại chính tả hoặc thử từ khóa khác.",
+      "noKeyword": "Không có sản phẩm nào phù hợp với bộ lọc đã chọn. Hãy thử xóa một số bộ lọc để xem thêm sản phẩm.",
+      "resetAll": "Đặt lại toàn bộ bộ lọc"
+    },
+    "card": {
+      "price": "Giá",
+      "viewDetails": "Xem chi tiết cho {{name}}"
+    },
+    "pagination": {
+      "previous": "Trước",
+      "next": "Sau",
+      "ariaPrev": "Trang trước",
+      "ariaNext": "Trang sau"
+    },
+    "suggestions": {
+      "title": "Gợi ý sản phẩm",
+      "pressEnter": "Nhấn ↵ để tìm kiếm",
+      "noSuggestions": "Không có gợi ý sản phẩm nào cho \"{{keyword}}\"",
+      "pressEnterGeneral": "Nhấn Enter để xem toàn bộ kết quả tìm kiếm",
+      "viewAllResults": "Xem tất cả kết quả tìm kiếm cho \"{{keyword}}\""
+    }
+  }
+}

@@ -45,6 +45,11 @@ httpRequest.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
+    const currentLang =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'en'
+        : 'en';
+    config.headers['Accept-Language'] = currentLang;
 
     // Auto-transform request body keys to snake_case unless it's FormData
     if (config.data && !(config.data instanceof FormData)) {

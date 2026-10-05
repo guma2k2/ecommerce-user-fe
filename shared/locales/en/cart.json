@@ -1,0 +1,78 @@
+{
+  "title": "Shopping Cart",
+  "error": {
+    "title": "Failed to load shopping cart",
+    "description": "An unexpected error occurred while fetching your cart details.",
+    "retry": "Try Again"
+  },
+  "empty": {
+    "title": "Your shopping cart is empty",
+    "description": "Looks like you haven't added any items to your cart yet. Explore our latest arrivals and top-rated products!",
+    "action": "Start Shopping",
+    "guestTitle": "Sign in to view your cart",
+    "guestDescription": "Log in to your account to view saved cart items, synchronize across devices, and checkout smoothly.",
+    "signIn": "Sign In",
+    "continueBrowsing": "Continue Browsing"
+  },
+  "popover": {
+    "title": "Recently Added Products",
+    "viewCart": "View Cart",
+    "itemsCount": "{{count}} item",
+    "itemsCount_plural": "{{count}} items",
+    "emptySubtext": "Browse our trending catalog and discover great deals today!",
+    "exploreProducts": "Explore Products",
+    "moreProducts": "{{count}} more products in cart",
+    "total": "Total:"
+  },
+  "table": {
+    "product": "Product",
+    "unitPrice": "Unit Price",
+    "quantity": "Quantity",
+    "totalPrice": "Total Price",
+    "actions": "Actions",
+    "itemsCount": "Cart Items ({{count}})"
+  },
+  "item": {
+    "noImage": "No Image",
+    "sku": "SKU: {{sku}}",
+    "outOfStock": "Out of Stock",
+    "onlyAvailable": "Only {{count}} available",
+    "onlyLeft": "Only {{count}} left",
+    "removeAria": "Remove {{name}} from cart"
+  },
+  "stepper": {
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity"
+  },
+  "summary": {
+    "title": "Order Summary",
+    "subtotal": "Subtotal",
+    "subtotalWithCount": "Subtotal ({{count}} {{unit}})",
+    "unitItem": "item",
+    "unitItems": "items",
+    "shipping": "Estimated Shipping",
+    "freeShipping": "FREE",
+    "discount": "Discount",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "continueShopping": "Continue Shopping",
+    "outOfStockWarning": "Please remove out-of-stock items before proceeding to checkout.",
+    "exceededWarning": "Some items exceed current available stock. Please adjust quantities.",
+    "guaranteeEncrypted": "Bank-grade 256-bit encrypted checkout",
+    "guaranteeFastDelivery": "Fast nationwide delivery",
+    "guaranteeGenuine": "100% Genuine product warranty"
+  },
+  "clear": {
+    "button": "Clear Cart",
+    "title": "Clear Shopping Cart?",
+    "description": "This action cannot be undone. All items will be removed.",
+    "cancel": "Cancel",
+    "confirm": "Clear Cart",
+    "clearing": "Clearing..."
+  },
+  "messages": {
+    "added": "Added to cart successfully",
+    "removed": "Item removed from cart",
+    "updated": "Cart quantity updated"
+  }
+}

@@ -1,11 +1,13 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Separator } from '@/components/ui';
 import { useSocialLogin } from '../hooks/useSocialLogin';
 import type { SocialProvider } from '../types/authTypes';
 
 export function SocialLoginButtons() {
+  const { t } = useTranslation('auth');
   const { initiateSocialLogin, loadingProvider } = useSocialLogin();
 
   const handleProviderClick = (provider: SocialProvider) => {
@@ -19,7 +21,7 @@ export function SocialLoginButtons() {
       <div className="relative flex items-center justify-center">
         <Separator className="w-full" />
         <span className="absolute bg-card px-2 text-xs font-medium uppercase text-muted-foreground">
-          Or continue with
+          {t('social.continueWith')}
         </span>
       </div>
 

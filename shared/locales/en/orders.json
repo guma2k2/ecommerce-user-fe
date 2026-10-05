@@ -1,0 +1,36 @@
+{
+  "checkout": {
+    "title": "Checkout",
+    "shippingAddress": "Shipping Address",
+    "deliveryMethod": "Delivery Method",
+    "paymentMethod": "Payment Method",
+    "placeOrder": "Place Order",
+    "processing": "Processing your order..."
+  },
+  "success": {
+    "title": "Thank You For Your Order!",
+    "subtitle": "Your order has been received and is being processed by our fulfillment team.",
+    "orderReference": "Order Reference:",
+    "sessionId": "Session ID:",
+    "nextSteps": "What's Next?",
+    "step1": "You will receive an email confirmation with your order details.",
+    "step2": "Our warehouse team will verify and prepare your package.",
+    "step3": "You can track delivery progress anytime in your account.",
+    "viewOrder": "View Order History",
+    "continueShopping": "Continue Shopping"
+  },
+  "history": {
+    "title": "Order History",
+    "empty": "No orders found",
+    "orderCode": "Order #{{code}}",
+    "date": "Placed on {{date}}",
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "viewDetails": "View Details"
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, AlertDescription, Button, SelectItem } from '@/components/ui';
@@ -12,6 +13,7 @@ import { AuthCardWrapper } from './AuthCardWrapper';
 import { SocialLoginButtons } from './SocialLoginButtons';
 
 export function SignUpForm() {
+  const { t } = useTranslation('auth');
   const { mutate: signUp, isPending, error } = useSignUp();
 
   const { control, handleSubmit } = useForm<SignUpFormValues>({
@@ -36,14 +38,14 @@ export function SignUpForm() {
 
   const errorMessage =
     (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-    (error ? 'Registration failed. Please check your information.' : null);
+    (error ? t('register.errorFallback') : null);
 
   return (
     <AuthCardWrapper
-      title="Create an Account"
-      description="Join our marketplace to discover exclusive products and deals"
-      footerText="Already have an account?"
-      footerLinkText="Sign in"
+      title={t('register.title')}
+      description={t('register.subtitle')}
+      footerText={t('register.hasAccount')}
+      footerLinkText={t('register.loginLink')}
       footerLinkHref={ROUTES.AUTH.LOGIN}
     >
       {errorMessage && (
@@ -56,42 +58,42 @@ export function SignUpForm() {
         <FormInput
           control={control}
           name="name"
-          label="Full Name"
-          placeholder="Jane Doe"
+          label={t('fields.fullName')}
+          placeholder={t('fields.fullNamePlaceholder')}
           disabled={isPending}
         />
 
         <FormInput
           control={control}
           name="email"
-          label="Email address"
+          label={t('fields.email')}
           type="email"
-          placeholder="customer@example.com"
+          placeholder={t('fields.emailPlaceholder')}
           disabled={isPending}
         />
 
         <FormInput
           control={control}
           name="password"
-          label="Password"
+          label={t('fields.password')}
           type="password"
-          placeholder="Min 8 chars, 1 uppercase, 1 special..."
+          placeholder={t('fields.newPasswordPlaceholder')}
           disabled={isPending}
         />
 
         <FormInput
           control={control}
           name="confirmPassword"
-          label="Confirm Password"
+          label={t('fields.confirmPassword')}
           type="password"
-          placeholder="Re-enter your password"
+          placeholder={t('fields.confirmPasswordPlaceholder')}
           disabled={isPending}
         />
 
         <FormSelect
           control={control}
           name="language"
-          label="Preferred Language"
+          label={t('fields.preferredLanguage')}
           disabled={isPending}
         >
           <SelectItem value="EN">English (EN)</SelectItem>
@@ -99,7 +101,7 @@ export function SignUpForm() {
         </FormSelect>
 
         <Button type="submit" disabled={isPending} className="w-full mt-2">
-          {isPending ? 'Creating account...' : 'Create Account'}
+          {isPending ? t('register.submitting') : t('register.submit')}
         </Button>
       </form>
 

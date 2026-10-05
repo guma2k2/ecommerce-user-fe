@@ -53,19 +53,21 @@ export function OrderListContainer() {
         {STATUS_TABS.map((tab) => {
           const isActive = activeStatus === tab.value;
           return (
-            <button
+            <Button
               key={tab.value}
               type="button"
+              variant={isActive ? 'default' : 'ghost'}
+              size="sm"
               onClick={() => handleTabChange(tab.value)}
               className={cn(
-                'px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-150',
+                'rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-150 h-8 px-3.5',
                 isActive
-                  ? 'bg-primary text-primary-foreground shadow-xs font-semibold'
+                  ? 'shadow-xs font-semibold'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
               )}
             >
               {tab.label}
-            </button>
+            </Button>
           );
         })}
       </div>

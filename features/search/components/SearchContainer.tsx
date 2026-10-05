@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation, Trans } from 'react-i18next';
 import { Home, Sparkles } from 'lucide-react';
 import {
   Breadcrumb,
@@ -35,6 +36,9 @@ export function SearchContainer({
   categoryTitle,
   categoryDescription,
 }: SearchContainerProps) {
+  const { t } = useTranslation('products');
+  const { t: tCommon } = useTranslation('common');
+
   const {
     params,
     currentPage,
@@ -77,7 +81,7 @@ export function SearchContainer({
                 }
               >
                 <Home className="size-3.5" />
-                <span>Home</span>
+                <span>{tCommon('nav.home')}</span>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -90,20 +94,20 @@ export function SearchContainer({
                       <Link href={ROUTES.SHOP.CATALOG} />
                     }
                   >
-                    Categories
+                    {tCommon('nav.categories')}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbPage className="font-semibold text-foreground capitalize">
-                    {categoryTitle || fixedCategorySlug || 'Category'}
+                    {categoryTitle || fixedCategorySlug || tCommon('nav.categories')}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </>
             ) : (
               <BreadcrumbItem>
                 <BreadcrumbPage className="font-semibold text-foreground">
-                  {params.keyword ? 'Search' : 'Catalog'}
+                  {params.keyword ? t('search.resultsFor', { keyword: params.keyword }) : t('search.catalog')}
                 </BreadcrumbPage>
               </BreadcrumbItem>
             )}
@@ -115,15 +119,15 @@ export function SearchContainer({
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-xs font-semibold text-primary mb-1">
               <Sparkles className="size-3" />
-              <span>{isCategoryMode ? 'Category Store' : 'Discovery Engine'}</span>
+              <span>{isCategoryMode ? t('search.categoryStore') : t('search.discoveryEngine')}</span>
             </div>
 
             <Typography.H1 className="text-2xl sm:text-3xl font-extrabold capitalize">
               {isCategoryMode
-                ? categoryTitle || fixedCategorySlug || 'Products'
+                ? categoryTitle || fixedCategorySlug || tCommon('nav.products')
                 : params.keyword
-                ? `Results for "${params.keyword}"`
-                : 'All Products'}
+                ? t('search.resultsFor', { keyword: params.keyword })
+                : t('search.allProducts')}
             </Typography.H1>
 
             {categoryDescription && (
@@ -137,7 +141,7 @@ export function SearchContainer({
           <div className="w-full md:w-80">
             <SearchBar
               initialValue={params.keyword || ''}
-              placeholder="Refine search..."
+              placeholder={t('search.refinePlaceholder')}
               onSearch={(kw) => setKeyword(kw)}
             />
           </div>
@@ -166,14 +170,18 @@ export function SearchContainer({
             {/* Results count text */}
             <p className="text-xs sm:text-sm text-muted-foreground">
               {isLoading ? (
-                'Loading products...'
+                t('search.loadingProducts')
               ) : totalElements > 0 ? (
-                <>
-                  Showing <strong className="text-foreground">{products.length}</strong> of{' '}
-                  <strong className="text-foreground">{totalElements}</strong> items
-                </>
+                <Trans
+                  ns="products"
+                  i18nKey="search.showingResults"
+                  values={{ count: products.length, total: totalElements }}
+                  components={{
+                    strong: <strong className="text-foreground" />,
+                  }}
+                />
               ) : (
-                'No products match your criteria'
+                t('search.noMatch')
               )}
             </p>
           </div>
@@ -181,7 +189,7 @@ export function SearchContainer({
           {/* Sort dropdown */}
           <div className="flex items-center gap-2">
             <span className="hidden sm:inline text-xs font-medium text-muted-foreground">
-              Sort by:
+              {t('search.sortBy')}
             </span>
             <SearchSortSelect
               value={params.sort || 'RELEVANCE'}

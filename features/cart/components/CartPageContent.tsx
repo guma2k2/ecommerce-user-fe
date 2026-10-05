@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button, buttonVariants, Typography } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -13,6 +14,8 @@ import { CartItemList } from './CartItemList';
 import { CartSummary } from './CartSummary';
 
 export function CartPageContent() {
+  const { t } = useTranslation('cart');
+  const { t: tCommon } = useTranslation('common');
   const { cart, items, totalQuantity, totalPrice, isLoading, isError, refetch, isAuthenticated } =
     useCart();
 
@@ -40,12 +43,12 @@ export function CartPageContent() {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-center">
         <div className="max-w-md mx-auto space-y-4">
-          <Typography.H2 className="text-xl font-bold">Failed to load shopping cart</Typography.H2>
+          <Typography.H2 className="text-xl font-bold">{t('error.title')}</Typography.H2>
           <Typography.Muted className="text-sm">
-            An unexpected error occurred while fetching your cart details.
+            {t('error.description')}
           </Typography.Muted>
           <Button onClick={() => refetch()} variant="outline" className="rounded-xl">
-            Try Again
+            {t('error.retry')}
           </Button>
         </div>
       </div>
@@ -67,10 +70,10 @@ export function CartPageContent() {
       <div className="flex items-center justify-between pb-6">
         <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
           <Link href={ROUTES.HOME} className="hover:text-foreground transition-colors">
-            Home
+            {tCommon('nav.home')}
           </Link>
           <ChevronRight className="size-3.5" />
-          <span className="text-foreground font-medium">Shopping Cart</span>
+          <span className="text-foreground font-medium">{t('title')}</span>
         </div>
 
         <Link
@@ -81,12 +84,12 @@ export function CartPageContent() {
           )}
         >
           <ArrowLeft className="size-3.5" />
-          Continue Shopping
+          {t('summary.continueShopping')}
         </Link>
       </div>
 
       <Typography.H1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-8">
-        Shopping Cart
+        {t('title')}
       </Typography.H1>
 
       {/* Main 2-column grid */}

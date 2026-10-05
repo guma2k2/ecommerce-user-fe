@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
+  Button,
   Carousel,
   CarouselContent,
   CarouselItem,
@@ -112,8 +113,10 @@ export function ProductMediaGallery({
               const isSelected = selectedImage === url;
               return (
                 <CarouselItem key={idx} className="pl-3 basis-auto">
-                  <button
+                  <Button
                     type="button"
+                    variant="unstyled"
+                    size="unstyled"
                     onMouseEnter={() => setSelectedImageOverride(url)}
                     onClick={() => handleSelectThumbnail(url, idx)}
                     className={`relative size-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-200 focus-visible:outline-none cursor-pointer ${
@@ -129,7 +132,7 @@ export function ProductMediaGallery({
                       sizes="80px"
                       className="object-contain p-1.5"
                     />
-                  </button>
+                  </Button>
                 </CarouselItem>
               );
             })}

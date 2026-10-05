@@ -1,3 +1,5 @@
+'use client';
+
 import { Textarea, Checkbox, Input, Field, FieldContent, FieldDescription, FieldError, FieldLabel, Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui"
 import type { ReactNode } from "react"
 import { Controller, type ControllerProps, type FieldPath, type FieldValues } from "react-hook-form"
