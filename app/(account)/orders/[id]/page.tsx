@@ -4,9 +4,9 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/utils';
 import {
   orderDetailQueryOptions,
-  OrderDetailContainer,
   OrderDetailSkeleton,
 } from '@/features/orders';
+import { OrderDetailClient } from './OrderDetailClient';
 
 interface OrderDetailPageProps {
   params: Promise<{
@@ -32,7 +32,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<OrderDetailSkeleton />}>
-        <OrderDetailContainer orderId={id} />
+        <OrderDetailClient orderId={id} />
       </Suspense>
     </HydrationBoundary>
   );

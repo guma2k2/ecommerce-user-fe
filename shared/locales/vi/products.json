@@ -55,7 +55,7 @@
     "refinePlaceholder": "Tìm kiếm thêm...",
     "inputPlaceholder": "Tìm sản phẩm, thương hiệu, danh mục...",
     "loadingProducts": "Đang tải sản phẩm...",
-    "showingResults": "Hiển thị <strong class=\"text-foreground\">{{count}}</strong> trên <strong class=\"text-foreground\">{{total}}</strong> sản phẩm",
+    "showingResults": "Hiển thị <strong>{{count}}</strong> trên <strong>{{total}}</strong> sản phẩm",
     "noMatch": "Không có sản phẩm nào phù hợp",
     "sortBy": "Sắp xếp theo:",
     "filters": {
@@ -85,7 +85,7 @@
     },
     "empty": {
       "title": "Không tìm thấy sản phẩm",
-      "withKeyword": "Không tìm thấy sản phẩm nào phù hợp với \"<span class=\"font-semibold text-foreground\">{{keyword}}</span>\". Vui lòng kiểm tra lại chính tả hoặc thử từ khóa khác.",
+      "withKeyword": "Không tìm thấy sản phẩm nào phù hợp với \"<span>{{keyword}}</span>\". Vui lòng kiểm tra lại chính tả hoặc thử từ khóa khác.",
       "noKeyword": "Không có sản phẩm nào phù hợp với bộ lọc đã chọn. Hãy thử xóa một số bộ lọc để xem thêm sản phẩm.",
       "resetAll": "Đặt lại toàn bộ bộ lọc"
     },

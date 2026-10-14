@@ -1,4 +1,4 @@
-import type { ShippingAddress, PaymentMethod } from '@/features/checkout/types';
+import type { ShippingAddress, PaymentMethod } from '@/shared/types';
 
 export type OrderStatus =
   | 'PENDING'
@@ -13,6 +13,7 @@ export type PaymentStatus =
   | 'SUCCEEDED'
   | 'FAILED'
   | 'CANCELLED'
+  | 'PARTIALLY_REFUNDED'
   | 'REFUNDED';
 
 export interface OrderItemDetail {
@@ -55,30 +56,4 @@ export interface OrderFilterParams {
   pageNumber?: number;
   pageSize?: number;
   status?: OrderStatus | 'ALL';
-}
-
-export interface CheckoutSessionRequest {
-  orderId: string;
-  amount: number;
-  currency: string;
-}
-
-export interface CheckoutSessionResponse {
-  paymentId: number;
-  sessionId: string;
-  checkoutUrl: string;
-}
-
-export interface PaymentDetail {
-  id: number;
-  customerId: string;
-  orderId: string;
-  amount: number;
-  currency: string;
-  status: PaymentStatus;
-  method: PaymentMethod;
-  stripeSessionId?: string | null;
-  stripePaymentIntentId?: string | null;
-  failureReason?: string | null;
-  createdAt: string;
 }

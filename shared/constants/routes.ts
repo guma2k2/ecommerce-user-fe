@@ -12,6 +12,7 @@ export const ROUTES = {
     PROFILE: '/profile',
     ORDERS: '/orders',
     ORDER_DETAIL: (id: string) => `/orders/${id}` as const,
+    PAYMENTS: '/payments',
   },
   SHOP: {
     CATALOG: '/products',
