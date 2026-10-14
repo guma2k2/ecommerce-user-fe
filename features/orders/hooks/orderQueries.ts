@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/constants';
-import { orderService, paymentService } from '../services';
+import { orderService } from '../services';
 import type { OrderFilterParams } from '../types';
 
 export const ordersListQueryOptions = (params?: OrderFilterParams) =>
@@ -16,12 +16,4 @@ export const orderDetailQueryOptions = (orderId: string) =>
     queryFn: () => orderService.getOrderDetail(orderId),
     staleTime: 30 * 1000,
     enabled: Boolean(orderId),
-  });
-
-export const paymentDetailQueryOptions = (paymentId: number | string) =>
-  queryOptions({
-    queryKey: queryKeys.payments.detail(paymentId),
-    queryFn: () => paymentService.getPaymentDetail(paymentId),
-    staleTime: 30 * 1000,
-    enabled: Boolean(paymentId),
   });

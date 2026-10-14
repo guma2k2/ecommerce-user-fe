@@ -24,9 +24,10 @@ import { OrderDetailSkeleton } from './OrderSkeleton';
 
 interface OrderDetailContainerProps {
   orderId: string;
+  renderPaymentAction?: (order: NonNullable<ReturnType<typeof useOrderDetail>['data']>) => React.ReactNode;
 }
 
-export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
+export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDetailContainerProps) {
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const { data: order, isLoading, isError, refetch } = useOrderDetail(orderId);
 
@@ -160,6 +161,11 @@ export function OrderDetailContainer({ orderId }: OrderDetailContainerProps) {
                 {formatCurrency(order.totalAmount, 'USD', 'en-US')}
               </Typography.Tabular>
             </div>
+            {renderPaymentAction && (
+              <div className="pt-3 border-t border-border/40">
+                {renderPaymentAction(order)}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

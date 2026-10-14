@@ -11,6 +11,7 @@ interface CheckoutSuccessPageProps {
     order_code?: string;
     order_id?: string;
     session_id?: string;
+    payment_id?: string;
   }>;
 }
 
@@ -22,6 +23,7 @@ export default async function CheckoutSuccessPage({ searchParams }: CheckoutSucc
       orderCode={resolvedParams.order_code}
       orderId={resolvedParams.order_id}
       sessionId={resolvedParams.session_id}
+      paymentId={resolvedParams.payment_id}
     />
   );
 }

@@ -11,12 +11,14 @@ interface CheckoutSuccessContainerProps {
   orderCode?: string | null;
   orderId?: string | null;
   sessionId?: string | null;
+  paymentId?: string | null;
 }
 
 export function CheckoutSuccessContainer({
   orderCode,
   orderId,
   sessionId,
+  paymentId,
 }: CheckoutSuccessContainerProps) {
   return (
     <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
@@ -37,7 +39,7 @@ export function CheckoutSuccessContainer({
           </div>
 
           {/* Reference Details */}
-          {(orderCode || orderId || sessionId) && (
+          {(orderCode || orderId || sessionId || paymentId) && (
             <div className="rounded-xl border border-border/80 bg-muted/40 p-4 max-w-md mx-auto space-y-2 text-xs">
               {orderCode && (
                 <div className="flex justify-between items-center py-1">
@@ -60,6 +62,14 @@ export function CheckoutSuccessContainer({
                   <span className="text-muted-foreground">Stripe Session:</span>
                   <span className="font-mono text-muted-foreground truncate max-w-[200px]" title={sessionId}>
                     {sessionId}
+                  </span>
+                </div>
+              )}
+              {paymentId && (
+                <div className="flex justify-between items-center py-1 border-t border-border/60">
+                  <span className="text-muted-foreground">Payment ID:</span>
+                  <span className="font-mono text-muted-foreground truncate max-w-[200px]" title={paymentId}>
+                    {paymentId}
                   </span>
                 </div>
               )}

@@ -1,13 +1,6 @@
-export type PaymentMethod = 'COD' | 'STRIPE';
+import type { PaymentMethod, ShippingAddress } from '@/shared/types';
 
-export interface ShippingAddress {
-  receiverName: string;
-  receiverPhone: string;
-  shippingAddress: string;
-  city: string;
-  district: string;
-  postalCode: string;
-}
+export type { PaymentMethod, ShippingAddress };
 
 export interface CreateOrderItem {
   productVariantId: number;

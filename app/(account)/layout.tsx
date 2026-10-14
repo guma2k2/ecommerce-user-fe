@@ -35,6 +35,12 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
               >
                 Orders
               </Link>
+              <Link
+                href={ROUTES.ACCOUNT.PAYMENTS}
+                className="hover:text-foreground transition-colors"
+              >
+                Payments
+              </Link>
             </nav>
           </div>
 

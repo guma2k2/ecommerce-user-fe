@@ -40,6 +40,8 @@ export const queryKeys = {
   },
   payments: {
     all: ['payments'] as const,
-    detail: (id: number | string) => [...queryKeys.payments.all, 'detail', id] as const,
+    lists: () => [...queryKeys.payments.all, 'list'] as const,
+    detail: (id: string) => [...queryKeys.payments.all, 'detail', id] as const,
+    ledger: (id: string) => [...queryKeys.payments.all, 'ledger', id] as const,
   },
 } as const;

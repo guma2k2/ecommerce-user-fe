@@ -87,6 +87,12 @@ export function PaymentStatusBadge({ status, className }: PaymentStatusBadgeProp
           Payment Cancelled
         </Badge>
       );
+    case 'PARTIALLY_REFUNDED':
+      return (
+        <Badge variant="secondary" className={className}>
+          Partially Refunded
+        </Badge>
+      );
     case 'REFUNDED':
       return (
         <Badge variant="secondary" className={className}>

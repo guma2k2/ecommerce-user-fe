@@ -55,7 +55,7 @@
     "refinePlaceholder": "Refine search...",
     "inputPlaceholder": "Search products, brands, categories...",
     "loadingProducts": "Loading products...",
-    "showingResults": "Showing <strong class=\"text-foreground\">{{count}}</strong> of <strong class=\"text-foreground\">{{total}}</strong> items",
+    "showingResults": "Showing <strong>{{count}}</strong> of <strong>{{total}}</strong> items",
     "noMatch": "No products match your criteria",
     "sortBy": "Sort by:",
     "filters": {
@@ -85,7 +85,7 @@
     },
     "empty": {
       "title": "No products found",
-      "withKeyword": "We couldn't find any items matching \"<span class=\"font-semibold text-foreground\">{{keyword}}</span>\". Check your spelling or try broader search terms.",
+      "withKeyword": "We couldn't find any items matching \"<span>{{keyword}}</span>\". Check your spelling or try broader search terms.",
       "noKeyword": "There are no products matching your selected filter criteria. Try clearing some filters to explore more products.",
       "resetAll": "Reset all filters"
     },
