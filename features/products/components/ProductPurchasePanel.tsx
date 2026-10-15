@@ -153,52 +153,52 @@ export function ProductPurchasePanel({
   };
 
   return (
-    <div className="flex flex-col space-y-6">
+    <div className="flex flex-col space-y-4">
       {/* Brand & Category badges */}
       <div className="flex items-center gap-2">
         {product.brand?.name && (
-          <Badge variant="secondary" className="font-semibold text-xs uppercase tracking-wider">
+          <Badge variant="secondary" className="font-semibold text-micro uppercase tracking-wider">
             {product.brand.name}
           </Badge>
         )}
         {product.category?.name && (
-          <Badge variant="outline" className="text-xs">
+          <Badge variant="outline" className="text-micro">
             {product.category.name}
           </Badge>
         )}
       </div>
 
       {/* Product Title */}
-      <div className="space-y-1.5">
-        <Typography.H1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
+      <div className="space-y-1">
+        <h1 className="text-lg sm:text-xl font-bold text-foreground leading-snug">
           {product.name}
-        </Typography.H1>
+        </h1>
         {activeVariant?.sku ? (
-          <Typography.Muted className="text-xs font-mono">
+          <Typography.Muted className="text-micro font-mono">
             {t('detail.sku', { sku: activeVariant.sku })}
           </Typography.Muted>
         ) : (
-          <Typography.Muted className="text-xs text-amber-500 font-medium">
+          <Typography.Muted className="text-micro text-amber-500 font-medium">
             {t('detail.chooseConfiguration')}
           </Typography.Muted>
         )}
       </div>
 
       {/* Pricing & Stock Status */}
-      <div className="p-4 rounded-2xl bg-muted/30 border border-border/60 flex items-center justify-between">
+      <div className="p-3 sm:p-3.5 rounded-xl bg-muted/30 border border-border/60 flex items-center justify-between">
         <div className="space-y-0.5">
           <div className="flex items-baseline gap-2">
             {isUnavailable ? (
-              <Typography.Large className="text-2xl font-bold text-muted-foreground">
+              <span className="text-xl font-bold text-muted-foreground">
                 {t('detail.unavailable')}
-              </Typography.Large>
+              </span>
             ) : (
-              <Typography.Tabular className="text-3xl font-black text-primary tracking-tight">
+              <span className="text-xl sm:text-2xl font-black text-primary tracking-tight tabular-nums">
                 {formatCurrency(price)}
-              </Typography.Tabular>
+              </span>
             )}
           </div>
-          <Typography.Muted className="text-[11px] block">
+          <Typography.Muted className="text-micro block">
             {isUnavailable
               ? t('detail.combinationNotExists')
               : t('detail.taxAndShipping')}
@@ -207,18 +207,18 @@ export function ProductPurchasePanel({
 
         <div>
           {isUnavailable ? (
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full">
-              <AlertCircle className="size-4" />
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full">
+              <AlertCircle className="size-3.5" />
               <span>{t('detail.unavailable')}</span>
             </div>
           ) : isOutOfStock ? (
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-destructive bg-destructive/10 px-3 py-1.5 rounded-full">
-              <AlertCircle className="size-4" />
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-destructive bg-destructive/10 px-2.5 py-1 rounded-full">
+              <AlertCircle className="size-3.5" />
               <span>{t('detail.outOfStock')}</span>
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full">
-              <CheckCircle2 className="size-4" />
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full">
+              <CheckCircle2 className="size-3.5" />
               <span>{t('detail.inStock', { count: stockCount })}</span>
             </div>
           )}
@@ -236,48 +236,48 @@ export function ProductPurchasePanel({
 
       {/* Unavailable combination alert */}
       {isUnavailable && (
-        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-2">
-          <AlertCircle className="size-4 shrink-0" />
+        <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-400 flex items-center gap-2">
+          <AlertCircle className="size-3.5 shrink-0" />
           <span>{t('detail.combinationNotExistsWarning')}</span>
         </div>
       )}
 
       {/* Quantity & CTA Action Buttons */}
-      <div className="space-y-4 pt-2">
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-semibold text-foreground">{t('detail.quantity')}</span>
-          <div className="flex items-center rounded-xl border border-border/80 bg-card p-1 shadow-2xs">
+      <div className="space-y-3 pt-1">
+        <div className="flex items-center gap-3">
+          <span className="text-xs sm:text-sm font-semibold text-foreground">{t('detail.quantity')}</span>
+          <div className="flex items-center rounded-lg border border-border/80 bg-card p-0.5 shadow-2xs">
             <Button
               type="button"
               variant="ghost"
-              size="icon-sm"
+              size="icon-2xs"
               disabled={quantity <= 1 || isActionDisabled || isPending}
               onClick={handleDecrease}
-              className="size-8 rounded-lg text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted"
+              className="size-7 rounded text-xs font-bold text-muted-foreground hover:text-foreground hover:bg-muted"
             >
               -
             </Button>
-            <span className="w-10 text-center text-sm font-semibold">{quantity}</span>
+            <span className="w-8 text-center text-xs sm:text-sm font-semibold">{quantity}</span>
             <Button
               type="button"
               variant="ghost"
-              size="icon-sm"
+              size="icon-2xs"
               disabled={quantity >= stockCount || isActionDisabled || isPending}
               onClick={handleIncrease}
-              className="size-8 rounded-lg text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted"
+              className="size-7 rounded text-xs font-bold text-muted-foreground hover:text-foreground hover:bg-muted"
             >
               +
             </Button>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
           <Button
-            size="lg"
+            size="default"
             variant="outline"
             disabled={isActionDisabled || isPending}
             onClick={handleAddToCart}
-            className="flex-1 rounded-xl h-12 text-sm font-bold gap-2 shadow-2xs"
+            className="flex-1 rounded-lg h-10 text-xs sm:text-sm font-bold gap-2 shadow-2xs"
           >
             {isPending && actionType === 'cart' ? (
               <>
@@ -292,10 +292,10 @@ export function ProductPurchasePanel({
             )}
           </Button>
           <Button
-            size="lg"
+            size="default"
             disabled={isActionDisabled || isPending}
             onClick={handleBuyNow}
-            className="flex-1 rounded-xl h-12 text-sm font-bold gap-2 shadow-md"
+            className="flex-1 rounded-lg h-10 text-xs sm:text-sm font-bold gap-2 shadow-xs"
           >
             {isPending && actionType === 'buy' ? (
               <>
@@ -313,33 +313,33 @@ export function ProductPurchasePanel({
 
         {/* Success Alert */}
         {successMessage && (
-          <Alert variant="success" className="animate-in fade-in slide-in-from-top-1 duration-200">
+          <Alert variant="success" className="animate-in fade-in slide-in-from-top-1 duration-200 py-2">
             <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
-            <AlertDescription className="font-medium">{successMessage}</AlertDescription>
+            <AlertDescription className="text-xs font-medium">{successMessage}</AlertDescription>
           </Alert>
         )}
 
         {/* Error Alert */}
         {errorMessage && (
-          <Alert variant="destructive" className="animate-in fade-in slide-in-from-top-1 duration-200">
+          <Alert variant="destructive" className="animate-in fade-in slide-in-from-top-1 duration-200 py-2">
             <AlertCircle className="size-4" />
-            <AlertDescription className="font-medium">{errorMessage}</AlertDescription>
+            <AlertDescription className="text-xs font-medium">{errorMessage}</AlertDescription>
           </Alert>
         )}
       </div>
 
       {/* Value Proposition & Guarantees */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-border/60 text-xs text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="size-4 text-primary shrink-0" />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-border/60 text-micro sm:text-xs text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <ShieldCheck className="size-3.5 text-primary shrink-0" />
           <span>{t('detail.guaranteeGenuine')}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <Truck className="size-4 text-primary shrink-0" />
+        <div className="flex items-center gap-1.5">
+          <Truck className="size-3.5 text-primary shrink-0" />
           <span>{t('detail.guaranteeFastShipping')}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <RotateCcw className="size-4 text-primary shrink-0" />
+        <div className="flex items-center gap-1.5">
+          <RotateCcw className="size-3.5 text-primary shrink-0" />
           <span>{t('detail.guaranteeReturn')}</span>
         </div>
       </div>

@@ -31,13 +31,13 @@ export function CartSummary({
   const finalTotal = totalPrice + shippingFee;
 
   return (
-    <Card className="rounded-2xl border-border/70 bg-card/80 backdrop-blur-xs shadow-xs sticky top-24">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-bold">{t('summary.title')}</CardTitle>
+    <Card className="rounded-xl border-border/70 bg-card/80 backdrop-blur-xs shadow-2xs sticky top-20">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="font-bold text-sm sm:text-base">{t('summary.title')}</CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-5">
-        <div className="space-y-3 text-sm">
+      <CardContent className="p-4 pt-0 space-y-4">
+        <div className="space-y-2.5 text-xs sm:text-sm">
           <div className="flex items-center justify-between text-muted-foreground">
             <span>
               {t('summary.subtotalWithCount', {
@@ -45,12 +45,12 @@ export function CartSummary({
                 unit: totalQuantity === 1 ? t('summary.unitItem') : t('summary.unitItems'),
               })}
             </span>
-            <span className="font-semibold text-foreground">{formatCurrency(totalPrice)}</span>
+            <span className="font-semibold text-foreground tabular-nums">{formatCurrency(totalPrice)}</span>
           </div>
 
           <div className="flex items-center justify-between text-muted-foreground">
             <span>{t('summary.shipping')}</span>
-            <span className="font-semibold text-foreground">
+            <span className="font-semibold text-foreground tabular-nums">
               {shippingFee === 0 ? (
                 <span className="text-emerald-600 font-bold">{t('summary.freeShipping')}</span>
               ) : (
@@ -59,11 +59,11 @@ export function CartSummary({
             </span>
           </div>
 
-          <Separator className="my-2 bg-border/60" />
+          <Separator className="my-1.5 bg-border/60" />
 
-          <div className="flex items-center justify-between text-base font-bold">
+          <div className="flex items-center justify-between text-sm sm:text-base font-bold">
             <span className="text-foreground">{t('summary.total')}</span>
-            <span className="text-xl font-extrabold text-primary tracking-tight">
+            <span className="text-lg sm:text-xl font-extrabold text-primary tracking-tight tabular-nums">
               {formatCurrency(finalTotal)}
             </span>
           </div>
@@ -71,12 +71,12 @@ export function CartSummary({
 
         {/* Warning if stock issues exist */}
         {hasOutOfStockItems && (
-          <p className="text-xs text-destructive font-medium bg-destructive/10 p-2.5 rounded-lg">
+          <p className="text-micro sm:text-xs text-destructive font-medium bg-destructive/10 p-2 rounded-lg">
             {t('summary.outOfStockWarning')}
           </p>
         )}
         {!hasOutOfStockItems && hasExceededItems && (
-          <p className="text-xs text-destructive font-medium bg-destructive/10 p-2.5 rounded-lg">
+          <p className="text-micro sm:text-xs text-destructive font-medium bg-destructive/10 p-2 rounded-lg">
             {t('summary.exceededWarning')}
           </p>
         )}
@@ -85,8 +85,8 @@ export function CartSummary({
         {isCheckoutDisabled ? (
           <Button
             disabled
-            size="lg"
-            className="w-full rounded-xl font-bold h-12 gap-2 shadow-sm"
+            size="default"
+            className="w-full rounded-lg font-bold h-10 text-xs sm:text-sm gap-2 shadow-2xs"
           >
             {t('summary.checkout')}
             <ArrowRight className="size-4" />
@@ -95,8 +95,8 @@ export function CartSummary({
           <Link
             href={ROUTES.SHOP.CHECKOUT}
             className={cn(
-              buttonVariants({ size: 'lg' }),
-              'w-full rounded-xl font-bold h-12 gap-2 shadow-sm flex items-center justify-center'
+              buttonVariants({ size: 'default' }),
+              'w-full rounded-lg font-bold h-10 text-xs sm:text-sm gap-2 shadow-xs flex items-center justify-center'
             )}
           >
             {t('summary.checkout')}

@@ -12,6 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Button,
+  Typography,
 } from '@/components/ui';
 import { useProductDetail, useVariantSelection } from '../hooks';
 import { ProductMediaGallery } from './ProductMediaGallery';
@@ -43,10 +44,10 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
   if (isError || !product) {
     return (
       <div className="container mx-auto px-4 py-20 text-center max-w-xl space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">{t('notFound.title')}</h2>
-        <p className="text-sm text-muted-foreground">
+        <Typography.H2>{t('notFound.title')}</Typography.H2>
+        <Typography.Muted>
           {t('notFound.description')}
-        </p>
+        </Typography.Muted>
         <Link href={ROUTES.SHOP.SEARCH}>
           <Button className="rounded-xl mt-2 gap-2">
             <ArrowLeft className="size-4" />
@@ -58,9 +59,9 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-10 max-w-7xl">
+    <div className="container mx-auto px-3 sm:px-5 lg:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8">
       {/* Breadcrumb Navigation */}
-      <Breadcrumb className="pb-1">
+      <Breadcrumb className="pb-0.5">
         <BreadcrumbList className="flex-nowrap overflow-x-auto whitespace-nowrap text-xs sm:text-sm">
           <BreadcrumbItem>
             <BreadcrumbLink
@@ -102,8 +103,8 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      {/* Top 2-Column Showcase */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+      {/* Top 2-Column Showcase with 2:3 ratio (Left: 2fr, Right: 3fr) */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 lg:gap-8 items-start">
         {/* Left Column: Media Gallery */}
         <ProductMediaGallery
           medias={product.medias}

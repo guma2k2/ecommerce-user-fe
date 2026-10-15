@@ -46,7 +46,7 @@ export function SearchSuggestionDropdown({
             ns="products"
             i18nKey="search.suggestions.pressEnter"
             components={{
-              kbd: <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] text-foreground" />,
+              kbd: <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-micro text-foreground" />,
             }}
           />
         </span>
@@ -102,12 +102,12 @@ export function SearchSuggestionDropdown({
                       {item.name}
                     </p>
                     {item.categoryName && (
-                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+                      <Badge variant="secondary" size="sm">
                         {item.categoryName}
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs font-semibold text-primary mt-0.5">
+                  <p className="text-xs font-semibold text-primary mt-0.5 tabular-nums">
                     {formatPriceValue(item.price)}
                   </p>
                 </div>

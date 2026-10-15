@@ -3,15 +3,15 @@ import { Skeleton } from '@/components/ui';
 
 export function ProductDetailSkeleton() {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 max-w-7xl animate-pulse">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 animate-pulse">
       {/* Breadcrumb Skeleton */}
       <div className="h-4 w-64 bg-muted/60 rounded-md" />
 
-      {/* Main Grid: Gallery + Purchase Panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+      {/* Main Grid: Gallery + Purchase Panel with 2:3 ratio */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 lg:gap-8">
         {/* Gallery */}
         <div className="space-y-4">
-          <Skeleton className="aspect-square w-full rounded-3xl" />
+          <Skeleton className="aspect-[4/3] max-h-[420px] w-full rounded-xl" />
           <div className="flex gap-3">
             <Skeleton className="size-20 rounded-2xl" />
             <Skeleton className="size-20 rounded-2xl" />

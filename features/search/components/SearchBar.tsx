@@ -130,18 +130,18 @@ export function SearchBar({
     >
       <div
         className={cn(
-          'relative flex items-center w-full rounded-2xl border transition-all duration-200 bg-background/80 backdrop-blur-md',
+          'relative flex items-center w-full rounded-xl border transition-all duration-200 bg-background/80 backdrop-blur-md',
           isOpen
-            ? 'border-primary ring-4 ring-primary/10 shadow-lg'
-            : 'border-border/80 hover:border-border shadow-xs hover:shadow-sm',
-          size === 'lg' ? 'h-13 px-4' : 'h-10 px-3.5'
+            ? 'border-primary ring-3 ring-primary/10 shadow-md'
+            : 'border-border/80 hover:border-border shadow-2xs hover:shadow-xs',
+          size === 'lg' ? 'h-11 px-3.5' : 'h-9 px-3'
         )}
       >
         <Search
           className={cn(
-            'shrink-0 text-muted-foreground transition-colors mr-2.5',
+            'shrink-0 text-muted-foreground transition-colors mr-2',
             isOpen && 'text-primary',
-            size === 'lg' ? 'size-5' : 'size-4'
+            size === 'lg' ? 'size-4.5' : 'size-3.5'
           )}
         />
 

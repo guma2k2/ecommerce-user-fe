@@ -26,23 +26,23 @@ export function ProductOptionPicker({
   if (!options || options.length === 0) return null;
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3.5">
       {options.map((option) => {
         const selectedValueId = selectedOptions[option.productOptionId];
         const selectedValueName = option.values.find((v) => v.id === selectedValueId)?.value;
 
         return (
-          <div key={option.productOptionId} className="space-y-2.5">
-            <div className="flex items-center justify-between text-sm">
+          <div key={option.productOptionId} className="space-y-1.5">
+            <div className="flex items-center justify-between text-xs sm:text-sm">
               <span className="font-semibold text-foreground">{option.name}:</span>
               {selectedValueName && (
-                <span className="text-xs font-medium text-muted-foreground">
+                <span className="text-micro sm:text-xs font-medium text-muted-foreground">
                   {selectedValueName}
                 </span>
               )}
             </div>
 
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {option.values.map((val) => {
                 const isSelected = selectedValueId === val.id;
                 const status: OptionValueStatus = getOptionStatus
@@ -90,7 +90,7 @@ export function ProductOptionPicker({
                     title={statusTitle || undefined}
                     onClick={() => onSelectOption(option.productOptionId, val.id)}
                     className={cn(
-                      'relative rounded-xl px-3.5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 h-auto',
+                      'relative rounded-lg px-2.5 py-1 text-xs font-medium transition-all duration-200 h-auto',
                       styleClasses
                     )}
                   >

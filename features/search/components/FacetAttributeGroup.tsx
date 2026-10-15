@@ -63,7 +63,7 @@ export function FacetAttributeGroup({
                   </span>
                 ) : null}
                 <span>{item.value}</span>
-                <span className="text-[10px] text-muted-foreground/80 font-mono">
+                <span className="text-micro text-muted-foreground/80 font-mono tabular-nums">
                   ({item.count})
                 </span>
               </Button>
@@ -97,7 +97,7 @@ export function FacetAttributeGroup({
                     {item.value}
                   </span>
                 </div>
-                <span className="shrink-0 text-[11px] text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded-md font-mono">
+                <span className="shrink-0 text-xs text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded-md font-mono tabular-nums">
                   {item.count}
                 </span>
               </label>

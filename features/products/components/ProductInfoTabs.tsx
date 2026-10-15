@@ -16,32 +16,32 @@ export function ProductInfoTabs({ product, activeVariant }: ProductInfoTabsProps
   const { t } = useTranslation('products');
 
   return (
-    <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 shadow-xs">
-      <Tabs defaultValue="description" className="space-y-6">
+    <div className="rounded-xl border border-border/80 bg-card p-4 sm:p-5 shadow-2xs">
+      <Tabs defaultValue="description" className="space-y-4">
         {/* Tab Navigation Header */}
-        <div className="border-b border-border/60 pb-3">
-          <TabsList className="bg-transparent p-0 h-auto gap-2 flex-wrap justify-start">
+        <div className="border-b border-border/60 pb-2.5">
+          <TabsList className="bg-transparent p-0 h-auto gap-1.5 flex-wrap justify-start">
             <TabsTrigger
               value="description"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-xs transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-2xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-2xs transition-all"
             >
-              <FileText className="size-4" />
+              <FileText className="size-3.5" />
               <span>{t('detail.description')}</span>
             </TabsTrigger>
 
             <TabsTrigger
               value="specifications"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-xs transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-2xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-2xs transition-all"
             >
-              <SlidersHorizontal className="size-4" />
+              <SlidersHorizontal className="size-3.5" />
               <span>{t('detail.specifications')}</span>
             </TabsTrigger>
 
             <TabsTrigger
               value="warranty"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-xs transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/60 data-[active]:bg-primary data-[active]:text-primary-foreground data-[active]:shadow-2xs aria-selected:bg-primary aria-selected:text-primary-foreground aria-selected:shadow-2xs transition-all"
             >
-              <ShieldCheck className="size-4" />
+              <ShieldCheck className="size-3.5" />
               <span>{t('detail.warranty')}</span>
             </TabsTrigger>
           </TabsList>

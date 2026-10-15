@@ -25,7 +25,7 @@ export function SearchProductGrid({
 }: SearchProductGridProps) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-2.5 lg:gap-3">
         {Array.from({ length: pageSize }).map((_, index) => (
           <SearchProductCardSkeleton key={index} />
         ))}
@@ -46,7 +46,7 @@ export function SearchProductGrid({
   return (
     <div
       data-slot="search-product-grid"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6"
+      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-2.5 lg:gap-3"
     >
       {products.map((product) => (
         <SearchProductCard key={product.id} product={product} />

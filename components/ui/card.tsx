@@ -24,11 +24,21 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+export interface CardTitleProps extends React.ComponentProps<"div"> {
+  size?: "default" | "sm" | "lg"
+}
+
+function CardTitle({ className, size = "default", ...props }: CardTitleProps) {
   return (
     <div
       data-slot="card-title"
-      className={cn("leading-none font-semibold", className)}
+      className={cn(
+        "leading-none font-semibold tracking-tight",
+        size === "default" && "text-base sm:text-lg",
+        size === "sm" && "text-sm sm:text-base",
+        size === "lg" && "text-lg sm:text-xl",
+        className
+      )}
       {...props}
     />
   )
@@ -38,7 +48,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn("text-muted-foreground text-xs sm:text-sm leading-normal", className)}
       {...props}
     />
   )

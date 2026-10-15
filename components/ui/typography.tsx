@@ -5,22 +5,24 @@ import { cn } from "@/lib/utils"
 export const typographyVariants = cva("text-foreground", {
   variants: {
     variant: {
-      h1: "scroll-m-20 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-balance",
-      h2: "scroll-m-20 text-2xl sm:text-3xl font-bold tracking-tight text-balance",
-      h3: "scroll-m-20 text-xl sm:text-2xl font-semibold tracking-tight text-balance",
-      h4: "scroll-m-20 text-lg sm:text-xl font-semibold tracking-tight text-balance",
-      h5: "scroll-m-20 text-base sm:text-lg font-semibold tracking-tight text-balance",
-      h6: "text-sm sm:text-base font-semibold tracking-tight text-balance",
+      display: "scroll-m-20 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-balance",
+      h1: "scroll-m-20 text-2xl sm:text-3xl font-extrabold tracking-tight text-balance",
+      h2: "scroll-m-20 text-xl sm:text-2xl font-bold tracking-tight text-balance",
+      h3: "scroll-m-20 text-lg sm:text-xl font-semibold tracking-tight text-balance",
+      h4: "scroll-m-20 text-base sm:text-lg font-semibold tracking-tight text-balance",
+      h5: "scroll-m-20 text-sm sm:text-base font-semibold tracking-tight text-balance",
+      h6: "text-xs sm:text-sm font-semibold tracking-tight text-balance",
       p: "leading-7 [&:not(:first-child)]:mt-3",
-      lead: "text-lg sm:text-xl text-muted-foreground leading-relaxed",
+      lead: "text-base sm:text-lg text-muted-foreground leading-relaxed",
       large: "text-lg font-semibold",
-      small: "text-sm font-medium leading-none",
-      muted: "text-sm text-muted-foreground",
+      small: "text-xs sm:text-sm font-medium leading-none",
+      muted: "text-xs sm:text-sm text-muted-foreground",
       caption: "text-xs text-muted-foreground",
-      subtitle: "text-sm sm:text-base font-medium text-muted-foreground",
+      micro: "text-micro font-bold uppercase tracking-wider",
+      subtitle: "text-xs sm:text-sm font-medium text-muted-foreground",
       overline: "text-xs font-semibold uppercase tracking-wider text-muted-foreground",
-      label: "text-sm font-semibold text-foreground",
-      code: "relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
+      label: "text-sm font-medium text-foreground",
+      code: "relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs sm:text-sm font-semibold",
       blockquote: "mt-6 border-l-2 border-border pl-6 italic",
       tabular: "tabular-nums tracking-tight",
     },
@@ -40,6 +42,7 @@ export const typographyVariants = cva("text-foreground", {
 export type TypographyVariant = NonNullable<VariantProps<typeof typographyVariants>["variant"]>
 
 const defaultTagMap: Record<TypographyVariant, React.ElementType> = {
+  display: "h1",
   h1: "h1",
   h2: "h2",
   h3: "h3",
@@ -52,6 +55,7 @@ const defaultTagMap: Record<TypographyVariant, React.ElementType> = {
   small: "small",
   muted: "p",
   caption: "span",
+  micro: "span",
   subtitle: "p",
   overline: "span",
   label: "span",
@@ -92,6 +96,10 @@ type SubComponentProps<E extends React.ElementType> = {
   as?: React.ElementType
   affects?: VariantProps<typeof typographyVariants>["affects"]
 } & React.ComponentPropsWithoutRef<E>
+
+export function TypographyDisplay({ as, className, affects, ...props }: SubComponentProps<"h1">) {
+  return <Typography as={as || "h1"} variant="display" affects={affects} className={className} {...props} />
+}
 
 export function TypographyH1({ as, className, affects, ...props }: SubComponentProps<"h1">) {
   return <Typography as={as || "h1"} variant="h1" affects={affects} className={className} {...props} />
@@ -141,6 +149,10 @@ export function TypographyCaption({ as, className, affects, ...props }: SubCompo
   return <Typography as={as || "span"} variant="caption" affects={affects} className={className} {...props} />
 }
 
+export function TypographyMicro({ as, className, affects, ...props }: SubComponentProps<"span">) {
+  return <Typography as={as || "span"} variant="micro" affects={affects} className={className} {...props} />
+}
+
 export function TypographySubtitle({ as, className, affects, ...props }: SubComponentProps<"p">) {
   return <Typography as={as || "p"} variant="subtitle" affects={affects} className={className} {...props} />
 }
@@ -165,6 +177,7 @@ export function TypographyTabular({ as, className, affects, ...props }: SubCompo
   return <Typography as={as || "span"} variant="tabular" affects={affects} className={className} {...props} />
 }
 
+Typography.Display = TypographyDisplay
 Typography.H1 = TypographyH1
 Typography.H2 = TypographyH2
 Typography.H3 = TypographyH3
@@ -177,6 +190,7 @@ Typography.Large = TypographyLarge
 Typography.Small = TypographySmall
 Typography.Muted = TypographyMuted
 Typography.Caption = TypographyCaption
+Typography.Micro = TypographyMicro
 Typography.Subtitle = TypographySubtitle
 Typography.Overline = TypographyOverline
 Typography.Label = TypographyLabel

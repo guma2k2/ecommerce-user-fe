@@ -65,13 +65,13 @@ export function SearchFacetSidebar({
   return (
     <aside
       data-slot="facet-sidebar"
-      className={`w-full rounded-2xl border border-border/70 bg-card/60 backdrop-blur-sm p-4 sm:p-5 shadow-xs ${className || ''}`}
+      className={`w-full rounded-xl border border-border/70 bg-card/60 backdrop-blur-sm p-3 sm:p-3.5 shadow-2xs ${className || ''}`}
     >
       {/* Sidebar Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-border/60 mb-5">
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal className="size-4 text-primary" />
-          <h2 className="font-bold text-base tracking-tight text-foreground">
+      <div className="flex items-center justify-between pb-2.5 border-b border-border/60 mb-3">
+        <div className="flex items-center gap-1.5">
+          <SlidersHorizontal className="size-3.5 text-primary" />
+          <h2 className="font-bold text-xs sm:text-sm tracking-tight text-foreground">
             {t('search.filters.title')}
           </h2>
         </div>
@@ -82,34 +82,34 @@ export function SearchFacetSidebar({
             variant="ghost"
             size="sm"
             onClick={onClearAll}
-            className="h-7 text-xs text-muted-foreground hover:text-destructive gap-1 px-2"
+            className="h-6 text-micro text-muted-foreground hover:text-destructive gap-1 px-1.5"
           >
-            <RotateCcw className="size-3" />
+            <RotateCcw className="size-2.5" />
             {t('search.filters.resetAll')}
           </Button>
         )}
       </div>
 
-      <div className="space-y-6 divide-y divide-border/40">
+      <div className="space-y-4 divide-y divide-border/40">
         {/* 1. Price Range Section */}
-        <div className="pt-2 first:pt-0">
+        <div className="pt-1.5 first:pt-0">
           <Button
             type="button"
             variant="ghost"
             size="unstyled"
             onClick={() => toggleSection('price')}
-            className="flex w-full items-center justify-between py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
+            className="flex w-full items-center justify-between py-1.5 text-xs sm:text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
           >
             <span>{t('search.filters.priceRange')}</span>
             <ChevronDown
-              className={`size-4 text-muted-foreground transition-transform duration-200 ${
+              className={`size-3.5 text-muted-foreground transition-transform duration-200 ${
                 collapsedSections['price'] ? '-rotate-90' : ''
               }`}
             />
           </Button>
 
           {!collapsedSections['price'] && (
-            <div className="pt-2">
+            <div className="pt-1.5">
               <FacetPriceRange
                 priceRange={facets.priceRange}
                 currentMinPrice={minPrice}
@@ -122,31 +122,31 @@ export function SearchFacetSidebar({
 
         {/* 2. Brands Section */}
         {facets.brands && facets.brands.length > 0 && (
-          <div className="pt-5">
+          <div className="pt-3">
             <Button
               type="button"
               variant="ghost"
               size="unstyled"
               onClick={() => toggleSection('brands')}
-              className="flex w-full items-center justify-between py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
+              className="flex w-full items-center justify-between py-1.5 text-xs sm:text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
             >
               <div className="flex items-center gap-1.5">
                 <span>{t('search.filters.brands')}</span>
                 {selectedBrandIds.length > 0 && (
-                  <span className="flex size-4.5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                  <span className="flex size-4 items-center justify-center rounded-full bg-primary text-micro font-bold text-primary-foreground tabular-nums">
                     {selectedBrandIds.length}
                   </span>
                 )}
               </div>
               <ChevronDown
-                className={`size-4 text-muted-foreground transition-transform duration-200 ${
+                className={`size-3.5 text-muted-foreground transition-transform duration-200 ${
                   collapsedSections['brands'] ? '-rotate-90' : ''
                 }`}
               />
             </Button>
 
             {!collapsedSections['brands'] && (
-              <div className="pt-2">
+              <div className="pt-1.5">
                 <FacetBrandGroup
                   brands={facets.brands}
                   selectedBrandIds={selectedBrandIds}
@@ -165,31 +165,31 @@ export function SearchFacetSidebar({
             const activeValuesForAttr = parsedAttrMap.get(attr.id) || [];
 
             return (
-              <div key={attr.id} className="pt-5">
+              <div key={attr.id} className="pt-3">
                 <Button
                   type="button"
                   variant="ghost"
                   size="unstyled"
                   onClick={() => toggleSection(sectionKey)}
-                  className="flex w-full items-center justify-between py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
+                  className="flex w-full items-center justify-between py-1.5 text-xs sm:text-sm font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>{attr.name}</span>
                     {activeValuesForAttr.length > 0 && (
-                      <span className="flex size-4.5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                      <span className="flex size-4 items-center justify-center rounded-full bg-primary text-micro font-bold text-primary-foreground tabular-nums">
                         {activeValuesForAttr.length}
                       </span>
                     )}
                   </div>
                   <ChevronDown
-                    className={`size-4 text-muted-foreground transition-transform duration-200 ${
+                    className={`size-3.5 text-muted-foreground transition-transform duration-200 ${
                       isCollapsed ? '-rotate-90' : ''
                     }`}
                   />
                 </Button>
 
                 {!isCollapsed && (
-                  <div className="pt-2">
+                  <div className="pt-1.5">
                     <FacetAttributeGroup
                       attribute={attr}
                       selectedValues={activeValuesForAttr}

@@ -22,35 +22,35 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
   return (
     <div
       data-slot="product-card"
-      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-card/60 backdrop-blur-xs transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:-translate-y-1"
+      className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/70 bg-card/70 backdrop-blur-xs transition-all duration-200 hover:border-primary/50 hover:shadow-md hover:-translate-y-0.5"
     >
       <div>
         {/* Thumbnail Image Container */}
-        <Link href={detailUrl} className="block relative aspect-square w-full overflow-hidden bg-muted/40">
+        <Link href={detailUrl} className="block relative aspect-square w-full overflow-hidden bg-muted/30">
           {product.thumbnailUrl ? (
             <Image
               src={product.thumbnailUrl}
               alt={product.name}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-104"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-muted-foreground/50">
-              <Package className="size-12" />
+              <Package className="size-10" />
             </div>
           )}
 
           {/* Badges Overlay */}
-          <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+          <div className="absolute top-1.5 left-1.5 right-1.5 flex items-center justify-between pointer-events-none">
             {product.brandName ? (
-              <Badge variant="secondary" className="text-[10px] font-semibold tracking-wider uppercase backdrop-blur-md bg-background/80 shadow-2xs">
+              <Badge variant="secondary" size="sm" className="backdrop-blur-md bg-background/85 shadow-2xs">
                 {product.brandName}
               </Badge>
             ) : <span />}
 
             {product.categoryName && (
-              <Badge variant="outline" className="text-[10px] font-medium backdrop-blur-md bg-background/80">
+              <Badge variant="outline" size="sm" className="backdrop-blur-md bg-background/85">
                 {product.categoryName}
               </Badge>
             )}
@@ -58,11 +58,11 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
         </Link>
 
         {/* Content Body */}
-        <div className="p-4 space-y-2">
+        <div className="p-2.5 space-y-1">
           <Link href={detailUrl}>
             <h3
               title={product.name}
-              className="font-semibold text-sm sm:text-base text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug"
+              className="font-medium text-xs sm:text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug min-h-[2.4rem]"
             >
               {product.name}
             </h3>
@@ -71,20 +71,20 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
       </div>
 
       {/* Footer Price & Action */}
-      <div className="p-4 pt-0 flex items-center justify-between border-t border-border/40 mt-3 pt-3">
+      <div className="p-2.5 pt-0 flex items-center justify-between border-t border-border/30 mt-1 pt-2">
         <div>
-          <span className="text-[11px] text-muted-foreground block font-medium">{t('search.card.price')}</span>
-          <p className="font-bold text-sm sm:text-base text-primary">
+          <span className="text-micro text-muted-foreground block font-medium uppercase tracking-wider">{t('search.card.price')}</span>
+          <p className="font-bold text-sm sm:text-base text-primary tabular-nums">
             {formatPriceRange(product.minPrice, product.maxPrice)}
           </p>
         </div>
 
         <Link
           href={detailUrl}
-          className="flex size-8.5 items-center justify-center rounded-xl bg-muted/80 text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-200"
+          className="flex size-7 items-center justify-center rounded-lg bg-muted/70 text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-200"
           aria-label={t('search.card.viewDetails', { name: product.name })}
         >
-          <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>
       </div>
     </div>

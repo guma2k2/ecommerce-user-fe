@@ -31,15 +31,15 @@ export function CartItemList({ items, totalQuantity }: CartItemListProps) {
     <div className="space-y-4">
       {/* Header bar */}
       <div className="flex items-center justify-between pb-2 border-b border-border/60">
-        <Typography.H2 className="text-base sm:text-lg font-bold">
+        <Typography.H4 className="font-bold">
           {t('table.itemsCount', { count: totalQuantity })}
-        </Typography.H2>
+        </Typography.H4>
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={() => setIsClearModalOpen(true)}
-          className="text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg gap-1.5 h-8 px-2.5"
+          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg gap-1.5 h-8 px-2.5"
         >
           <Trash2 className="size-3.5" />
           {t('clear.button')}

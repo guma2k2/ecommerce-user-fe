@@ -21,11 +21,11 @@ export function CartEmptyState({ isGuest = false }: CartEmptyStateProps) {
         <ShoppingBag className="size-10 stroke-[1.5]" />
       </div>
 
-      <Typography.H2 className="text-2xl font-bold tracking-tight mb-2">
+      <Typography.H2 className="mb-2">
         {isGuest ? t('empty.guestTitle') : t('empty.title')}
       </Typography.H2>
 
-      <Typography.Muted className="text-sm mb-8">
+      <Typography.Muted className="mb-8">
         {isGuest ? t('empty.guestDescription') : t('empty.description')}
       </Typography.Muted>
 
