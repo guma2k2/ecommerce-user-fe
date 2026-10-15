@@ -14,6 +14,25 @@ export function useVariantSelection(product?: ProductDetail | null) {
   const searchParams = useSearchParams();
   const variantParam = searchParams.get('variant');
 
+  // Helper to map variant's productOptionValueIds to optionId -> valueId
+  const getOptionsForVariant = useCallback(
+    (variant: ProductVariant | null | undefined, prod: ProductDetail | null | undefined) => {
+      const map: Record<number, number> = {};
+      if (variant && prod?.options) {
+        variant.productOptionValueIds.forEach((valId) => {
+          for (const opt of prod.options) {
+            if (opt.values.some((v) => v.id === valId)) {
+              map[opt.productOptionId] = valId;
+              break;
+            }
+          }
+        });
+      }
+      return map;
+    },
+    []
+  );
+
   // Find initial variant from URL param or default to first variant
   const initialVariant = useMemo(() => {
     if (!product?.variants || product.variants.length === 0) return null;
@@ -28,38 +47,39 @@ export function useVariantSelection(product?: ProductDetail | null) {
 
   // Map optionId -> optionValueId
   const [selectedOptions, setSelectedOptions] = useState<Record<number, number>>(() => {
-    const initialMap: Record<number, number> = {};
-    if (initialVariant && product?.options) {
-      initialVariant.productOptionValueIds.forEach((valId) => {
-        // Find which option contains this valId
-        for (const opt of product.options) {
-          if (opt.values.some((v) => v.id === valId)) {
-            initialMap[opt.productOptionId] = valId;
-            break;
-          }
-        }
-      });
-    }
-    return initialMap;
+    return getOptionsForVariant(initialVariant, product);
   });
 
-  // Keep selectedOptions in sync if variantParam changes externally without effect-driven cascading renders
-  const [prevVariantParam, setPrevVariantParam] = useState(variantParam);
+  // Track previous product ID and variant param to synchronize during render without useEffect cascading renders
+  const [prevProductId, setPrevProductId] = useState<number | null>(product?.id ?? null);
+  const [prevVariantParam, setPrevVariantParam] = useState<string | null>(variantParam);
+
+  // If product changed or was just loaded asynchronously, synchronize selectedOptions
+  const shouldReinitializeProduct =
+    Boolean(product && product.id !== prevProductId) ||
+    Boolean(
+      product &&
+        product.variants &&
+        product.variants.length > 0 &&
+        Object.keys(selectedOptions).length === 0
+    );
+
+  if (shouldReinitializeProduct && product) {
+    setPrevProductId(product.id);
+    const targetVariant = variantParam
+      ? product.variants.find((v) => String(v.id) === variantParam) || product.variants[0]
+      : product.variants[0];
+    const newMap = getOptionsForVariant(targetVariant, product);
+    setSelectedOptions(newMap);
+  }
+
+  // If variantParam changed externally (e.g. browser history navigation)
   if (variantParam !== prevVariantParam) {
     setPrevVariantParam(variantParam);
     if (variantParam && product?.variants && product?.options) {
       const matched = product.variants.find((v) => String(v.id) === variantParam);
       if (matched) {
-        const newMap: Record<number, number> = {};
-        matched.productOptionValueIds.forEach((valId) => {
-          for (const opt of product.options) {
-            if (opt.values.some((v) => v.id === valId)) {
-              newMap[opt.productOptionId] = valId;
-              break;
-            }
-          }
-        });
-        setSelectedOptions(newMap);
+        setSelectedOptions(getOptionsForVariant(matched, product));
       }
     }
   }
@@ -82,16 +102,7 @@ export function useVariantSelection(product?: ProductDetail | null) {
       );
 
       if (matchedVariant) {
-        const newMap: Record<number, number> = {};
-        matchedVariant.productOptionValueIds.forEach((valId) => {
-          for (const opt of product.options) {
-            if (opt.values.some((v) => v.id === valId)) {
-              newMap[opt.productOptionId] = valId;
-              break;
-            }
-          }
-        });
-        setSelectedOptions(newMap);
+        setSelectedOptions(getOptionsForVariant(matchedVariant, product));
 
         const nextUrl = `/products/${product.slug}?variant=${matchedVariant.id}`;
         router.replace(nextUrl, { scroll: false });
@@ -101,7 +112,7 @@ export function useVariantSelection(product?: ProductDetail | null) {
         setSelectedOptions(nextOptions);
       }
     },
-    [selectedOptions, product, router]
+    [selectedOptions, product, router, getOptionsForVariant]
   );
 
   // Computes granular option status: 'selected' | 'available' | 'out_of_stock' | 'disabled'

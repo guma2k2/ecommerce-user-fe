@@ -34,7 +34,7 @@ export function SearchSortSelect({ value, onChange }: SearchSortSelectProps) {
           </option>
         ))}
       </select>
-      <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none text-[10px]">
+      <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none text-micro">
         ▼
       </span>
     </div>

@@ -2,6 +2,7 @@ import type {
   ProductDetail,
   ProductVariant,
   OptionValueStatus,
+  ProductMedia,
 } from '../types';
 
 /**
@@ -25,7 +26,12 @@ export function findExactVariant(
   product?: ProductDetail | null,
   selectedOptions?: Record<number, number>
 ): ProductVariant | null {
-  if (!product?.variants || !selectedOptions) return null;
+  if (!product?.variants || product.variants.length === 0 || !selectedOptions) return null;
+
+  // If the product has no configurable options, return the primary default variant
+  if (!product.options || product.options.length === 0) {
+    return product.variants[0];
+  }
 
   const selectedValues = Object.values(selectedOptions);
   if (selectedValues.length === 0) return null;
@@ -164,4 +170,42 @@ export function getOptionValueStatus(
 
   const hasStock = matchingVariants.some((v) => v.quantity > 0);
   return hasStock ? 'available' : 'out_of_stock';
+}
+
+/**
+ * Detects if a media asset is a video (by type or file extension)
+ */
+export function isMediaVideo(media?: ProductMedia | string | null): boolean {
+  if (!media) return false;
+  if (typeof media === 'string') {
+    return (
+      media.includes('/video/upload/') ||
+      /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(media)
+    );
+  }
+  return (
+    media.type === 'VIDEO' ||
+    (Boolean(media.url) &&
+      (media.url.includes('/video/upload/') ||
+        /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(media.url)))
+  );
+}
+
+/**
+ * Resolves a valid image thumbnail URL for either an image or a video.
+ * For Cloudinary video URLs, transforms .mp4 to .jpg to extract the video frame poster.
+ */
+export function getMediaThumbnailUrl(media?: ProductMedia | string | null): string {
+  if (!media) return '';
+  const url = typeof media === 'string' ? media : media.url;
+  if (!url) return '';
+
+  if (isMediaVideo(media)) {
+    // Cloudinary video thumbnail poster: replace video extension with .jpg
+    if (url.includes('/video/upload/')) {
+      return url.replace(/\.(mp4|webm|ogg|mov)(\?.*)?$/i, '.jpg');
+    }
+  }
+
+  return url;
 }

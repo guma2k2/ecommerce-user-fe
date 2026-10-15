@@ -69,7 +69,7 @@ export function FacetBrandGroup({
                     {brand.name}
                   </span>
                 </div>
-                <span className="shrink-0 text-[11px] text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded-md font-mono">
+                <span className="shrink-0 text-xs text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded-md font-mono tabular-nums">
                   {brand.count}
                 </span>
               </label>

@@ -55,7 +55,7 @@ export function SearchContainer({
   } = useSearchFilters({
     fixedCategoryId,
     fixedCategorySlug,
-    defaultPageSize: 12,
+    defaultPageSize: 20,
   });
 
   const { products, pagination, facets, isLoading } = useProductSearch(params);
@@ -65,7 +65,7 @@ export function SearchContainer({
   const totalPages = pagination?.totalPages ?? 1;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 max-w-7xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4 max-w-7xl">
       {/* 1. Breadcrumbs & Page Header */}
       <div className="space-y-3">
         {/* Breadcrumb */}
@@ -122,7 +122,7 @@ export function SearchContainer({
               <span>{isCategoryMode ? t('search.categoryStore') : t('search.discoveryEngine')}</span>
             </div>
 
-            <Typography.H1 className="text-2xl sm:text-3xl font-extrabold capitalize">
+            <Typography.H1 className="capitalize">
               {isCategoryMode
                 ? categoryTitle || fixedCategorySlug || tCommon('nav.products')
                 : params.keyword
@@ -131,7 +131,7 @@ export function SearchContainer({
             </Typography.H1>
 
             {categoryDescription && (
-              <Typography.Muted className="text-xs sm:text-sm mt-1 max-w-2xl block">
+              <Typography.Muted className="mt-1 max-w-2xl block">
                 {categoryDescription}
               </Typography.Muted>
             )}
@@ -208,7 +208,7 @@ export function SearchContainer({
       </div>
 
       {/* 3. Main Discovery 2-Column Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 lg:gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-5 xl:grid-cols-6 gap-3.5 lg:gap-4 items-start">
         {/* Desktop Sidebar (1 column) */}
         <div className="hidden md:block md:col-span-1 sticky top-20">
           <SearchFacetSidebar
@@ -225,8 +225,8 @@ export function SearchContainer({
           />
         </div>
 
-        {/* Product Catalog Grid + Pagination (3 columns) */}
-        <main className="md:col-span-3 space-y-6">
+        {/* Product Catalog Grid + Pagination (4 or 5 columns) */}
+        <main className="md:col-span-4 xl:col-span-5 space-y-5">
           <SearchProductGrid
             products={products}
             isLoading={isLoading}

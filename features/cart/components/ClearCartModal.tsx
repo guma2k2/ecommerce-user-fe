@@ -35,10 +35,10 @@ export function ClearCartModal({
             <AlertTriangle className="size-5" />
           </div>
           <div>
-            <Typography.H3 id="clear-cart-title" className="text-base font-bold">
+            <Typography.H3 id="clear-cart-title" className="font-bold">
               {t('clear.title')}
             </Typography.H3>
-            <Typography.Caption className="text-xs mt-0.5 block">
+            <Typography.Caption className="mt-0.5 block">
               {t('clear.description')}
             </Typography.Caption>
           </div>

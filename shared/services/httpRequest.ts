@@ -4,7 +4,10 @@ import { STORAGE_KEYS } from '@/shared/constants';
 import { keysToCamelCase, keysToSnakeCase } from '@/shared/utils/appUtils';
 import type { ApiResponse } from '@/shared/types/api';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const BASE_URL =
+  typeof window === 'undefined'
+    ? process.env.INTERNAL_API_URL || process.env.BACKEND_API_URL || 'http://localhost:8080/api/v1'
+    : process.env.NEXT_PUBLIC_API_URL || '';
 
 export const httpRequest = axios.create({
   baseURL: BASE_URL,
@@ -58,6 +61,14 @@ httpRequest.interceptors.request.use(
 
     if (config.params) {
       config.params = keysToSnakeCase(config.params);
+    }
+
+    // Ensure absolute URL during server-side execution (SSR prefetching)
+    if (typeof window === 'undefined' && (!config.baseURL || !config.baseURL.startsWith('http'))) {
+      config.baseURL =
+        process.env.INTERNAL_API_URL ||
+        process.env.BACKEND_API_URL ||
+        'http://localhost:8080/api/v1';
     }
 
     return config;

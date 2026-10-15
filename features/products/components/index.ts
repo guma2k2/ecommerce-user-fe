@@ -5,3 +5,4 @@ export * from './ProductSpecificationsTable';
 export * from './ProductInfoTabs';
 export * from './ProductDetailSkeleton';
 export * from './ProductDetailContainer';
+export * from './ProductMediaDialog';

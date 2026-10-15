@@ -20,16 +20,16 @@ export function Header({ className = '' }: HeaderProps) {
     <header
       className={`sticky top-0 z-50 w-full border-b border-border/70 bg-background/95 backdrop-blur-md transition-all duration-200 ${className}`}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="container mx-auto flex h-14 items-center justify-between gap-3 px-3 sm:px-5 lg:px-6">
         {/* Brand Logo */}
         <Link
           href={ROUTES.HOME}
-          className="flex items-center gap-2.5 font-bold text-xl tracking-tight shrink-0 group focus-visible:outline-none"
+          className="flex items-center gap-2 font-bold text-lg tracking-tight shrink-0 group focus-visible:outline-none"
         >
-          <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground font-extrabold text-base shadow-sm group-hover:scale-105 transition-transform duration-200">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-extrabold text-sm shadow-2xs group-hover:scale-105 transition-transform duration-200">
             E
           </div>
-          <span className="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-foreground/75 bg-clip-text text-transparent">
+          <span className="font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-foreground/75 bg-clip-text text-transparent">
             {t('app.name')}
           </span>
         </Link>

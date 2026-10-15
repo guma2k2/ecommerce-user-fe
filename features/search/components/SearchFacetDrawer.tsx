@@ -54,7 +54,7 @@ export function SearchFacetDrawer({
         <SlidersHorizontal className="size-3.5 text-primary" />
         <span>{t('search.filters.title')}</span>
         {activeFilterCount > 0 && (
-          <span className="flex size-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+          <span className="flex size-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground tabular-nums">
             {activeFilterCount}
           </span>
         )}

@@ -43,8 +43,8 @@ export function CartPageContent() {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-center">
         <div className="max-w-md mx-auto space-y-4">
-          <Typography.H2 className="text-xl font-bold">{t('error.title')}</Typography.H2>
-          <Typography.Muted className="text-sm">
+          <Typography.H2>{t('error.title')}</Typography.H2>
+          <Typography.Muted>
             {t('error.description')}
           </Typography.Muted>
           <Button onClick={() => refetch()} variant="outline" className="rounded-xl">
@@ -65,14 +65,14 @@ export function CartPageContent() {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+    <div className="container mx-auto max-w-7xl px-3 sm:px-5 lg:px-6 py-4 sm:py-6">
       {/* Breadcrumb & Navigation */}
-      <div className="flex items-center justify-between pb-6">
-        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+      <div className="flex items-center justify-between pb-4">
+        <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground">
           <Link href={ROUTES.HOME} className="hover:text-foreground transition-colors">
             {tCommon('nav.home')}
           </Link>
-          <ChevronRight className="size-3.5" />
+          <ChevronRight className="size-3" />
           <span className="text-foreground font-medium">{t('title')}</span>
         </div>
 
@@ -80,20 +80,20 @@ export function CartPageContent() {
           href={ROUTES.SHOP.CATALOG}
           className={cn(
             buttonVariants({ variant: 'ghost', size: 'sm' }),
-            'text-xs text-muted-foreground hover:text-foreground flex items-center gap-1.5'
+            'text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs h-7 px-2'
           )}
         >
-          <ArrowLeft className="size-3.5" />
+          <ArrowLeft className="size-3" />
           {t('summary.continueShopping')}
         </Link>
       </div>
 
-      <Typography.H1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-8">
+      <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-4">
         {t('title')}
-      </Typography.H1>
+      </h1>
 
       {/* Main 2-column grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
         <div className="lg:col-span-8">
           <CartItemList items={items} totalQuantity={totalQuantity} />
         </div>

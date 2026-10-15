@@ -94,7 +94,7 @@ export function FacetPriceRange({
               }
             }}
           />
-          <div className="flex justify-between items-center text-[11px] text-muted-foreground mt-1">
+          <div className="flex justify-between items-center text-xs text-muted-foreground mt-1 tabular-nums">
             <span>{formatPriceValue(globalMin)}</span>
             <span>{formatPriceValue(globalMax)}</span>
           </div>
@@ -104,7 +104,7 @@ export function FacetPriceRange({
       {/* Min & Max Inputs */}
       <div className="grid grid-cols-2 gap-2 items-center">
         <div>
-          <label className="text-[11px] text-muted-foreground font-medium mb-1 block">
+          <label className="text-xs text-muted-foreground font-medium mb-1 block">
             {t('search.filters.minPrice')}
           </label>
           <div className="relative">
@@ -122,7 +122,7 @@ export function FacetPriceRange({
         </div>
 
         <div>
-          <label className="text-[11px] text-muted-foreground font-medium mb-1 block">
+          <label className="text-xs text-muted-foreground font-medium mb-1 block">
             {t('search.filters.maxPrice')}
           </label>
           <div className="relative">
@@ -164,7 +164,7 @@ export function FacetPriceRange({
 
       {/* Quick Presets */}
       <div className="space-y-1.5 pt-1 border-t border-border/50">
-        <span className="text-[11px] font-medium text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           {t('search.filters.quickRanges')}
         </span>
         <div className="grid grid-cols-2 gap-1.5">
@@ -178,7 +178,7 @@ export function FacetPriceRange({
                 variant={isSelected ? 'default' : 'outline'}
                 size="xs"
                 onClick={() => handlePreset(p.min, p.max)}
-                className={`justify-start text-left truncate px-2 rounded-md text-[11px] h-7 font-normal ${
+                className={`justify-start text-left truncate px-2 rounded-md text-xs h-7 font-normal ${
                   isSelected
                     ? 'border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary font-medium shadow-none'
                     : 'border-border/60 hover:bg-muted/60 text-muted-foreground hover:text-foreground'

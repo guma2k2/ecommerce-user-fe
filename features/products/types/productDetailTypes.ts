@@ -9,9 +9,14 @@ export interface ProductCategory {
 }
 
 export interface ProductMedia {
-  id: string;
+  mediaId?: string;
+  id?: string;
   url: string;
   position: number;
+  type?: 'IMAGE' | 'VIDEO' | string | null;
+  altText?: string | null;
+  duration?: string | null;
+  variantIds?: number[];
 }
 
 export interface ProductAttributeItem {
