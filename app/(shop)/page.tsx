@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6 max-w-7xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6">
       {/* Top Section: Left Category Sidebar + Right Promo Banner */}
-      <section className="flex flex-col lg:flex-row gap-4 sm:gap-5 items-stretch">
+      <section className="flex flex-col lg:flex-row gap-4 sm:gap-5 items-start">
         {/* Left Sidebar: Parent Categories */}
         <CategorySidebar />
 

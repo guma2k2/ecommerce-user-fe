@@ -8,7 +8,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
     <div className="min-h-screen flex flex-col bg-background">
       {/* Account Shell Header */}
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6">
             <Link
               href={ROUTES.HOME}
@@ -51,7 +51,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-8 sm:px-8">
+      <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
 

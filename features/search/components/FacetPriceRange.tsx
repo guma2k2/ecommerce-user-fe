@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Input, Slider } from '@/components/ui';
+import { Button, Slider } from '@/components/ui';
 import { formatPriceValue } from '../utils';
 import type { PriceRangeFacet } from '../types';
 
@@ -23,48 +23,33 @@ export function FacetPriceRange({
   const globalMin = Math.floor(priceRange?.minPrice ?? 0);
   const globalMax = Math.ceil(priceRange?.maxPrice ?? 5000);
 
-  const [minInput, setMinInput] = useState<string>(
-    currentMinPrice !== undefined ? String(currentMinPrice) : ''
-  );
-  const [maxInput, setMaxInput] = useState<string>(
-    currentMaxPrice !== undefined ? String(currentMaxPrice) : ''
-  );
+  const effectiveMin = currentMinPrice !== undefined ? currentMinPrice : globalMin;
+  const effectiveMax = currentMaxPrice !== undefined ? currentMaxPrice : globalMax;
 
-  const [prevMin, setPrevMin] = useState(currentMinPrice);
-  const [prevMax, setPrevMax] = useState(currentMaxPrice);
+  // Track slider range with live drag updates
+  const [sliderRange, setSliderRange] = useState<[number, number]>([effectiveMin, effectiveMax]);
+  const [prevProps, setPrevProps] = useState({ min: currentMinPrice, max: currentMaxPrice });
 
-  if (currentMinPrice !== prevMin) {
-    setPrevMin(currentMinPrice);
-    setMinInput(currentMinPrice !== undefined ? String(currentMinPrice) : '');
+  // Sync state during render when props change (React 19 recommended pattern)
+  if (prevProps.min !== currentMinPrice || prevProps.max !== currentMaxPrice) {
+    setPrevProps({ min: currentMinPrice, max: currentMaxPrice });
+    setSliderRange([effectiveMin, effectiveMax]);
   }
-
-  if (currentMaxPrice !== prevMax) {
-    setPrevMax(currentMaxPrice);
-    setMaxInput(currentMaxPrice !== undefined ? String(currentMaxPrice) : '');
-  }
-
-  const sliderValue = [
-    currentMinPrice !== undefined ? currentMinPrice : globalMin,
-    currentMaxPrice !== undefined ? currentMaxPrice : globalMax,
-  ];
-
-  const handleApply = () => {
-    const min = minInput !== '' ? parseFloat(minInput) : undefined;
-    const max = maxInput !== '' ? parseFloat(maxInput) : undefined;
-    onApplyPriceRange(min, max);
-  };
-
-  const handlePreset = (min?: number, max?: number) => {
-    setMinInput(min !== undefined ? String(min) : '');
-    setMaxInput(max !== undefined ? String(max) : '');
-    onApplyPriceRange(min, max);
-  };
 
   const handleSliderChange = (vals: number | readonly number[]) => {
     if (Array.isArray(vals) && vals.length >= 2) {
-      setMinInput(String(vals[0]));
-      setMaxInput(String(vals[1]));
+      setSliderRange([vals[0], vals[1]]);
     }
+  };
+
+  const handleSliderCommit = (vals: number | readonly number[]) => {
+    if (Array.isArray(vals) && vals.length >= 2) {
+      onApplyPriceRange(vals[0], vals[1]);
+    }
+  };
+
+  const handlePreset = (min?: number, max?: number) => {
+    onApplyPriceRange(min, max);
   };
 
   const hasFilter = currentMinPrice !== undefined || currentMaxPrice !== undefined;
@@ -78,96 +63,46 @@ export function FacetPriceRange({
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3.5">
       {/* Slider component */}
       {globalMax > globalMin && (
-        <div className="px-1 pt-2">
+        <div className="px-1 pt-1">
           <Slider
             min={globalMin}
             max={globalMax}
             step={10}
-            value={sliderValue}
+            value={sliderRange}
             onValueChange={handleSliderChange}
-            onValueCommitted={(vals) => {
-              if (Array.isArray(vals) && vals.length >= 2) {
-                onApplyPriceRange(vals[0], vals[1]);
-              }
-            }}
+            onValueCommitted={handleSliderCommit}
           />
-          <div className="flex justify-between items-center text-xs text-muted-foreground mt-1 tabular-nums">
-            <span>{formatPriceValue(globalMin)}</span>
-            <span>{formatPriceValue(globalMax)}</span>
+          <div className="flex justify-between items-center text-xs mt-1.5 tabular-nums">
+            <span className="font-medium text-foreground">{formatPriceValue(sliderRange[0])}</span>
+            <span className="font-medium text-foreground">{formatPriceValue(sliderRange[1])}</span>
           </div>
         </div>
       )}
 
-      {/* Min & Max Inputs */}
-      <div className="grid grid-cols-2 gap-2 items-center">
-        <div>
-          <label className="text-xs text-muted-foreground font-medium mb-1 block">
-            {t('search.filters.minPrice')}
-          </label>
-          <div className="relative">
-            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-              $
-            </span>
-            <Input
-              type="number"
-              placeholder={String(globalMin)}
-              value={minInput}
-              onChange={(e) => setMinInput(e.target.value)}
-              className="h-8 pl-6 text-xs"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="text-xs text-muted-foreground font-medium mb-1 block">
-            {t('search.filters.maxPrice')}
-          </label>
-          <div className="relative">
-            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-              $
-            </span>
-            <Input
-              type="number"
-              placeholder={String(globalMax)}
-              value={maxInput}
-              onChange={(e) => setMaxInput(e.target.value)}
-              className="h-8 pl-6 text-xs"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Button
-          type="button"
-          size="sm"
-          onClick={handleApply}
-          className="flex-1 h-8 text-xs font-semibold"
-        >
-          {t('search.filters.applyPrice')}
-        </Button>
-        {hasFilter && (
+      {/* Filter Reset Button if active */}
+      {hasFilter && (
+        <div className="flex justify-end pt-0.5">
           <Button
             type="button"
-            variant="outline"
-            size="sm"
+            variant="ghost"
+            size="xs"
             onClick={() => handlePreset(undefined, undefined)}
-            className="h-8 text-xs px-2.5"
+            className="h-6 px-2 text-micro text-muted-foreground hover:text-foreground"
           >
             {t('search.filters.reset')}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Quick Presets */}
-      <div className="space-y-1.5 pt-1 border-t border-border/50">
+      <div className="space-y-1.5 pt-2 border-t border-border/50">
         <span className="text-xs font-medium text-muted-foreground block mb-1">
           {t('search.filters.quickRanges')}
         </span>
-        <div className="grid grid-cols-2 gap-1.5">
+        <div className="flex flex-wrap gap-1.5">
           {presets.map((p) => {
             const isSelected =
               currentMinPrice === p.min && currentMaxPrice === p.max;
@@ -178,7 +113,7 @@ export function FacetPriceRange({
                 variant={isSelected ? 'default' : 'outline'}
                 size="xs"
                 onClick={() => handlePreset(p.min, p.max)}
-                className={`justify-start text-left truncate px-2 rounded-md text-xs h-7 font-normal ${
+                className={`px-2.5 py-1 rounded-lg text-xs h-7 font-normal transition-colors ${
                   isSelected
                     ? 'border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary font-medium shadow-none'
                     : 'border-border/60 hover:bg-muted/60 text-muted-foreground hover:text-foreground'
