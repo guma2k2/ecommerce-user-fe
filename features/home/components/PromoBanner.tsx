@@ -13,7 +13,7 @@ interface PromoBannerProps {
 export function PromoBanner({ className = '' }: PromoBannerProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground p-5 sm:p-6 lg:p-7 shadow-md flex flex-col justify-between min-h-[240px] lg:min-h-[290px] ${className}`}
+      className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground p-4 sm:p-5 lg:p-6 shadow-md flex flex-col justify-between min-h-[200px] sm:min-h-[220px] ${className}`}
     >
       {/* Background Decorative Blobs */}
       <div className="absolute -right-16 -top-16 size-56 sm:size-72 rounded-full bg-white/10 blur-3xl pointer-events-none" />
@@ -31,12 +31,12 @@ export function PromoBanner({ className = '' }: PromoBannerProps) {
       </div>
 
       {/* Hero Headline & Description */}
-      <div className="relative z-10 my-2.5 max-w-xl space-y-2">
-        <Typography.Display className="leading-tight drop-shadow-xs text-primary-foreground text-xl sm:text-2xl lg:text-3xl font-extrabold">
+      <div className="relative z-10 my-2 max-w-xl space-y-1.5">
+        <Typography.H2 className="leading-snug drop-shadow-xs text-primary-foreground text-lg sm:text-xl lg:text-2xl font-bold tracking-tight">
           Next-Gen Tech, <br className="hidden sm:inline" />
           Unbeatable Value.
-        </Typography.Display>
-        <Typography.P affects="removeMargin" className="text-xs sm:text-sm text-primary-foreground/90 max-w-md font-medium leading-relaxed">
+        </Typography.H2>
+        <Typography.P affects="removeMargin" className="text-xs sm:text-sm text-primary-foreground/90 max-w-md font-normal leading-relaxed">
           Upgrade your workspace with flagship laptops, smartphones, and audio gear. Authentic warranty and fast delivery guaranteed.
         </Typography.P>
       </div>

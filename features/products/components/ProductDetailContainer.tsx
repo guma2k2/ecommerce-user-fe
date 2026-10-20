@@ -59,7 +59,7 @@ export function ProductDetailContainer({ slug }: ProductDetailContainerProps) {
   }
 
   return (
-    <div className="container mx-auto px-3 sm:px-5 lg:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6 sm:space-y-8">
       {/* Breadcrumb Navigation */}
       <Breadcrumb className="pb-0.5">
         <BreadcrumbList className="flex-nowrap overflow-x-auto whitespace-nowrap text-xs sm:text-sm">

@@ -12,7 +12,7 @@ export function Footer({ className = '' }: FooterProps) {
 
   return (
     <footer className={`border-t border-border/40 py-8 bg-muted/20 text-center text-xs text-muted-foreground mt-12 ${className}`}>
-      <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
         <div className="flex items-center gap-6">
           <span>{t('footer.authentic')}</span>

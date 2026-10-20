@@ -65,7 +65,7 @@ export function SearchContainer({
   const totalPages = pagination?.totalPages ?? 1;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4 max-w-7xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4">
       {/* 1. Breadcrumbs & Page Header */}
       <div className="space-y-3">
         {/* Breadcrumb */}
@@ -122,13 +122,13 @@ export function SearchContainer({
               <span>{isCategoryMode ? t('search.categoryStore') : t('search.discoveryEngine')}</span>
             </div>
 
-            <Typography.H1 className="capitalize">
+            <Typography.H2 className="text-xl sm:text-2xl font-bold tracking-tight capitalize">
               {isCategoryMode
                 ? categoryTitle || fixedCategorySlug || tCommon('nav.products')
                 : params.keyword
                 ? t('search.resultsFor', { keyword: params.keyword })
                 : t('search.allProducts')}
-            </Typography.H1>
+            </Typography.H2>
 
             {categoryDescription && (
               <Typography.Muted className="mt-1 max-w-2xl block">

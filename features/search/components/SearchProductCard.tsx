@@ -62,7 +62,7 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
           <Link href={detailUrl}>
             <h3
               title={product.name}
-              className="font-medium text-xs sm:text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug min-h-[2.4rem]"
+              className="font-medium text-xs sm:text-[13px] text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug min-h-[2.1rem]"
             >
               {product.name}
             </h3>
@@ -74,7 +74,7 @@ export function SearchProductCard({ product }: SearchProductCardProps) {
       <div className="p-2.5 pt-0 flex items-center justify-between border-t border-border/30 mt-1 pt-2">
         <div>
           <span className="text-micro text-muted-foreground block font-medium uppercase tracking-wider">{t('search.card.price')}</span>
-          <p className="font-bold text-sm sm:text-base text-primary tabular-nums">
+          <p className="font-bold text-xs sm:text-sm text-primary tabular-nums tracking-tight">
             {formatPriceRange(product.minPrice, product.maxPrice)}
           </p>
         </div>

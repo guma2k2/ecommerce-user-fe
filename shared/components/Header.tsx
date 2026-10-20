@@ -20,7 +20,7 @@ export function Header({ className = '' }: HeaderProps) {
     <header
       className={`sticky top-0 z-50 w-full border-b border-border/70 bg-background/95 backdrop-blur-md transition-all duration-200 ${className}`}
     >
-      <div className="container mx-auto flex h-14 items-center justify-between gap-3 px-3 sm:px-5 lg:px-6">
+      <div className="container mx-auto flex h-14 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Link
           href={ROUTES.HOME}

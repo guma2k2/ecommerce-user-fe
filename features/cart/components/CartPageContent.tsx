@@ -22,7 +22,7 @@ export function CartPageContent() {
   // If user is not signed in
   if (!isAuthenticated) {
     return (
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <CartEmptyState isGuest />
       </div>
     );
@@ -31,7 +31,7 @@ export function CartPageContent() {
   // Initial loading state
   if (isLoading) {
     return (
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="h-8 w-48 bg-muted/60 animate-pulse rounded-md mb-8" />
         <CartSkeleton />
       </div>
@@ -41,7 +41,7 @@ export function CartPageContent() {
   // Error state
   if (isError) {
     return (
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <div className="max-w-md mx-auto space-y-4">
           <Typography.H2>{t('error.title')}</Typography.H2>
           <Typography.Muted>
@@ -58,14 +58,14 @@ export function CartPageContent() {
   // Empty cart state
   if (!cart || items.length === 0) {
     return (
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <CartEmptyState />
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-3 sm:px-5 lg:px-6 py-4 sm:py-6">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
       {/* Breadcrumb & Navigation */}
       <div className="flex items-center justify-between pb-4">
         <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground">
