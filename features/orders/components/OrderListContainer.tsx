@@ -43,9 +43,6 @@ export function OrderListContainer() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
         <Typography.H1 className="text-2xl font-bold">Order History</Typography.H1>
-        <Typography.Muted className="text-xs mt-1">
-          Track, manage, and review all your purchases and delivery statuses.
-        </Typography.Muted>
       </div>
 
       {/* Filter Tabs */}

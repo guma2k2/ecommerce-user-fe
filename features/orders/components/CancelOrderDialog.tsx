@@ -61,8 +61,7 @@ export function CancelOrderDialog({
           <DialogTitle className="text-center">Cancel Order?</DialogTitle>
           <DialogDescription className="text-center text-xs">
             Are you sure you want to cancel order{' '}
-            <strong className="text-foreground font-mono">{orderCode}</strong>? This action will
-            restore the reserved stock and cannot be undone.
+            <strong className="text-foreground font-mono">{orderCode}</strong>? This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
 

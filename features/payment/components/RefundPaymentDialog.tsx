@@ -121,15 +121,10 @@ export function RefundPaymentDialog({
         <DialogHeader className="pb-3 border-b border-border/40">
           <DialogTitle className="flex items-center gap-2 text-base font-semibold">
             <RotateCcw className="size-4 text-amber-500" />
-            <span>Request Payment Refund</span>
+            <span>Request Refund</span>
           </DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground">
-            Submit a full or partial refund for payment <span className="font-mono">{paymentId}</span>
-            {orderId && (
-              <>
-                {' '}• Order <span className="font-mono">{orderId}</span>
-              </>
-            )}
+            Order <span className="font-mono font-medium text-foreground">{orderId || paymentId}</span>
           </DialogDescription>
         </DialogHeader>
 
@@ -165,13 +160,13 @@ export function RefundPaymentDialog({
 
           <div className="space-y-1.5">
             <label htmlFor="refund-reason" className="text-xs font-medium text-foreground">
-              Reason (Optional)
+              Reason
             </label>
             <Textarea
               id="refund-reason"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              placeholder="E.g., Returned item, duplicate charge..."
+              placeholder="Reason for refund (optional)"
               rows={3}
               maxLength={255}
             />

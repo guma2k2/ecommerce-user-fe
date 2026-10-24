@@ -84,9 +84,6 @@ export function PaymentListContainer() {
           <Typography.H1 className="text-2xl font-bold tracking-tight">
             Payments & Invoices
           </Typography.H1>
-          <Typography.Muted className="text-sm mt-1">
-            Review your transaction charges, ledger audit records, and refund requests.
-          </Typography.Muted>
         </div>
       </div>
 
@@ -96,6 +93,9 @@ export function PaymentListContainer() {
           const canRefund =
             (payment.status === 'SUCCEEDED' || payment.status === 'PARTIALLY_REFUNDED') &&
             refundableAmount > 0;
+
+          const paymentMethodLabel =
+            payment.method === 'STRIPE' ? 'Credit / Debit Card' : payment.method || 'Card';
 
           return (
             <Card key={payment.id} className="border-border/80 shadow-xs hover:border-border transition-colors">
@@ -111,7 +111,7 @@ export function PaymentListContainer() {
                     </div>
                     {payment.orderId && (
                       <CardDescription className="text-xs">
-                        Associated Order: <span className="font-mono font-medium text-foreground">{payment.orderId}</span>
+                        Order: <span className="font-mono font-medium text-foreground">{payment.orderId}</span>
                       </CardDescription>
                     )}
                   </div>
@@ -134,7 +134,7 @@ export function PaymentListContainer() {
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="size-3.5 text-primary" />
                     <span>
-                      Method: <strong className="text-foreground">{payment.method}</strong>
+                      Method: <strong className="text-foreground">{paymentMethodLabel}</strong>
                     </span>
                   </div>
                   {payment.createdAt && (
@@ -149,11 +149,6 @@ export function PaymentListContainer() {
                           minute: '2-digit',
                         })}
                       </span>
-                    </div>
-                  )}
-                  {payment.gatewayTransactionId && (
-                    <div className="font-mono text-[11px] text-muted-foreground truncate max-w-sm">
-                      Txn: {payment.gatewayTransactionId}
                     </div>
                   )}
                 </div>

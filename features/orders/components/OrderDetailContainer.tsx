@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
-import { formatCurrency } from '@/shared/utils/appUtils';
+import { formatCurrency, maskPhoneNumber } from '@/shared/utils/appUtils';
 import { cn } from '@/lib/utils';
 import { useOrderDetail } from '../hooks';
 import { OrderStatusBadge, PaymentStatusBadge } from './OrderStatusBadge';
@@ -118,15 +118,25 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-4 text-xs space-y-2 text-muted-foreground">
-            <p className="font-semibold text-foreground text-sm">
-              {order.shippingAddress?.receiverName}
-            </p>
-            <p>Phone: {order.shippingAddress?.receiverPhone}</p>
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-foreground text-sm">
+                {order.shippingAddress?.receiverName}
+              </span>
+              {order.shippingAddress?.receiverPhone && (
+                <span className="font-mono text-xs text-muted-foreground">
+                  {maskPhoneNumber(order.shippingAddress.receiverPhone)}
+                </span>
+              )}
+            </div>
             <p className="leading-relaxed">
-              {order.shippingAddress?.shippingAddress}, {order.shippingAddress?.district},{' '}
-              {order.shippingAddress?.city}
+              {[
+                order.shippingAddress?.shippingAddress,
+                order.shippingAddress?.district,
+                order.shippingAddress?.city,
+              ]
+                .filter(Boolean)
+                .join(', ')}
             </p>
-            <p>Postal Code: {order.shippingAddress?.postalCode}</p>
             {order.note && (
               <div className="mt-3 pt-3 border-t border-border/40 flex items-start gap-1.5">
                 <FileText className="size-3.5 text-muted-foreground shrink-0 mt-0.5" />
@@ -148,7 +158,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
             <div className="flex justify-between items-center">
               <span>Payment Method:</span>
               <span className="font-medium text-foreground">
-                {order.paymentMethod === 'STRIPE' ? 'Credit / Debit Card (Stripe)' : 'Cash on Delivery (COD)'}
+                {order.paymentMethod === 'STRIPE' ? 'Credit / Debit Card' : 'Cash on Delivery'}
               </span>
             </div>
             <div className="flex justify-between items-center">

@@ -18,6 +18,7 @@ import { useAddToCart } from '@/features/cart';
 import { useAuthStore } from '@/shared/stores';
 import { ROUTES } from '@/shared/constants';
 import { getApiErrorMessage, formatCurrency } from '@/shared/utils';
+import { cn } from '@/lib/utils';
 import type { ProductDetail, ProductVariant, OptionValueStatus } from '../types';
 import { ProductOptionPicker } from './ProductOptionPicker';
 
@@ -45,10 +46,19 @@ export function ProductPurchasePanel({
   const pathname = usePathname();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const [quantity, setQuantity] = useState(1);
+  const [prevVariantId, setPrevVariantId] = useState<number | null>(activeVariant?.id ?? null);
+  const [quantity, setQuantity] = useState(() =>
+    activeVariant && activeVariant.quantity > 0 ? 1 : 0
+  );
   const [actionType, setActionType] = useState<'cart' | 'buy' | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Synchronize quantity during render when activeVariant switches (per React 19 rules)
+  if (activeVariant?.id !== prevVariantId) {
+    setPrevVariantId(activeVariant?.id ?? null);
+    setQuantity(activeVariant && activeVariant.quantity > 0 ? 1 : 0);
+  }
 
   const { mutate: addToCart, isPending } = useAddToCart();
 
@@ -173,15 +183,25 @@ export function ProductPurchasePanel({
         <h1 className="text-lg sm:text-xl font-bold text-foreground leading-snug">
           {product.name}
         </h1>
-        {activeVariant?.sku ? (
-          <Typography.Muted className="text-micro font-mono">
-            {t('detail.sku', { sku: activeVariant.sku })}
-          </Typography.Muted>
-        ) : (
-          <Typography.Muted className="text-micro text-amber-500 font-medium">
-            {t('detail.chooseConfiguration')}
-          </Typography.Muted>
-        )}
+        <div className="flex items-center gap-2 flex-wrap">
+          {activeVariant?.sku ? (
+            <Typography.Muted className="text-micro font-mono">
+              {t('detail.sku', { sku: activeVariant.sku })}
+            </Typography.Muted>
+          ) : (
+            <Typography.Muted className="text-micro text-amber-500 font-medium">
+              {t('detail.chooseConfiguration')}
+            </Typography.Muted>
+          )}
+          {activeVariant?.title && (
+            <>
+              <span className="text-muted-foreground/40 text-micro">•</span>
+              <Typography.Muted className="text-micro font-medium text-foreground/80">
+                {activeVariant.title}
+              </Typography.Muted>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Pricing & Stock Status */}
@@ -244,7 +264,7 @@ export function ProductPurchasePanel({
 
       {/* Quantity & CTA Action Buttons */}
       <div className="space-y-3 pt-1">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <span className="text-xs sm:text-sm font-semibold text-foreground">{t('detail.quantity')}</span>
           <div className="flex items-center rounded-lg border border-border/80 bg-card p-0.5 shadow-2xs">
             <Button
@@ -257,7 +277,7 @@ export function ProductPurchasePanel({
             >
               -
             </Button>
-            <span className="w-8 text-center text-xs sm:text-sm font-semibold">{quantity}</span>
+            <span className="w-8 text-center text-xs sm:text-sm font-semibold tabular-nums">{quantity}</span>
             <Button
               type="button"
               variant="ghost"
@@ -269,6 +289,24 @@ export function ProductPurchasePanel({
               +
             </Button>
           </div>
+
+          {/* Show remaining quantity of chosen variant */}
+          {activeVariant && (
+            <span
+              className={cn(
+                'text-xs font-medium',
+                isOutOfStock
+                  ? 'text-destructive font-semibold'
+                  : stockCount <= 5
+                  ? 'text-amber-600 dark:text-amber-400 font-semibold'
+                  : 'text-muted-foreground'
+              )}
+            >
+              {isOutOfStock
+                ? t('detail.outOfStock')
+                : t('detail.available', { count: stockCount })}
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col sm:flex-row gap-2.5 pt-1">

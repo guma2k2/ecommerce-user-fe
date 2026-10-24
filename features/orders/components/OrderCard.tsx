@@ -63,7 +63,7 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
                   {order.totalItems} {order.totalItems === 1 ? 'item' : 'items'}
                 </span>
                 <span>•</span>
-                <span>Payment: {order.paymentMethod === 'STRIPE' ? 'Card (Stripe)' : 'Cash on Delivery'}</span>
+                <span>Payment: {order.paymentMethod === 'STRIPE' ? 'Credit / Debit Card' : 'Cash on Delivery'}</span>
               </div>
               <div>
                 <span>Total: </span>
