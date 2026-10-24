@@ -95,3 +95,16 @@ export function getApiErrorMessage(
   return fallbackMessage;
 }
 
+/**
+ * Safely masks a phone number for customer privacy (e.g., 0987654321 -> 098****321)
+ */
+export function maskPhoneNumber(phone?: string | null): string {
+  if (!phone) return '';
+  const cleaned = phone.trim();
+  if (cleaned.length <= 4) return cleaned;
+  if (cleaned.length <= 7) {
+    return `${cleaned.slice(0, 2)}***${cleaned.slice(-2)}`;
+  }
+  return `${cleaned.slice(0, 3)}****${cleaned.slice(-3)}`;
+}
+

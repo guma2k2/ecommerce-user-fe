@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FileText, Loader2, Calendar, Receipt, ShieldCheck } from 'lucide-react';
+import { FileText, Loader2, Calendar, Receipt } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -83,10 +83,10 @@ export function PaymentLedgerDialog({
         <DialogHeader className="pb-3 border-b border-border/40">
           <DialogTitle className="flex items-center gap-2 text-base font-semibold">
             <Receipt className="size-4 text-primary" />
-            <span>Payment Audit Ledger</span>
+            <span>Payment Ledger</span>
           </DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground">
-            Transaction audit trail for payment <span className="font-mono">{paymentId}</span>
+            Payment <span className="font-mono">{paymentId}</span>
             {orderId && (
               <>
                 {' '}• Order <span className="font-mono">{orderId}</span>
@@ -126,44 +126,18 @@ export function PaymentLedgerDialog({
                   </Typography.Tabular>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-muted-foreground text-[11px]">
-                  <div className="flex items-center gap-1.5">
-                    <ShieldCheck className="size-3 text-primary shrink-0" />
-                    <span>Provider: <strong className="text-foreground">{entry.gatewayProvider}</strong></span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="size-3 shrink-0" />
-                    <span>
-                      {new Date(entry.createdAt).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      })}
-                    </span>
-                  </div>
-
-                  {entry.gatewayTransactionId && (
-                    <div className="sm:col-span-2 flex items-center gap-1.5 font-mono text-[10px] break-all">
-                      <span className="text-muted-foreground">Txn:</span>
-                      <span className="text-foreground">{entry.gatewayTransactionId}</span>
-                    </div>
-                  )}
-
-                  {entry.idempotencyKey && (
-                    <div className="sm:col-span-2 text-[10px] text-muted-foreground truncate">
-                      Idempotency: <span className="font-mono">{entry.idempotencyKey}</span>
-                    </div>
-                  )}
-
-                  {entry.metadata && (
-                    <div className="sm:col-span-2 text-[11px] italic text-muted-foreground mt-0.5">
-                      &ldquo;{entry.metadata}&rdquo;
-                    </div>
-                  )}
+                <div className="flex items-center gap-1.5 text-muted-foreground text-[11px]">
+                  <Calendar className="size-3 shrink-0" />
+                  <span>
+                    {new Date(entry.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    })}
+                  </span>
                 </div>
               </div>
             ))}

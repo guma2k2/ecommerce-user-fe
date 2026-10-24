@@ -71,7 +71,7 @@ export function PayOrderButton({
         {isPending ? (
           <>
             <Loader2 className="size-3.5 animate-spin" />
-            <span>Connecting to Stripe...</span>
+            <span>Connecting to payment...</span>
           </>
         ) : (
           <>
