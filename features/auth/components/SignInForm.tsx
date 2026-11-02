@@ -9,7 +9,7 @@ import { Alert, AlertDescription, Button } from '@/components/ui';
 import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useSignIn } from '../hooks/useSignIn';
-import { signInSchema, type SignInFormValues } from '../validator';
+import { getSignInSchema, type SignInFormValues } from '../validator';
 import { AuthCardWrapper } from './AuthCardWrapper';
 import { SocialLoginButtons } from './SocialLoginButtons';
 
@@ -18,7 +18,7 @@ export function SignInForm() {
   const { mutate: signIn, isPending, error } = useSignIn();
 
   const { control, handleSubmit } = useForm<SignInFormValues>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(getSignInSchema(t)),
     defaultValues: {
       email: '',
       password: '',
@@ -58,9 +58,17 @@ export function SignInForm() {
           disabled={isPending}
         />
 
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">{t('fields.password')}</span>
+        <div className="space-y-1">
+          <FormInput
+            control={control}
+            name="password"
+            label={t('fields.password')}
+            type="password"
+            placeholder={t('fields.passwordPlaceholder')}
+            autoComplete="current-password"
+            disabled={isPending}
+          />
+          <div className="flex justify-end">
             <Link
               href={ROUTES.AUTH.FORGOT_PASSWORD}
               className="text-xs text-primary hover:underline"
@@ -68,17 +76,9 @@ export function SignInForm() {
               {t('login.forgotPassword')}
             </Link>
           </div>
-          <FormInput
-            control={control}
-            name="password"
-            type="password"
-            placeholder={t('fields.passwordPlaceholder')}
-            autoComplete="current-password"
-            disabled={isPending}
-          />
         </div>
 
-        <Button type="submit" disabled={isPending} className="w-full">
+        <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? t('login.submitting') : t('login.submit')}
         </Button>
       </form>

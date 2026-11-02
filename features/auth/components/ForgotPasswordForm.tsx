@@ -8,7 +8,7 @@ import { Alert, AlertDescription, Button } from '@/components/ui';
 import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useForgotPassword } from '../hooks/useForgotPassword';
-import { forgotPasswordSchema, type ForgotPasswordFormValues } from '../validator';
+import { getForgotPasswordSchema, type ForgotPasswordFormValues } from '../validator';
 import { AuthCardWrapper } from './AuthCardWrapper';
 
 export function ForgotPasswordForm() {
@@ -17,7 +17,7 @@ export function ForgotPasswordForm() {
   const { mutate: sendResetLink, isPending, error } = useForgotPassword();
 
   const { control, handleSubmit } = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(forgotPasswordSchema),
+    resolver: zodResolver(getForgotPasswordSchema(t)),
     defaultValues: {
       email: '',
     },
@@ -48,16 +48,21 @@ export function ForgotPasswordForm() {
         footerLinkHref={ROUTES.AUTH.LOGIN}
       >
         <Alert variant="success">
-          <AlertDescription>{t('forgotPassword.inboxMessage')}</AlertDescription>
+          <AlertDescription>
+            {t('forgotPassword.inboxMessage')}
+          </AlertDescription>
         </Alert>
 
-        <Button
-          variant="outline"
-          className="w-full mt-4"
-          onClick={() => setSubmittedEmail(null)}
-        >
-          {t('forgotPassword.tryAnother')}
-        </Button>
+        <div className="pt-2">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() => setSubmittedEmail(null)}
+          >
+            {t('forgotPassword.tryAnother')}
+          </Button>
+        </div>
       </AuthCardWrapper>
     );
   }
@@ -83,11 +88,14 @@ export function ForgotPasswordForm() {
           label={t('fields.email')}
           type="email"
           placeholder={t('fields.emailPlaceholder')}
+          autoComplete="email"
           disabled={isPending}
         />
 
-        <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? t('forgotPassword.submitting') : t('forgotPassword.submit')}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending
+            ? t('forgotPassword.submitting')
+            : t('forgotPassword.submit')}
         </Button>
       </form>
     </AuthCardWrapper>

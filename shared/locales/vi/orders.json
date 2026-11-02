@@ -1,36 +1,89 @@
 {
-  "checkout": {
-    "title": "Thanh toán",
+  "card": {
+    "unitItem": "sản phẩm",
+    "unitItems": "sản phẩm",
+    "paymentMethod": "Thanh toán: {{method}}",
+    "cod": "Thanh toán khi nhận hàng",
+    "stripe": "Thẻ tín dụng / ghi nợ",
+    "total": "Tổng tiền: ",
+    "cancel": "Hủy đơn",
+    "viewDetails": "Xem chi tiết"
+  },
+  "status": {
+    "pending": "Chờ xử lý",
+    "confirmed": "Đã xác nhận",
+    "processing": "Đang xử lý",
+    "shipping": "Đang giao",
+    "delivered": "Đã giao",
+    "cancelled": "Đã hủy"
+  },
+  "paymentStatus": {
+    "awaitingPayment": "Chờ thanh toán",
+    "paid": "Đã thanh toán",
+    "failed": "Thanh toán thất bại",
+    "cancelled": "Đã hủy thanh toán",
+    "partiallyRefunded": "Hoàn tiền một phần",
+    "refunded": "Đã hoàn tiền"
+  },
+  "detail": {
+    "notFoundTitle": "Không tìm thấy đơn hàng",
+    "notFoundDesc": "Đơn hàng bạn yêu cầu không tồn tại hoặc bạn không có quyền xem đơn hàng này.",
+    "backToOrders": "Quay lại danh sách đơn hàng",
+    "orderPlacedOn": "Đặt ngày {{date}}",
+    "orderItems": "Sản phẩm trong đơn",
+    "itemCount": "{{count}} {{unit}}",
+    "variantId": "Mã biến thể: {{id}}",
+    "quantity": "Số lượng: {{count}}",
     "shippingAddress": "Địa chỉ giao hàng",
-    "deliveryMethod": "Phương thức vận chuyển",
-    "paymentMethod": "Phương thức thanh toán",
-    "placeOrder": "Đặt hàng",
-    "processing": "Đang xử lý đơn hàng của bạn..."
+    "receiver": "Người nhận",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ",
+    "paymentInfo": "Thông tin thanh toán",
+    "paymentMethod": "Phương thức",
+    "paymentStatus": "Trạng thái",
+    "orderNotes": "Ghi chú đơn hàng",
+    "orderSummary": "Tóm tắt đơn hàng",
+    "subtotal": "Tạm tính",
+    "shipping": "Phí vận chuyển",
+    "freeShipping": "Miễn phí",
+    "total": "Tổng thanh toán",
+    "cancelOrder": "Hủy đơn hàng"
   },
-  "success": {
-    "title": "Cảm ơn bạn đã đặt hàng!",
-    "subtitle": "Đơn hàng của bạn đã được tiếp nhận và đang được đội ngũ chuẩn bị xử lý.",
-    "orderReference": "Mã tham chiếu đơn hàng:",
-    "sessionId": "Mã phiên:",
-    "nextSteps": "Các bước tiếp theo",
-    "step1": "Bạn sẽ nhận được email xác nhận kèm thông tin chi tiết đơn hàng.",
-    "step2": "Kho sẽ kiểm tra và đóng gói kiện hàng của bạn.",
-    "step3": "Bạn có thể theo dõi tiến độ giao hàng bất cứ lúc nào trong tài khoản.",
-    "viewOrder": "Xem lịch sử đơn hàng",
-    "continueShopping": "Tiếp tục mua sắm"
-  },
-  "history": {
+  "list": {
     "title": "Lịch sử đơn hàng",
-    "empty": "Chưa có đơn hàng nào",
-    "orderCode": "Đơn hàng #{{code}}",
-    "date": "Đặt ngày {{date}}",
-    "status": {
+    "tabs": {
+      "all": "Tất cả",
       "pending": "Chờ xử lý",
+      "confirmed": "Đã xác nhận",
       "processing": "Đang xử lý",
-      "shipped": "Đang giao",
+      "shipping": "Đang giao",
       "delivered": "Đã giao",
       "cancelled": "Đã hủy"
     },
-    "viewDetails": "Xem chi tiết"
+    "emptyTitle": "Không có đơn hàng nào",
+    "emptyDesc": "Bạn chưa có đơn hàng nào phù hợp với bộ lọc này.",
+    "browseCatalog": "Khám phá danh mục",
+    "errorTitle": "Không thể tải danh sách đơn hàng",
+    "tryAgain": "Thử lại",
+    "prev": "Trước",
+    "next": "Tiếp theo",
+    "pageOf": "Trang {{current}} / {{total}}"
+  },
+  "cancelDialog": {
+    "title": "Hủy đơn hàng",
+    "confirmPrompt": "Bạn có chắc chắn muốn hủy đơn hàng #{{code}} không? Hành động này không thể hoàn tác và số lượng hàng giữ chỗ sẽ được giải phóng.",
+    "keepOrder": "Giữ lại đơn hàng",
+    "confirmCancel": "Đồng ý hủy đơn",
+    "cancelling": "Đang hủy đơn...",
+    "errorFallback": "Không thể hủy đơn hàng này. Chỉ những đơn hàng đang chờ xử lý mới có thể hủy."
+  },
+  "stepper": {
+    "placed": "Đã đặt hàng",
+    "confirmed": "Đã xác nhận",
+    "processing": "Đang xử lý",
+    "shipping": "Đang giao hàng",
+    "delivered": "Đã giao hàng",
+    "cancelledTitle": "Đơn hàng đã hủy",
+    "cancelledDesc": "Đơn hàng này đã bị hủy và tồn kho giữ chỗ đã được hoàn lại."
   }
 }

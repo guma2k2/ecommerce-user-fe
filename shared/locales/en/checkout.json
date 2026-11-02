@@ -1,0 +1,79 @@
+{
+  "container": {
+    "backToCart": "Back to Cart",
+    "pageTitle": "Checkout",
+    "emptyCartTitle": "Your cart is empty",
+    "emptyCartDescription": "You don't have any items in your cart to checkout. Browse our catalog to find products you love!",
+    "exploreProducts": "Explore Products",
+    "errorFallback": "Failed to place order. Please review your information and try again."
+  },
+  "shipping": {
+    "title": "Shipping Address",
+    "receiverName": "Recipient Full Name *",
+    "receiverNamePlaceholder": "e.g. Alex Mercer",
+    "receiverPhone": "Phone Number *",
+    "receiverPhonePlaceholder": "e.g. 0987654321",
+    "address": "Street Address *",
+    "addressPlaceholder": "e.g. 72 Le Thanh Ton Street, Ben Nghe Ward",
+    "city": "City / Province *",
+    "cityPlaceholder": "e.g. Ho Chi Minh City",
+    "district": "District *",
+    "districtPlaceholder": "e.g. District 1",
+    "postalCode": "Postal Code *",
+    "postalCodePlaceholder": "e.g. 70000"
+  },
+  "payment": {
+    "title": "Payment Method",
+    "cod": "Cash on Delivery",
+    "codDesc": "Pay upon package delivery to your address.",
+    "stripe": "Credit / Debit Card (Stripe)",
+    "stripeDesc": "Instant secure payment via Stripe with Visa, MasterCard.",
+    "secureNotice": "Encrypted & secure transaction via Stripe Gateway."
+  },
+  "summary": {
+    "title": "Order Summary",
+    "unitItem": "item",
+    "unitItems": "items",
+    "deliveryNote": "Delivery Note (Optional)",
+    "deliveryNotePlaceholder": "Add any delivery instructions or special requests...",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "freeShipping": "Free",
+    "total": "Total",
+    "processing": "Processing Order...",
+    "payWithStripe": "Pay with Stripe",
+    "confirmOrder": "Confirm & Place Order",
+    "secureGuarantee": "Secure Checkout Guaranteed"
+  },
+  "success": {
+    "title": "Thank You For Your Order!",
+    "subtitle": "Your order has been received and is being processed by our fulfillment team.",
+    "orderReference": "Order Reference:",
+    "orderId": "Order ID:",
+    "sessionId": "Session ID:",
+    "paymentId": "Payment ID:",
+    "nextSteps": "What's Next?",
+    "step1": "You will receive an email confirmation with your order details.",
+    "step2": "Our warehouse team will verify and prepare your package.",
+    "step3": "You can track delivery progress anytime in your account.",
+    "viewOrder": "View Order History",
+    "continueShopping": "Continue Shopping"
+  },
+  "validation": {
+    "receiverNameMin": "Receiver name must be at least 2 characters",
+    "receiverNameMax": "Receiver name cannot exceed 100 characters",
+    "phoneMin": "Phone number must be at least 8 digits",
+    "phoneMax": "Phone number cannot exceed 15 digits",
+    "phoneInvalid": "Invalid phone number format",
+    "addressMin": "Address must be at least 5 characters",
+    "addressMax": "Address cannot exceed 255 characters",
+    "cityRequired": "City is required",
+    "cityMax": "City cannot exceed 100 characters",
+    "districtRequired": "District is required",
+    "districtMax": "District cannot exceed 100 characters",
+    "postalCodeRequired": "Postal code is required",
+    "postalCodeMax": "Postal code cannot exceed 20 characters",
+    "noteMax": "Note cannot exceed 500 characters"
+  }
+}
+

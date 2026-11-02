@@ -31,7 +31,7 @@ if (!i18n.isInitialized) {
     lng: getInitialLanguage(),
     fallbackLng: DEFAULT_LANGUAGE,
     defaultNS: 'common',
-    ns: ['common', 'auth', 'cart', 'products', 'orders'],
+    ns: ['common', 'auth', 'cart', 'products', 'orders', 'checkout', 'payment', 'home'],
     interpolation: {
       escapeValue: false,
     },

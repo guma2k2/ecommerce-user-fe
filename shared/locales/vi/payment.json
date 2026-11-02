@@ -1,0 +1,70 @@
+{
+  "list": {
+    "pageTitle": "Lịch sử thanh toán & Giao dịch",
+    "pageDescription": "Theo dõi các khoản thanh toán, hoàn tiền và đối soát giao dịch của tài khoản.",
+    "errorTitle": "Không thể tải lịch sử thanh toán",
+    "errorDescription": "Đã xảy ra lỗi khi lấy danh sách giao dịch của bạn. Vui lòng thử lại.",
+    "tryAgain": "Thử lại",
+    "emptyTitle": "Chưa có giao dịch thanh toán nào",
+    "emptyDescription": "Khi bạn thanh toán đơn hàng trực tuyến, lịch sử giao dịch sẽ hiển thị tại đây.",
+    "thId": "Mã thanh toán",
+    "thOrder": "Đơn hàng",
+    "thAmount": "Số tiền",
+    "thStatus": "Trạng thái",
+    "thMethod": "Phương thức",
+    "thDate": "Thời gian tạo",
+    "thActions": "Thao tác",
+    "viewOrder": "Xem đơn hàng",
+    "ledgerTrail": "Nhật ký đối soát",
+    "requestRefund": "Yêu cầu hoàn tiền"
+  },
+  "status": {
+    "paid": "Đã thanh toán",
+    "awaitingPayment": "Chờ thanh toán",
+    "failed": "Thanh toán thất bại",
+    "cancelled": "Đã hủy thanh toán",
+    "partiallyRefunded": "Hoàn tiền một phần",
+    "refunded": "Đã hoàn tiền"
+  },
+  "payButton": {
+    "payNow": "Thanh toán ngay (Stripe)",
+    "processing": "Đang xử lý...",
+    "errorFallback": "Không thể khởi tạo phiên thanh toán. Vui lòng thử lại."
+  },
+  "ledger": {
+    "title": "Nhật ký đối soát giao dịch",
+    "description": "Chi tiết dòng tiền và lịch trình ghi nhận giao dịch của thanh toán",
+    "noEntries": "Chưa có bản ghi đối soát nào cho giao dịch này.",
+    "thType": "Loại bút toán",
+    "thAmount": "Số tiền",
+    "thDescription": "Nội dung",
+    "thDate": "Thời điểm",
+    "close": "Đóng",
+    "types": {
+      "initialization": "Khởi tạo",
+      "capture": "Thu tiền",
+      "refund": "Hoàn tiền",
+      "chargeback": "Bồi hoàn",
+      "fee": "Phí giao dịch",
+      "adjustment": "Điều chỉnh"
+    }
+  },
+  "refund": {
+    "trigger": "Hoàn tiền",
+    "title": "Yêu cầu hoàn tiền",
+    "description": "Thực hiện hoàn tiền toàn phần hoặc một phần cho giao dịch",
+    "amountLabel": "Số tiền hoàn ({{currency}})",
+    "maxNotice": "Số tiền tối đa có thể hoàn: {{amount}}",
+    "reasonLabel": "Lý do hoàn tiền",
+    "reasonPlaceholder": "Ví dụ: Khách hàng đổi trả sản phẩm lỗi, hỏng hóc...",
+    "cancel": "Hủy bỏ",
+    "submit": "Thực hiện hoàn tiền",
+    "submitting": "Đang xử lý hoàn tiền...",
+    "success": "Xử lý hoàn tiền thành công",
+    "errAmountPositive": "Vui lòng nhập số tiền hoàn hợp lệ lớn hơn 0",
+    "errAmountExceed": "Số tiền hoàn không được vượt quá {{amount}}",
+    "errReasonRequired": "Vui lòng nhập lý do hoàn tiền",
+    "errFallback": "Xử lý hoàn tiền thất bại. Vui lòng thử lại."
+  }
+}
+

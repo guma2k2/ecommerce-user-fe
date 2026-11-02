@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import {
   Dialog,
@@ -30,6 +31,7 @@ export function CancelOrderDialog({
   onOpenChange,
   onSuccess,
 }: CancelOrderDialogProps) {
+  const { t } = useTranslation('orders');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { mutate: cancelOrder, isPending } = useCancelOrder();
 
@@ -45,7 +47,7 @@ export function CancelOrderDialog({
         setErrorMessage(
           apiError?.response?.data?.message ||
             apiError?.message ||
-            'Unable to cancel this order. Only pending orders can be cancelled.'
+            t('cancelDialog.errorFallback')
         );
       },
     });
@@ -58,10 +60,9 @@ export function CancelOrderDialog({
           <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive mb-2">
             <AlertTriangle className="size-6" />
           </div>
-          <DialogTitle className="text-center">Cancel Order?</DialogTitle>
+          <DialogTitle className="text-center">{t('cancelDialog.title')}</DialogTitle>
           <DialogDescription className="text-center text-xs">
-            Are you sure you want to cancel order{' '}
-            <strong className="text-foreground font-mono">{orderCode}</strong>? This action cannot be undone.
+            {t('cancelDialog.confirmPrompt', { code: orderCode })}
           </DialogDescription>
         </DialogHeader>
 
@@ -78,7 +79,7 @@ export function CancelOrderDialog({
             disabled={isPending}
             onClick={() => onOpenChange(false)}
           >
-            Keep Order
+            {t('cancelDialog.keepOrder')}
           </Button>
           <Button
             type="button"
@@ -88,7 +89,7 @@ export function CancelOrderDialog({
             className="gap-2"
           >
             {isPending && <Loader2 className="size-4 animate-spin" />}
-            <span>Yes, Cancel Order</span>
+            <span>{isPending ? t('cancelDialog.cancelling') : t('cancelDialog.confirmCancel')}</span>
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
 import { CreditCard, Banknote, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -11,6 +12,7 @@ interface PaymentMethodSelectorProps {
 }
 
 export function PaymentMethodSelector({ form }: PaymentMethodSelectorProps) {
+  const { t } = useTranslation('checkout');
   const {
     watch,
     setValue,
@@ -51,7 +53,7 @@ export function PaymentMethodSelector({ form }: PaymentMethodSelectorProps) {
               >
                 <Banknote className="size-4" />
               </div>
-              <span className="font-semibold text-sm">Cash on Delivery</span>
+              <span className="font-semibold text-sm">{t('payment.cod')}</span>
             </div>
             <div
               className={cn(
@@ -67,7 +69,7 @@ export function PaymentMethodSelector({ form }: PaymentMethodSelectorProps) {
             </div>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed pl-10.5">
-            Pay with cash when package is delivered to your doorstep.
+            {t('payment.codDesc')}
           </p>
         </div>
 
@@ -100,7 +102,7 @@ export function PaymentMethodSelector({ form }: PaymentMethodSelectorProps) {
               >
                 <CreditCard className="size-4" />
               </div>
-              <span className="font-semibold text-sm">Credit / Debit Card</span>
+              <span className="font-semibold text-sm">{t('payment.stripe')}</span>
             </div>
             <div
               className={cn(
@@ -116,7 +118,7 @@ export function PaymentMethodSelector({ form }: PaymentMethodSelectorProps) {
             </div>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed pl-10.5">
-            Encrypted checkout powered by Stripe. Supports Visa, MasterCard, Amex.
+            {t('payment.stripeDesc')}
           </p>
         </div>
       </div>
@@ -128,7 +130,7 @@ export function PaymentMethodSelector({ form }: PaymentMethodSelectorProps) {
       {currentMethod === 'STRIPE' && (
         <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2 text-xs text-muted-foreground">
           <ShieldCheck className="size-4 text-primary shrink-0" />
-          <span>You will be safely redirected to Stripe Hosted Checkout to complete payment.</span>
+          <span>{t('payment.secureNotice')}</span>
         </div>
       )}
     </div>

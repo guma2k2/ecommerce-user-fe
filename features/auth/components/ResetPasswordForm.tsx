@@ -1,15 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, AlertDescription, Button } from '@/components/ui';
 import { FormInput } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useResetPassword } from '../hooks/useResetPassword';
-import { resetPasswordSchema, type ResetPasswordFormValues } from '../validator';
+import { getResetPasswordSchema, type ResetPasswordFormValues } from '../validator';
 import { AuthCardWrapper } from './AuthCardWrapper';
 
 export function ResetPasswordForm() {
@@ -20,7 +20,7 @@ export function ResetPasswordForm() {
   const { mutate: resetPassword, isPending, error } = useResetPassword();
 
   const { control, handleSubmit, register } = useForm<ResetPasswordFormValues>({
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(getResetPasswordSchema(t)),
     defaultValues: {
       token,
       password: '',
@@ -49,7 +49,9 @@ export function ResetPasswordForm() {
         footerLinkHref={ROUTES.AUTH.FORGOT_PASSWORD}
       >
         <Alert variant="destructive">
-          <AlertDescription>{t('resetPassword.invalidMessage')}</AlertDescription>
+          <AlertDescription>
+            {t('resetPassword.invalidMessage')}
+          </AlertDescription>
         </Alert>
       </AuthCardWrapper>
     );
@@ -70,7 +72,6 @@ export function ResetPasswordForm() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Hidden token field - not rendered as a visible form control */}
         <input type="hidden" {...register('token')} value={token} />
 
         <FormInput
@@ -79,6 +80,7 @@ export function ResetPasswordForm() {
           label={t('fields.newPassword')}
           type="password"
           placeholder={t('fields.newPasswordPlaceholder')}
+          autoComplete="new-password"
           disabled={isPending}
         />
 
@@ -88,11 +90,14 @@ export function ResetPasswordForm() {
           label={t('fields.confirmPassword')}
           type="password"
           placeholder={t('fields.confirmNewPasswordPlaceholder')}
+          autoComplete="new-password"
           disabled={isPending}
         />
 
-        <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? t('resetPassword.submitting') : t('resetPassword.submit')}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending
+            ? t('resetPassword.submitting')
+            : t('resetPassword.submit')}
         </Button>
       </form>
     </AuthCardWrapper>

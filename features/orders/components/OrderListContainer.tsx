@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Package, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button, buttonVariants, Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
@@ -11,19 +12,20 @@ import { OrderCard } from './OrderCard';
 import { OrderListSkeleton } from './OrderSkeleton';
 import type { OrderStatus } from '../types';
 
-const STATUS_TABS: { label: string; value: OrderStatus | 'ALL' }[] = [
-  { label: 'All Orders', value: 'ALL' },
-  { label: 'Pending', value: 'PENDING' },
-  { label: 'Confirmed', value: 'CONFIRMED' },
-  { label: 'Processing', value: 'PROCESSING' },
-  { label: 'Shipping', value: 'SHIPPING' },
-  { label: 'Delivered', value: 'DELIVERED' },
-  { label: 'Cancelled', value: 'CANCELLED' },
-];
-
 export function OrderListContainer() {
+  const { t } = useTranslation('orders');
   const [activeStatus, setActiveStatus] = useState<OrderStatus | 'ALL'>('ALL');
   const [currentPage, setCurrentPage] = useState<number>(0);
+
+  const statusTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
+    { label: t('list.tabs.all'), value: 'ALL' },
+    { label: t('list.tabs.pending'), value: 'PENDING' },
+    { label: t('list.tabs.confirmed'), value: 'CONFIRMED' },
+    { label: t('list.tabs.processing'), value: 'PROCESSING' },
+    { label: t('list.tabs.shipping'), value: 'SHIPPING' },
+    { label: t('list.tabs.delivered'), value: 'DELIVERED' },
+    { label: t('list.tabs.cancelled'), value: 'CANCELLED' },
+  ];
 
   const { data, isLoading, isError, refetch } = useOrders({
     status: activeStatus,
@@ -42,12 +44,12 @@ export function OrderListContainer() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
-        <Typography.H1 className="text-2xl font-bold">Order History</Typography.H1>
+        <Typography.H1 className="text-2xl font-bold">{t('list.title')}</Typography.H1>
       </div>
 
       {/* Filter Tabs */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-border/60">
-        {STATUS_TABS.map((tab) => {
+        {statusTabs.map((tab) => {
           const isActive = activeStatus === tab.value;
           return (
             <Button
@@ -74,9 +76,9 @@ export function OrderListContainer() {
         <OrderListSkeleton />
       ) : isError ? (
         <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-8 text-center space-y-3">
-          <p className="text-sm text-destructive font-medium">Failed to load orders.</p>
+          <p className="text-sm text-destructive font-medium">{t('list.errorTitle')}</p>
           <Button variant="outline" size="sm" onClick={() => refetch()}>
-            Try Again
+            {t('list.tryAgain')}
           </Button>
         </div>
       ) : orders.length === 0 ? (
@@ -85,11 +87,11 @@ export function OrderListContainer() {
             <Package className="size-7" />
           </div>
           <div className="space-y-1">
-            <Typography.H3 className="font-semibold text-base">No orders found</Typography.H3>
+            <Typography.H3 className="font-semibold text-base">{t('list.emptyTitle')}</Typography.H3>
             <Typography.Muted className="text-xs max-w-sm mx-auto block">
               {activeStatus === 'ALL'
-                ? "You haven't placed any orders yet. Discover our catalog to get started!"
-                : `You don't have any orders with status "${activeStatus}".`}
+                ? t('list.emptyDesc')
+                : `${t('list.emptyTitle')} (${activeStatus})`}
             </Typography.Muted>
           </div>
           {activeStatus === 'ALL' ? (
@@ -98,7 +100,7 @@ export function OrderListContainer() {
               className={cn(buttonVariants(), 'gap-2 text-xs')}
             >
               <ShoppingBag className="size-3.5" />
-              <span>Start Shopping</span>
+              <span>{t('list.browseCatalog')}</span>
             </Link>
           ) : (
             <Button
@@ -107,7 +109,7 @@ export function OrderListContainer() {
               onClick={() => handleTabChange('ALL')}
               className="text-xs"
             >
-              View All Orders
+              {t('list.tabs.all')}
             </Button>
           )}
         </div>
@@ -121,7 +123,7 @@ export function OrderListContainer() {
           {totalPages > 1 && (
             <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs text-muted-foreground">
               <span>
-                Page {currentPage + 1} of {totalPages}
+                {t('list.pageOf', { current: currentPage + 1, total: totalPages })}
               </span>
               <div className="flex items-center gap-2">
                 <Button
@@ -132,7 +134,7 @@ export function OrderListContainer() {
                   className="gap-1 h-8"
                 >
                   <ChevronLeft className="size-4" />
-                  <span>Previous</span>
+                  <span>{t('list.prev')}</span>
                 </Button>
                 <Button
                   variant="outline"
@@ -141,7 +143,7 @@ export function OrderListContainer() {
                   onClick={() => setCurrentPage((p) => p + 1)}
                   className="gap-1 h-8"
                 >
-                  <span>Next</span>
+                  <span>{t('list.next')}</span>
                   <ChevronRight className="size-4" />
                 </Button>
               </div>

@@ -1,5 +1,5 @@
 import 'i18next';
-import type { common, auth, cart, products, orders } from './en';
+import type { common, auth, cart, products, orders, checkout, payment, home } from './en';
 
 export interface I18nResources {
   common: typeof common;
@@ -7,6 +7,9 @@ export interface I18nResources {
   cart: typeof cart;
   products: typeof products;
   orders: typeof orders;
+  checkout: typeof checkout;
+  payment: typeof payment;
+  home: typeof home;
 }
 
 declare module 'i18next' {

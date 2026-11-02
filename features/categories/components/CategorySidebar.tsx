@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import {
   ChevronRight,
   Layers,
@@ -38,6 +39,7 @@ interface CategorySidebarProps {
 }
 
 export function CategorySidebar({ className = '' }: CategorySidebarProps) {
+  const { t } = useTranslation('home');
   const { data: categories, isLoading, isError } = useParentCategories();
   const [activeCategory, setActiveCategory] = useState<CategoryItem | null>(null);
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -51,18 +53,14 @@ export function CategorySidebar({ className = '' }: CategorySidebarProps) {
 
   const handleCategoryHover = (category: CategoryItem) => {
     clearCloseTimer();
-    if (category.children && category.children.length > 0) {
-      setActiveCategory(category);
-    } else {
-      setActiveCategory(null);
-    }
+    setActiveCategory(category);
   };
 
   const handleMouseLeave = () => {
     clearCloseTimer();
     closeTimerRef.current = setTimeout(() => {
       setActiveCategory(null);
-    }, 200);
+    }, 150);
   };
 
   const handleFlyoutEnter = () => {
@@ -77,19 +75,16 @@ export function CategorySidebar({ className = '' }: CategorySidebarProps) {
 
   if (isLoading) {
     return (
-      <aside className={`w-full lg:w-56 bg-card rounded-xl border border-border/70 p-2 shadow-2xs ${className}`}>
-        <div className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+      <aside className={`w-full lg:w-56 bg-card rounded-xl border border-border/70 p-3 shadow-2xs ${className}`}>
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
           <Layers className="size-3.5 text-primary" />
-          <span>Categories</span>
+          <span>{t('categories.title')}</span>
         </div>
-        <div className="space-y-1 mt-1">
-          {Array.from({ length: 7 }).map((_, i) => (
-            <div key={i} className="flex items-center justify-between p-1.5 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Skeleton className="size-6 rounded-md" />
-                <Skeleton className="h-3.5 w-24" />
-              </div>
-              <Skeleton className="size-3.5 rounded-full" />
+        <div className="space-y-1">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-2 px-2 py-1.5">
+              <Skeleton className="size-6 rounded-md" />
+              <Skeleton className="h-4 w-28" />
             </div>
           ))}
         </div>
@@ -102,10 +97,10 @@ export function CategorySidebar({ className = '' }: CategorySidebarProps) {
       <aside className={`w-full lg:w-56 bg-card rounded-xl border border-border/70 p-3 shadow-2xs ${className}`}>
         <div className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
           <Layers className="size-3.5 text-primary" />
-          <span>Categories</span>
+          <span>{t('categories.title')}</span>
         </div>
         <p className="text-xs text-muted-foreground py-3 text-center">
-          No categories available
+          {t('categories.empty')}
         </p>
       </aside>
     );
@@ -118,7 +113,7 @@ export function CategorySidebar({ className = '' }: CategorySidebarProps) {
     >
       <div className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-bold text-muted-foreground uppercase tracking-wider border-b border-border/40 mb-1">
         <Layers className="size-3.5 text-primary" />
-        <span>Categories</span>
+        <span>{t('categories.title')}</span>
       </div>
 
       <nav className="space-y-0.5">
@@ -179,7 +174,7 @@ export function CategorySidebar({ className = '' }: CategorySidebarProps) {
             <h4 className="font-semibold text-xs sm:text-sm text-foreground">
               {activeCategory.name}
             </h4>
-            <p className="text-micro text-muted-foreground">Select a subcategory</p>
+            <p className="text-micro text-muted-foreground">{t('categories.selectSubcategory')}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-0.5">
@@ -202,7 +197,7 @@ export function CategorySidebar({ className = '' }: CategorySidebarProps) {
               onClick={() => setActiveCategory(null)}
               className="text-xs font-semibold text-primary hover:underline"
             >
-              View all in {activeCategory.name} →
+              {t('categories.viewAllIn', { name: activeCategory.name })}
             </Link>
           </div>
         </div>

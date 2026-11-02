@@ -8,7 +8,7 @@ import { Alert, AlertDescription, Button, SelectItem } from '@/components/ui';
 import { FormInput, FormSelect } from '@/shared/components';
 import { ROUTES } from '@/shared/constants';
 import { useSignUp } from '../hooks/useSignUp';
-import { signUpSchema, type SignUpFormValues } from '../validator';
+import { getSignUpSchema, type SignUpFormValues } from '../validator';
 import { AuthCardWrapper } from './AuthCardWrapper';
 import { SocialLoginButtons } from './SocialLoginButtons';
 
@@ -17,7 +17,7 @@ export function SignUpForm() {
   const { mutate: signUp, isPending, error } = useSignUp();
 
   const { control, handleSubmit } = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(getSignUpSchema(t)),
     defaultValues: {
       name: '',
       email: '',
@@ -54,12 +54,13 @@ export function SignUpForm() {
         </Alert>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormInput
           control={control}
           name="name"
           label={t('fields.fullName')}
           placeholder={t('fields.fullNamePlaceholder')}
+          autoComplete="name"
           disabled={isPending}
         />
 
@@ -69,6 +70,7 @@ export function SignUpForm() {
           label={t('fields.email')}
           type="email"
           placeholder={t('fields.emailPlaceholder')}
+          autoComplete="email"
           disabled={isPending}
         />
 
@@ -77,7 +79,8 @@ export function SignUpForm() {
           name="password"
           label={t('fields.password')}
           type="password"
-          placeholder={t('fields.newPasswordPlaceholder')}
+          placeholder={t('fields.passwordPlaceholder')}
+          autoComplete="new-password"
           disabled={isPending}
         />
 
@@ -87,6 +90,7 @@ export function SignUpForm() {
           label={t('fields.confirmPassword')}
           type="password"
           placeholder={t('fields.confirmPasswordPlaceholder')}
+          autoComplete="new-password"
           disabled={isPending}
         />
 
@@ -96,11 +100,11 @@ export function SignUpForm() {
           label={t('fields.preferredLanguage')}
           disabled={isPending}
         >
-          <SelectItem value="EN">English (EN)</SelectItem>
-          <SelectItem value="VI">Tiếng Việt (VI)</SelectItem>
+          <SelectItem value="EN">English</SelectItem>
+          <SelectItem value="VI">Tiếng Việt</SelectItem>
         </FormSelect>
 
-        <Button type="submit" disabled={isPending} className="w-full mt-2">
+        <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? t('register.submitting') : t('register.submit')}
         </Button>
       </form>

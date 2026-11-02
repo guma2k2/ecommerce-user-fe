@@ -1,0 +1,79 @@
+{
+  "container": {
+    "backToCart": "Quay lại giỏ hàng",
+    "pageTitle": "Thanh toán",
+    "emptyCartTitle": "Giỏ hàng của bạn đang trống",
+    "emptyCartDescription": "Bạn chưa có sản phẩm nào trong giỏ hàng để thanh toán. Hãy khám phá danh mục để chọn sản phẩm yêu thích!",
+    "exploreProducts": "Khám phá sản phẩm",
+    "errorFallback": "Đặt hàng không thành công. Vui lòng kiểm tra lại thông tin và thử lại."
+  },
+  "shipping": {
+    "title": "Địa chỉ giao hàng",
+    "receiverName": "Họ và tên người nhận *",
+    "receiverNamePlaceholder": "Ví dụ: Nguyễn Văn A",
+    "receiverPhone": "Số điện thoại *",
+    "receiverPhonePlaceholder": "Ví dụ: 0987654321",
+    "address": "Địa chỉ nhận hàng *",
+    "addressPlaceholder": "Ví dụ: 72 Lê Thánh Tôn, Phường Bến Nghé",
+    "city": "Tỉnh / Thành phố *",
+    "cityPlaceholder": "Ví dụ: TP. Hồ Chí Minh",
+    "district": "Quận / Huyện *",
+    "districtPlaceholder": "Ví dụ: Quận 1",
+    "postalCode": "Mã bưu điện *",
+    "postalCodePlaceholder": "Ví dụ: 70000"
+  },
+  "payment": {
+    "title": "Phương thức thanh toán",
+    "cod": "Thanh toán khi nhận hàng (COD)",
+    "codDesc": "Thanh toán bằng tiền mặt khi nhận hàng tại địa chỉ của bạn.",
+    "stripe": "Thẻ tín dụng / Thẻ ghi nợ (Stripe)",
+    "stripeDesc": "Thanh toán an toàn tức thì qua Stripe hỗ trợ thẻ Visa, MasterCard.",
+    "secureNotice": "Giao dịch bảo mật và mã hóa chuẩn quốc tế qua cổng Stripe."
+  },
+  "summary": {
+    "title": "Tóm tắt đơn hàng",
+    "unitItem": "sản phẩm",
+    "unitItems": "sản phẩm",
+    "deliveryNote": "Ghi chú giao hàng (Tùy chọn)",
+    "deliveryNotePlaceholder": "Thêm hướng dẫn giao hàng hoặc yêu cầu đặc biệt...",
+    "subtotal": "Tạm tính",
+    "shipping": "Phí vận chuyển",
+    "freeShipping": "Miễn phí",
+    "total": "Tổng cộng",
+    "processing": "Đang xử lý đơn hàng...",
+    "payWithStripe": "Thanh toán qua Stripe",
+    "confirmOrder": "Xác nhận & Đặt hàng",
+    "secureGuarantee": "Bảo đảm thanh toán an toàn"
+  },
+  "success": {
+    "title": "Cảm ơn bạn đã đặt hàng!",
+    "subtitle": "Đơn hàng của bạn đã được tiếp nhận và đang được đội ngũ chuẩn bị xử lý.",
+    "orderReference": "Mã tham chiếu đơn hàng:",
+    "orderId": "Mã đơn hàng:",
+    "sessionId": "Mã phiên:",
+    "paymentId": "Mã thanh toán:",
+    "nextSteps": "Các bước tiếp theo",
+    "step1": "Bạn sẽ nhận được email xác nhận kèm thông tin chi tiết đơn hàng.",
+    "step2": "Kho sẽ kiểm tra và đóng gói kiện hàng của bạn.",
+    "step3": "Bạn có thể theo dõi tiến độ giao hàng bất cứ lúc nào trong tài khoản.",
+    "viewOrder": "Xem lịch sử đơn hàng",
+    "continueShopping": "Tiếp tục mua sắm"
+  },
+  "validation": {
+    "receiverNameMin": "Tên người nhận phải có ít nhất 2 ký tự",
+    "receiverNameMax": "Tên người nhận không được vượt quá 100 ký tự",
+    "phoneMin": "Số điện thoại phải có ít nhất 8 chữ số",
+    "phoneMax": "Số điện thoại không được vượt quá 15 chữ số",
+    "phoneInvalid": "Định dạng số điện thoại không hợp lệ",
+    "addressMin": "Địa chỉ phải có ít nhất 5 ký tự",
+    "addressMax": "Địa chỉ không được vượt quá 255 ký tự",
+    "cityRequired": "Vui lòng nhập Tỉnh / Thành phố",
+    "cityMax": "Tỉnh / Thành phố không được vượt quá 100 ký tự",
+    "districtRequired": "Vui lòng nhập Quận / Huyện",
+    "districtMax": "Quận / Huyện không được vượt quá 100 ký tự",
+    "postalCodeRequired": "Vui lòng nhập mã bưu điện",
+    "postalCodeMax": "Mã bưu điện không được vượt quá 20 ký tự",
+    "noteMax": "Ghi chú không được vượt quá 500 ký tự"
+  }
+}
+

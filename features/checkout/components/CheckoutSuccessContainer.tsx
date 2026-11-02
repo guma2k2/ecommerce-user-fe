@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { CheckCircle2, PackageCheck, ShoppingBag, ArrowRight } from 'lucide-react';
 import { Card, CardContent, buttonVariants, Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
@@ -20,6 +21,8 @@ export function CheckoutSuccessContainer({
   sessionId,
   paymentId,
 }: CheckoutSuccessContainerProps) {
+  const { t } = useTranslation('checkout');
+
   return (
     <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
       <Card className="text-center border-border/80 shadow-lg">
@@ -31,10 +34,10 @@ export function CheckoutSuccessContainer({
 
           <div className="space-y-2">
             <Typography.H1 className="text-2xl sm:text-3xl font-bold">
-              Thank You For Your Order!
+              {t('success.title')}
             </Typography.H1>
             <Typography.Muted className="text-sm max-w-md mx-auto block">
-              Your order has been received and is being processed by our fulfillment team.
+              {t('success.subtitle')}
             </Typography.Muted>
           </div>
 
@@ -43,7 +46,7 @@ export function CheckoutSuccessContainer({
             <div className="rounded-xl border border-border/80 bg-muted/40 p-4 max-w-md mx-auto space-y-2 text-xs">
               {orderCode && (
                 <div className="flex justify-between items-center py-1">
-                  <span className="text-muted-foreground">Order Reference:</span>
+                  <span className="text-muted-foreground">{t('success.orderReference')}</span>
                   <Typography.Tabular className="font-mono font-bold text-foreground text-sm">
                     {orderCode}
                   </Typography.Tabular>
@@ -51,7 +54,7 @@ export function CheckoutSuccessContainer({
               )}
               {orderId && (
                 <div className="flex justify-between items-center py-1 border-t border-border/60">
-                  <span className="text-muted-foreground">Order ID:</span>
+                  <span className="text-muted-foreground">{t('success.orderId')}</span>
                   <span className="font-mono text-muted-foreground truncate max-w-[200px]" title={orderId}>
                     {orderId}
                   </span>
@@ -59,7 +62,7 @@ export function CheckoutSuccessContainer({
               )}
               {sessionId && (
                 <div className="flex justify-between items-center py-1 border-t border-border/60">
-                  <span className="text-muted-foreground">Stripe Session:</span>
+                  <span className="text-muted-foreground">{t('success.sessionId')}</span>
                   <span className="font-mono text-muted-foreground truncate max-w-[200px]" title={sessionId}>
                     {sessionId}
                   </span>
@@ -67,7 +70,7 @@ export function CheckoutSuccessContainer({
               )}
               {paymentId && (
                 <div className="flex justify-between items-center py-1 border-t border-border/60">
-                  <span className="text-muted-foreground">Payment ID:</span>
+                  <span className="text-muted-foreground">{t('success.paymentId')}</span>
                   <span className="font-mono text-muted-foreground truncate max-w-[200px]" title={paymentId}>
                     {paymentId}
                   </span>
@@ -80,11 +83,12 @@ export function CheckoutSuccessContainer({
           <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 max-w-md mx-auto text-left text-xs space-y-2">
             <p className="font-semibold text-primary flex items-center gap-1.5">
               <PackageCheck className="size-4" />
-              <span>What happens next?</span>
+              <span>{t('success.nextSteps')}</span>
             </p>
             <ul className="list-disc list-inside text-muted-foreground space-y-1 pl-1">
-              <li>You can view status updates anytime in your account portal.</li>
-              <li>Our delivery partner will reach out before delivery.</li>
+              <li>{t('success.step1')}</li>
+              <li>{t('success.step2')}</li>
+              <li>{t('success.step3')}</li>
             </ul>
           </div>
 
@@ -95,7 +99,7 @@ export function CheckoutSuccessContainer({
                 href={ROUTES.ACCOUNT.ORDER_DETAIL(orderId)}
                 className={cn(buttonVariants(), 'w-full sm:w-auto gap-2')}
               >
-                <span>View Order Details</span>
+                <span>{t('success.viewOrder')}</span>
                 <ArrowRight className="size-4" />
               </Link>
             ) : (
@@ -103,7 +107,7 @@ export function CheckoutSuccessContainer({
                 href={ROUTES.ACCOUNT.ORDERS}
                 className={cn(buttonVariants(), 'w-full sm:w-auto gap-2')}
               >
-                <span>View My Orders</span>
+                <span>{t('success.viewOrder')}</span>
                 <ArrowRight className="size-4" />
               </Link>
             )}
@@ -113,7 +117,7 @@ export function CheckoutSuccessContainer({
               className={cn(buttonVariants({ variant: 'outline' }), 'w-full sm:w-auto gap-2')}
             >
               <ShoppingBag className="size-4" />
-              <span>Continue Shopping</span>
+              <span>{t('success.continueShopping')}</span>
             </Link>
           </div>
         </CardContent>

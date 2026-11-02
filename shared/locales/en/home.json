@@ -1,0 +1,25 @@
+{
+  "promo": {
+    "tag": "Special Mega Launch Promo",
+    "discount": "Up to 40% OFF",
+    "headline": "Next-Gen Tech, Unbeatable Value.",
+    "description": "Upgrade your workspace with flagship laptops, smartphones, and audio gear. Authentic warranty and fast delivery guaranteed.",
+    "cta": "Shop Megadeals",
+    "guarantee": "Authentic Guarantee",
+    "delivery": "Free Express Delivery"
+  },
+  "bestSellers": {
+    "title": "Best Sellers",
+    "subtitle": "Top trending products chosen by thousands of happy customers this week.",
+    "viewAll": "View All",
+    "error": "Failed to load best sellers.",
+    "empty": "No best selling products available."
+  },
+  "categories": {
+    "title": "Categories",
+    "empty": "No categories available",
+    "selectSubcategory": "Select a subcategory",
+    "viewAllIn": "View all in {{name}} →"
+  }
+}
+
