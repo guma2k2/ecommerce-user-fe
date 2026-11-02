@@ -1,0 +1,25 @@
+{
+  "promo": {
+    "tag": "Khuyến Mãi Siêu Ra Mắt",
+    "discount": "Giảm Đến 40%",
+    "headline": "Công Nghệ Đột Phá, Giá Trị Vượt Trội.",
+    "description": "Nâng cấp không gian làm việc của bạn với laptop, điện thoại và thiết bị âm thanh đỉnh cao. Bảo hành chính hãng cùng giao hàng hỏa tốc.",
+    "cta": "Săn Deal Ngay",
+    "guarantee": "Cam Kết Chính Hãng",
+    "delivery": "Giao Hỏa Tốc Miễn Phí"
+  },
+  "bestSellers": {
+    "title": "Bán Chạy Nhất",
+    "subtitle": "Sản phẩm xu hướng hàng đầu được hàng ngàn khách hàng tin dùng trong tuần.",
+    "viewAll": "Xem Tất Cả",
+    "error": "Không thể tải sản phẩm bán chạy.",
+    "empty": "Chưa có sản phẩm bán chạy nào."
+  },
+  "categories": {
+    "title": "Danh Mục",
+    "empty": "Chưa có danh mục nào",
+    "selectSubcategory": "Chọn danh mục phụ",
+    "viewAllIn": "Xem tất cả trong {{name}} →"
+  }
+}
+

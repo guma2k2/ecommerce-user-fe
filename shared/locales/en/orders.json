@@ -1,36 +1,89 @@
 {
-  "checkout": {
-    "title": "Checkout",
+  "card": {
+    "unitItem": "item",
+    "unitItems": "items",
+    "paymentMethod": "Payment: {{method}}",
+    "cod": "Cash on Delivery",
+    "stripe": "Credit / Debit Card",
+    "total": "Total: ",
+    "cancel": "Cancel",
+    "viewDetails": "View Details"
+  },
+  "status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "processing": "Processing",
+    "shipping": "Shipping",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+  },
+  "paymentStatus": {
+    "awaitingPayment": "Awaiting Payment",
+    "paid": "Paid",
+    "failed": "Payment Failed",
+    "cancelled": "Payment Cancelled",
+    "partiallyRefunded": "Partially Refunded",
+    "refunded": "Refunded"
+  },
+  "detail": {
+    "notFoundTitle": "Order Not Found",
+    "notFoundDesc": "The requested order does not exist or you do not have permission to view it.",
+    "backToOrders": "Back to Orders",
+    "orderPlacedOn": "Placed on {{date}}",
+    "orderItems": "Order Items",
+    "itemCount": "{{count}} {{unit}}",
+    "variantId": "Variant ID: {{id}}",
+    "quantity": "Qty: {{count}}",
     "shippingAddress": "Shipping Address",
-    "deliveryMethod": "Delivery Method",
-    "paymentMethod": "Payment Method",
-    "placeOrder": "Place Order",
-    "processing": "Processing your order..."
+    "receiver": "Receiver",
+    "phone": "Phone",
+    "address": "Address",
+    "paymentInfo": "Payment Info",
+    "paymentMethod": "Method",
+    "paymentStatus": "Status",
+    "orderNotes": "Order Notes",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "freeShipping": "Free",
+    "total": "Total Amount",
+    "cancelOrder": "Cancel Order"
   },
-  "success": {
-    "title": "Thank You For Your Order!",
-    "subtitle": "Your order has been received and is being processed by our fulfillment team.",
-    "orderReference": "Order Reference:",
-    "sessionId": "Session ID:",
-    "nextSteps": "What's Next?",
-    "step1": "You will receive an email confirmation with your order details.",
-    "step2": "Our warehouse team will verify and prepare your package.",
-    "step3": "You can track delivery progress anytime in your account.",
-    "viewOrder": "View Order History",
-    "continueShopping": "Continue Shopping"
-  },
-  "history": {
+  "list": {
     "title": "Order History",
-    "empty": "No orders found",
-    "orderCode": "Order #{{code}}",
-    "date": "Placed on {{date}}",
-    "status": {
+    "tabs": {
+      "all": "All Orders",
       "pending": "Pending",
+      "confirmed": "Confirmed",
       "processing": "Processing",
-      "shipped": "Shipped",
+      "shipping": "Shipping",
       "delivered": "Delivered",
       "cancelled": "Cancelled"
     },
-    "viewDetails": "View Details"
+    "emptyTitle": "No Orders Found",
+    "emptyDesc": "You haven't placed any orders matching this filter.",
+    "browseCatalog": "Browse Catalog",
+    "errorTitle": "Failed to Load Orders",
+    "tryAgain": "Try Again",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "Page {{current}} of {{total}}"
+  },
+  "cancelDialog": {
+    "title": "Cancel Order",
+    "confirmPrompt": "Are you sure you want to cancel order #{{code}}? This action cannot be undone and reserved items will be released.",
+    "keepOrder": "Keep Order",
+    "confirmCancel": "Yes, Cancel Order",
+    "cancelling": "Cancelling...",
+    "errorFallback": "Unable to cancel this order. Only pending orders can be cancelled."
+  },
+  "stepper": {
+    "placed": "Order Placed",
+    "confirmed": "Confirmed",
+    "processing": "Processing",
+    "shipping": "Out for Delivery",
+    "delivered": "Delivered",
+    "cancelledTitle": "Order Cancelled",
+    "cancelledDesc": "This order was cancelled and inventory reservations were restored."
   }
 }

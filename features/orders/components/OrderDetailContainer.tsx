@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, MapPin, CreditCard, Calendar, FileText, XCircle } from 'lucide-react';
 import {
   Button,
@@ -28,6 +29,9 @@ interface OrderDetailContainerProps {
 }
 
 export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDetailContainerProps) {
+  const { t, i18n } = useTranslation('orders');
+  const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
+  const currency = i18n.language === 'vi' ? 'VND' : 'USD';
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
   const { data: order, isLoading, isError, refetch } = useOrderDetail(orderId);
 
@@ -38,22 +42,22 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
   if (isError || !order) {
     return (
       <div className="max-w-2xl mx-auto py-16 text-center space-y-4">
-        <Typography.H2 className="text-xl font-bold">Order Not Found</Typography.H2>
+        <Typography.H2 className="text-xl font-bold">{t('detail.notFoundTitle')}</Typography.H2>
         <Typography.Muted className="text-sm">
-          The requested order does not exist or you do not have permission to view it.
+          {t('detail.notFoundDesc')}
         </Typography.Muted>
         <Link
           href={ROUTES.ACCOUNT.ORDERS}
           className={buttonVariants()}
         >
-          Back to Orders
+          {t('detail.backToOrders')}
         </Link>
       </div>
     );
   }
 
   const formattedDate = order.createdAt
-    ? new Date(order.createdAt).toLocaleDateString('en-US', {
+    ? new Date(order.createdAt).toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -61,6 +65,9 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
         minute: '2-digit',
       })
     : '';
+
+  const paymentMethodLabel =
+    order.paymentMethod === 'STRIPE' ? t('card.stripe') : t('card.cod');
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -72,7 +79,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
             className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1.5')}
           >
             <ArrowLeft className="size-4" />
-            <span>Back to Orders</span>
+            <span>{t('detail.backToOrders')}</span>
           </Link>
           <div>
             <div className="flex items-center gap-2">
@@ -83,7 +90,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
             </div>
             <Typography.Caption className="flex items-center gap-1.5 mt-0.5">
               <Calendar className="size-3" />
-              <span>Placed on {formattedDate}</span>
+              <span>{t('detail.orderPlacedOn', { date: formattedDate })}</span>
             </Typography.Caption>
           </div>
         </div>
@@ -97,7 +104,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
             className="text-xs text-destructive hover:bg-destructive/10 hover:border-destructive/30"
           >
             <XCircle className="size-3.5 mr-1.5" />
-            <span>Cancel Order</span>
+            <span>{t('detail.cancelOrder')}</span>
           </Button>
         )}
       </div>
@@ -114,7 +121,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
           <CardHeader className="pb-3 border-b border-border/40">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold">
               <MapPin className="size-4 text-primary" />
-              <span>Delivery Address</span>
+              <span>{t('detail.shippingAddress')}</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-4 text-xs space-y-2 text-muted-foreground">
@@ -151,24 +158,24 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
           <CardHeader className="pb-3 border-b border-border/40">
             <CardTitle className="flex items-center gap-2 text-sm font-semibold">
               <CreditCard className="size-4 text-primary" />
-              <span>Payment Details</span>
+              <span>{t('detail.paymentInfo')}</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-4 text-xs space-y-3 text-muted-foreground">
             <div className="flex justify-between items-center">
-              <span>Payment Method:</span>
+              <span>{t('detail.paymentMethod')}:</span>
               <span className="font-medium text-foreground">
-                {order.paymentMethod === 'STRIPE' ? 'Credit / Debit Card' : 'Cash on Delivery'}
+                {paymentMethodLabel}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span>Payment Status:</span>
+              <span>{t('detail.paymentStatus')}:</span>
               <PaymentStatusBadge status={order.paymentStatus} />
             </div>
             <div className="flex justify-between items-center pt-2 border-t border-border/40">
-              <span className="font-semibold text-foreground">Order Total:</span>
+              <span className="font-semibold text-foreground">{t('detail.total')}:</span>
               <Typography.Tabular className="font-bold text-base text-primary">
-                {formatCurrency(order.totalAmount, 'USD', 'en-US')}
+                {formatCurrency(order.totalAmount, currency, locale)}
               </Typography.Tabular>
             </div>
             {renderPaymentAction && (
@@ -184,7 +191,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
       <Card className="border-border/80">
         <CardHeader className="pb-4 border-b border-border/40">
           <CardTitle className="text-sm font-semibold">
-            Ordered Items ({order.items?.length || 0})
+            {t('detail.orderItems')} ({order.items?.length || 0})
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-4 divide-y divide-border/60">
@@ -201,7 +208,7 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center text-xs text-muted-foreground">
-                    No image
+                    -
                   </div>
                 )}
               </div>
@@ -212,15 +219,15 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
                 <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
                   <span>SKU: {item.sku}</span>
                   <span>•</span>
-                  <span>Qty: {item.quantity}</span>
+                  <span>{t('detail.quantity', { count: item.quantity })}</span>
                 </div>
               </div>
               <div className="text-right">
                 <Typography.Tabular className="font-semibold text-sm block">
-                  {formatCurrency(item.totalPrice)}
+                  {formatCurrency(item.totalPrice, currency, locale)}
                 </Typography.Tabular>
                 <Typography.Caption className="text-[11px] mt-0.5 block">
-                  {formatCurrency(item.unitPrice)} each
+                  {formatCurrency(item.unitPrice, currency, locale)}
                 </Typography.Caption>
               </div>
             </div>
@@ -229,21 +236,21 @@ export function OrderDetailContainer({ orderId, renderPaymentAction }: OrderDeta
           {/* Pricing Calculation Breakdown */}
           <div className="pt-4 space-y-2 text-xs">
             <div className="flex justify-between text-muted-foreground">
-              <span>Subtotal</span>
+              <span>{t('detail.subtotal')}</span>
               <Typography.Tabular className="font-medium text-foreground">
-                {formatCurrency(order.totalAmount - (order.shippingFee || 0))}
+                {formatCurrency(order.totalAmount - (order.shippingFee || 0), currency, locale)}
               </Typography.Tabular>
             </div>
             <div className="flex justify-between text-muted-foreground">
-              <span>Shipping Fee</span>
+              <span>{t('detail.shipping')}</span>
               <Typography.Tabular className="font-medium text-foreground">
-                {order.shippingFee ? formatCurrency(order.shippingFee) : 'Free'}
+                {order.shippingFee ? formatCurrency(order.shippingFee, currency, locale) : t('detail.freeShipping')}
               </Typography.Tabular>
             </div>
             <div className="flex justify-between pt-2 border-t border-border/60 text-sm font-bold text-foreground">
-              <span>Total Paid</span>
+              <span>{t('detail.total')}</span>
               <Typography.Tabular className="text-base text-primary">
-                {formatCurrency(order.totalAmount)}
+                {formatCurrency(order.totalAmount, currency, locale)}
               </Typography.Tabular>
             </div>
           </div>

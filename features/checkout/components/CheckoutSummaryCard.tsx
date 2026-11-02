@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
 import { Loader2, ShoppingBag, ShieldCheck } from 'lucide-react';
 import { Button, Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui';
@@ -29,6 +30,9 @@ export function CheckoutSummaryCard({
   isSubmitting,
   onSubmit,
 }: CheckoutSummaryCardProps) {
+  const { t, i18n } = useTranslation('checkout');
+  const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
+  const currency = i18n.language === 'vi' ? 'VND' : 'USD';
   const { control } = form;
   const paymentMethod = form.watch('paymentMethod');
 
@@ -37,9 +41,9 @@ export function CheckoutSummaryCard({
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-base font-semibold">
           <ShoppingBag className="size-4 text-primary" />
-          <span>Order Summary</span>
+          <span>{t('summary.title')}</span>
           <span className="ml-auto text-xs font-normal text-muted-foreground">
-            ({items.length} {items.length === 1 ? 'item' : 'items'})
+            ({items.length} {items.length === 1 ? t('summary.unitItem') : t('summary.unitItems')})
           </span>
         </CardTitle>
       </CardHeader>
@@ -60,7 +64,7 @@ export function CheckoutSummaryCard({
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center text-[10px] text-muted-foreground">
-                    No image
+                    -
                   </div>
                 )}
               </div>
@@ -71,7 +75,7 @@ export function CheckoutSummaryCard({
                 <div className="flex items-center justify-between mt-1 text-xs text-muted-foreground">
                   <span>Qty: {item.quantity}</span>
                   <span className="font-medium text-foreground">
-                    {formatCurrency(item.subtotal, 'USD', 'en-US')}
+                    {formatCurrency(item.subtotal, currency, locale)}
                   </span>
                 </div>
               </div>
@@ -84,9 +88,9 @@ export function CheckoutSummaryCard({
           <FormTextarea
             control={control}
             name="note"
-            label="Delivery Note (Optional)"
+            label={t('summary.deliveryNote')}
             rows={2}
-            placeholder="e.g. Leave with security guard, call before delivery"
+            placeholder={t('summary.deliveryNotePlaceholder')}
             className="text-xs"
           />
         </div>
@@ -94,21 +98,21 @@ export function CheckoutSummaryCard({
         {/* Pricing Calculation Breakdown */}
         <div className="space-y-2 pt-3 border-t border-border/60 text-xs">
           <div className="flex justify-between text-muted-foreground">
-            <span>Subtotal</span>
+            <span>{t('summary.subtotal')}</span>
             <span className="font-medium text-foreground">
-              {formatCurrency(subtotal, 'USD', 'en-US')}
+              {formatCurrency(subtotal, currency, locale)}
             </span>
           </div>
           <div className="flex justify-between text-muted-foreground">
-            <span>Shipping Fee</span>
+            <span>{t('summary.shipping')}</span>
             <span className="font-medium text-foreground">
-              {shippingFee === 0 ? 'Free' : formatCurrency(shippingFee, 'USD', 'en-US')}
+              {shippingFee === 0 ? t('summary.freeShipping') : formatCurrency(shippingFee, currency, locale)}
             </span>
           </div>
           <div className="flex justify-between pt-2 border-t border-border/60 text-sm font-semibold text-foreground">
-            <span>Total Amount</span>
+            <span>{t('summary.total')}</span>
             <span className="text-base text-primary">
-              {formatCurrency(total, 'USD', 'en-US')}
+              {formatCurrency(total, currency, locale)}
             </span>
           </div>
         </div>
@@ -124,18 +128,18 @@ export function CheckoutSummaryCard({
           {isSubmitting ? (
             <>
               <Loader2 className="size-4 animate-spin mr-2" />
-              Processing Order...
+              {t('summary.processing')}
             </>
           ) : paymentMethod === 'STRIPE' ? (
-            'Proceed to Stripe Checkout'
+            t('summary.payWithStripe')
           ) : (
-            'Confirm & Place Order (COD)'
+            t('summary.confirmOrder')
           )}
         </Button>
 
         <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
           <ShieldCheck className="size-3.5 text-emerald-600 dark:text-emerald-400" />
-          <span>Guaranteed secure & encrypted checkout</span>
+          <span>{t('summary.secureGuarantee')}</span>
         </div>
       </CardFooter>
     </Card>

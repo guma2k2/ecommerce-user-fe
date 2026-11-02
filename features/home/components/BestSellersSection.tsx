@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Flame, ArrowRight } from 'lucide-react';
 import { ROUTES } from '@/shared/constants';
 import { Button, Typography } from '@/components/ui';
@@ -17,6 +18,7 @@ interface BestSellersSectionProps {
 }
 
 export function BestSellersSection({ limit = 8, className = '' }: BestSellersSectionProps) {
+  const { t } = useTranslation('home');
   const { data: products, isLoading, isError } = useBestSellers(limit);
 
   return (
@@ -29,17 +31,17 @@ export function BestSellersSection({ limit = 8, className = '' }: BestSellersSec
               <Flame className="size-3.5 fill-orange-500" />
             </div>
             <Typography.H3 className="font-bold">
-              Best Sellers
+              {t('bestSellers.title')}
             </Typography.H3>
           </div>
           <Typography.Muted className="text-xs">
-            Top trending products chosen by thousands of happy customers this week.
+            {t('bestSellers.subtitle')}
           </Typography.Muted>
         </div>
 
         <Link href={ROUTES.SHOP.SEARCH}>
           <Button variant="ghost" size="sm" className="font-semibold hover:text-primary h-8 px-2.5 text-xs">
-            <span>View All</span>
+            <span>{t('bestSellers.viewAll')}</span>
             <ArrowRight className="size-3.5" />
           </Button>
         </Link>
@@ -54,7 +56,7 @@ export function BestSellersSection({ limit = 8, className = '' }: BestSellersSec
         </div>
       ) : isError || !products || products.length === 0 ? (
         <div className="py-10 text-center text-xs text-muted-foreground border border-dashed rounded-xl bg-muted/10">
-          No best-selling products found at this moment.
+          {isError ? t('bestSellers.error') : t('bestSellers.empty')}
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-3">

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileText, Loader2, Calendar, Receipt } from 'lucide-react';
 import {
   Dialog,
@@ -24,25 +25,6 @@ interface PaymentLedgerDialogProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-function getEntryBadge(type: LedgerEntryType) {
-  switch (type) {
-    case 'INITIALIZATION':
-      return <Badge variant="secondary">Initialization</Badge>;
-    case 'CAPTURE':
-      return <Badge variant="success">Capture</Badge>;
-    case 'REFUND':
-      return <Badge variant="destructive">Refund</Badge>;
-    case 'CHARGEBACK':
-      return <Badge variant="destructive">Chargeback</Badge>;
-    case 'FEE':
-      return <Badge variant="outline">Fee</Badge>;
-    case 'ADJUSTMENT':
-      return <Badge variant="accent">Adjustment</Badge>;
-    default:
-      return <Badge variant="outline">{type}</Badge>;
-  }
-}
-
 export function PaymentLedgerDialog({
   paymentId,
   orderId,
@@ -50,12 +32,33 @@ export function PaymentLedgerDialog({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
 }: PaymentLedgerDialogProps) {
+  const { t, i18n } = useTranslation('payment');
+  const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
   const [internalOpen, setInternalOpen] = React.useState(false);
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
   const setOpen = isControlled ? controlledOnOpenChange! : setInternalOpen;
 
   const { data: entries, isLoading, isError } = usePaymentLedger(paymentId);
+
+  const getEntryBadge = (type: LedgerEntryType) => {
+    switch (type) {
+      case 'INITIALIZATION':
+        return <Badge variant="secondary">{t('ledger.types.initialization')}</Badge>;
+      case 'CAPTURE':
+        return <Badge variant="success">{t('ledger.types.capture')}</Badge>;
+      case 'REFUND':
+        return <Badge variant="destructive">{t('ledger.types.refund')}</Badge>;
+      case 'CHARGEBACK':
+        return <Badge variant="destructive">{t('ledger.types.chargeback')}</Badge>;
+      case 'FEE':
+        return <Badge variant="outline">{t('ledger.types.fee')}</Badge>;
+      case 'ADJUSTMENT':
+        return <Badge variant="accent">{t('ledger.types.adjustment')}</Badge>;
+      default:
+        return <Badge variant="outline">{type}</Badge>;
+    }
+  };
 
   return (
     <>
@@ -73,78 +76,77 @@ export function PaymentLedgerDialog({
           className="gap-1.5 text-xs"
         >
           <Receipt className="size-3.5" />
-          <span>View Ledger</span>
+          <span>{t('list.ledgerTrail')}</span>
         </Button>
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader className="pb-3 border-b border-border/40">
+            <DialogTitle className="flex items-center gap-2 text-base font-semibold">
+              <Receipt className="size-4 text-primary" />
+              <span>{t('ledger.title')}</span>
+            </DialogTitle>
+            <DialogDescription className="text-xs text-muted-foreground">
+              {t('ledger.description')} <span className="font-mono">{paymentId}</span>
+              {orderId && (
+                <>
+                  {' '}• <span className="font-mono">{orderId}</span>
+                </>
+              )}
+            </DialogDescription>
+          </DialogHeader>
 
-      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader className="pb-3 border-b border-border/40">
-          <DialogTitle className="flex items-center gap-2 text-base font-semibold">
-            <Receipt className="size-4 text-primary" />
-            <span>Payment Ledger</span>
-          </DialogTitle>
-          <DialogDescription className="text-xs text-muted-foreground">
-            Payment <span className="font-mono">{paymentId}</span>
-            {orderId && (
-              <>
-                {' '}• Order <span className="font-mono">{orderId}</span>
-              </>
-            )}
-          </DialogDescription>
-        </DialogHeader>
-
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-12 space-y-3">
-            <Loader2 className="size-6 animate-spin text-primary" />
-            <Typography.Muted className="text-xs">Loading ledger entries...</Typography.Muted>
-          </div>
-        ) : isError ? (
-          <div className="py-8 text-center text-xs text-destructive">
-            Failed to load payment ledger history. Please try again.
-          </div>
-        ) : !entries || entries.length === 0 ? (
-          <div className="py-8 text-center text-xs text-muted-foreground space-y-2">
-            <FileText className="size-8 mx-auto opacity-40" />
-            <p>No transaction ledger entries recorded yet.</p>
-          </div>
-        ) : (
-          <div className="divide-y divide-border/60">
-            {entries.map((entry) => (
-              <div key={entry.id} className="py-3.5 first:pt-1 last:pb-0 space-y-2 text-xs">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    {getEntryBadge(entry.entryType)}
-                    <Badge variant="outline" className="text-[10px] uppercase font-mono">
-                      {entry.balanceType}
-                    </Badge>
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-12 space-y-3">
+              <Loader2 className="size-6 animate-spin text-primary" />
+              <Typography.Muted className="text-xs">{t('payButton.processing')}</Typography.Muted>
+            </div>
+          ) : isError ? (
+            <div className="py-8 text-center text-xs text-destructive">
+              {t('list.errorDescription')}
+            </div>
+          ) : !entries || entries.length === 0 ? (
+            <div className="py-8 text-center text-xs text-muted-foreground space-y-2">
+              <FileText className="size-8 mx-auto opacity-40" />
+              <p>{t('ledger.noEntries')}</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-border/60">
+              {entries.map((entry) => (
+                <div key={entry.id} className="py-3.5 first:pt-1 last:pb-0 space-y-2 text-xs">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      {getEntryBadge(entry.entryType)}
+                      <Badge variant="outline" className="text-[10px] uppercase font-mono">
+                        {entry.balanceType}
+                      </Badge>
+                    </div>
+                    <Typography.Tabular className="font-bold text-sm text-foreground">
+                      {entry.balanceType === 'CREDIT' ? '-' : '+'}
+                      {formatCurrency(entry.amount, entry.currency || 'USD', locale)}
+                    </Typography.Tabular>
                   </div>
-                  <Typography.Tabular className="font-bold text-sm text-foreground">
-                    {entry.balanceType === 'CREDIT' ? '-' : '+'}
-                    {formatCurrency(entry.amount, entry.currency || 'USD')}
-                  </Typography.Tabular>
-                </div>
 
-                <div className="flex items-center gap-1.5 text-muted-foreground text-[11px]">
-                  <Calendar className="size-3 shrink-0" />
-                  <span>
-                    {new Date(entry.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    })}
-                  </span>
+                  <div className="flex items-center gap-1.5 text-muted-foreground text-[11px]">
+                    <Calendar className="size-3 shrink-0" />
+                    <span>
+                      {new Date(entry.createdAt).toLocaleDateString(locale, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      })}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+              ))}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

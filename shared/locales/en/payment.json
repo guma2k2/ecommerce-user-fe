@@ -1,0 +1,70 @@
+{
+  "list": {
+    "pageTitle": "Payment History & Transactions",
+    "pageDescription": "Charges, refunds, and ledger audit tracking for your customer account.",
+    "errorTitle": "Failed to Load Payments",
+    "errorDescription": "An error occurred while fetching your payment history. Please try again.",
+    "tryAgain": "Try Again",
+    "emptyTitle": "No Payment Records Yet",
+    "emptyDescription": "When you complete orders via online payment, your transactions will appear here.",
+    "thId": "Payment ID",
+    "thOrder": "Order",
+    "thAmount": "Total Amount",
+    "thStatus": "Status",
+    "thMethod": "Payment Method",
+    "thDate": "Created At",
+    "thActions": "Actions",
+    "viewOrder": "View Order",
+    "ledgerTrail": "Ledger Trail",
+    "requestRefund": "Request Refund"
+  },
+  "status": {
+    "paid": "Paid",
+    "awaitingPayment": "Awaiting Payment",
+    "failed": "Payment Failed",
+    "cancelled": "Payment Cancelled",
+    "partiallyRefunded": "Partially Refunded",
+    "refunded": "Refunded"
+  },
+  "payButton": {
+    "payNow": "Pay Now (Stripe)",
+    "processing": "Processing...",
+    "errorFallback": "Failed to initialize payment session. Please try again."
+  },
+  "ledger": {
+    "title": "Ledger Audit Trail",
+    "description": "Financial records and transaction timeline for payment",
+    "noEntries": "No ledger audit entries found for this transaction.",
+    "thType": "Entry Type",
+    "thAmount": "Amount",
+    "thDescription": "Description",
+    "thDate": "Timestamp",
+    "close": "Close",
+    "types": {
+      "initialization": "Initialization",
+      "capture": "Capture",
+      "refund": "Refund",
+      "chargeback": "Chargeback",
+      "fee": "Fee",
+      "adjustment": "Adjustment"
+    }
+  },
+  "refund": {
+    "trigger": "Refund",
+    "title": "Request Refund",
+    "description": "Process a full or partial refund for transaction",
+    "amountLabel": "Refund Amount ({{currency}})",
+    "maxNotice": "Maximum refundable: {{amount}}",
+    "reasonLabel": "Reason for Refund",
+    "reasonPlaceholder": "e.g., Customer requested return, damaged goods...",
+    "cancel": "Cancel",
+    "submit": "Process Refund",
+    "submitting": "Processing Refund...",
+    "success": "Refund processed successfully",
+    "errAmountPositive": "Please enter a valid positive refund amount",
+    "errAmountExceed": "Refund amount cannot exceed {{amount}}",
+    "errReasonRequired": "Please provide a reason for the refund",
+    "errFallback": "Failed to process refund. Please try again."
+  }
+}
+

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
 import { FormInput } from '@/shared/components';
 import type { CheckoutFormInput } from '../validator';
@@ -10,6 +11,7 @@ interface ShippingAddressFormProps {
 }
 
 export function ShippingAddressForm({ form }: ShippingAddressFormProps) {
+  const { t } = useTranslation('checkout');
   const { control } = form;
 
   return (
@@ -18,46 +20,46 @@ export function ShippingAddressForm({ form }: ShippingAddressFormProps) {
         <FormInput
           control={control}
           name="shippingAddress.receiverName"
-          label="Recipient Full Name *"
-          placeholder="e.g. Alex Mercer"
+          label={t('shipping.receiverName')}
+          placeholder={t('shipping.receiverNamePlaceholder')}
         />
 
         <FormInput
           control={control}
           name="shippingAddress.receiverPhone"
-          label="Phone Number *"
+          label={t('shipping.receiverPhone')}
           type="tel"
-          placeholder="e.g. 0987654321"
+          placeholder={t('shipping.receiverPhonePlaceholder')}
         />
       </div>
 
       <FormInput
         control={control}
         name="shippingAddress.shippingAddress"
-        label="Street Address *"
-        placeholder="e.g. 72 Le Thanh Ton Street, Ben Nghe Ward"
+        label={t('shipping.address')}
+        placeholder={t('shipping.addressPlaceholder')}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <FormInput
           control={control}
           name="shippingAddress.city"
-          label="City / Province *"
-          placeholder="e.g. Ho Chi Minh City"
+          label={t('shipping.city')}
+          placeholder={t('shipping.cityPlaceholder')}
         />
 
         <FormInput
           control={control}
           name="shippingAddress.district"
-          label="District *"
-          placeholder="e.g. District 1"
+          label={t('shipping.district')}
+          placeholder={t('shipping.districtPlaceholder')}
         />
 
         <FormInput
           control={control}
           name="shippingAddress.postalCode"
-          label="Postal Code *"
-          placeholder="e.g. 70000"
+          label={t('shipping.postalCode')}
+          placeholder={t('shipping.postalCodePlaceholder')}
         />
       </div>
     </div>

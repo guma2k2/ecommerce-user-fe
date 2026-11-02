@@ -74,6 +74,48 @@ export function formatCurrency(
 export const formatPrice = formatCurrency;
 
 /**
+ * Format date string with locale sensitivity
+ */
+export function formatDate(
+  dateInput: string | number | Date,
+  locale = 'en-US',
+  options?: Intl.DateTimeFormatOptions
+): string {
+  if (!dateInput) return '';
+  const date = typeof dateInput === 'object' ? dateInput : new Date(dateInput);
+  if (isNaN(date.getTime())) return '';
+
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    ...options,
+  }).format(date);
+}
+
+/**
+ * Format date and time string with locale sensitivity
+ */
+export function formatDateTime(
+  dateInput: string | number | Date,
+  locale = 'en-US',
+  options?: Intl.DateTimeFormatOptions
+): string {
+  if (!dateInput) return '';
+  const date = typeof dateInput === 'object' ? dateInput : new Date(dateInput);
+  if (isNaN(date.getTime())) return '';
+
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    ...options,
+  }).format(date);
+}
+
+/**
  * Safely extracts user-friendly error message from API or Axios errors
  */
 export function getApiErrorMessage(
@@ -107,4 +149,3 @@ export function maskPhoneNumber(phone?: string | null): string {
   }
   return `${cleaned.slice(0, 3)}****${cleaned.slice(-3)}`;
 }
-

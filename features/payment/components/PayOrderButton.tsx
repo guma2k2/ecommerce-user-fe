@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CreditCard, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { useCreateCheckoutSession } from '../hooks';
@@ -20,6 +21,7 @@ export function PayOrderButton({
   currency = 'USD',
   className,
 }: PayOrderButtonProps) {
+  const { t } = useTranslation('payment');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { mutate: createSession, isPending } = useCreateCheckoutSession();
 
@@ -52,7 +54,7 @@ export function PayOrderButton({
           setErrorMessage(
             apiError?.response?.data?.message ||
               apiError?.message ||
-              'Failed to initiate payment session. Please try again.'
+              t('payButton.errorFallback')
           );
         },
       }
@@ -71,12 +73,12 @@ export function PayOrderButton({
         {isPending ? (
           <>
             <Loader2 className="size-3.5 animate-spin" />
-            <span>Connecting to payment...</span>
+            <span>{t('payButton.processing')}</span>
           </>
         ) : (
           <>
             <CreditCard className="size-3.5" />
-            <span>Pay Now with Card</span>
+            <span>{t('payButton.payNow')}</span>
           </>
         )}
       </Button>

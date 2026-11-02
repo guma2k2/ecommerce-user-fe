@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MapPin, CreditCard, ArrowLeft, AlertCircle } from 'lucide-react';
@@ -13,7 +14,7 @@ import { ShippingAddressForm } from './ShippingAddressForm';
 import { PaymentMethodSelector } from './PaymentMethodSelector';
 import { CheckoutSummaryCard } from './CheckoutSummaryCard';
 import { useCreateOrder } from '../hooks';
-import { checkoutFormSchema, type CheckoutFormInput } from '../validator';
+import { getCheckoutFormSchema, type CheckoutFormInput } from '../validator';
 import type { CheckoutCartItem } from '../types';
 
 interface CheckoutContainerProps {
@@ -27,11 +28,12 @@ export function CheckoutContainer({
   totalPrice,
   isLoading = false,
 }: CheckoutContainerProps) {
+  const { t } = useTranslation('checkout');
   const user = useAuthStore((state) => state.user);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm<CheckoutFormInput>({
-    resolver: zodResolver(checkoutFormSchema),
+    resolver: zodResolver(getCheckoutFormSchema(t)),
     defaultValues: {
       paymentMethod: 'COD',
       note: '',
@@ -64,7 +66,7 @@ export function CheckoutContainer({
           const msg =
             apiError?.response?.data?.message ||
             apiError?.message ||
-            'Failed to place order. Please review your information and try again.';
+            t('container.errorFallback');
           setErrorMessage(msg);
         },
       }
@@ -77,15 +79,15 @@ export function CheckoutContainer({
   if (items.length === 0 && !isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 space-y-4">
-        <Typography.H2 className="text-xl font-bold">Your cart is empty</Typography.H2>
+        <Typography.H2 className="text-xl font-bold">{t('container.emptyCartTitle')}</Typography.H2>
         <Typography.Muted className="text-sm max-w-md block">
-          You don&apos;t have any items in your cart to checkout. Browse our catalog to find products you love!
+          {t('container.emptyCartDescription')}
         </Typography.Muted>
         <Link
           href={ROUTES.SHOP.CATALOG}
           className={cn(buttonVariants(), 'mt-2')}
         >
-          Explore Products
+          {t('container.exploreProducts')}
         </Link>
       </div>
     );
@@ -100,9 +102,9 @@ export function CheckoutContainer({
           className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1.5')}
         >
           <ArrowLeft className="size-4" />
-          <span>Back to Cart</span>
+          <span>{t('container.backToCart')}</span>
         </Link>
-        <Typography.H1 className="text-2xl font-bold">Checkout</Typography.H1>
+        <Typography.H1 className="text-2xl font-bold">{t('container.pageTitle')}</Typography.H1>
       </div>
 
       {errorMessage && (
@@ -121,7 +123,7 @@ export function CheckoutContainer({
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-base font-semibold">
                   <MapPin className="size-4 text-primary" />
-                  <span>Shipping Address</span>
+                  <span>{t('shipping.title')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -134,7 +136,7 @@ export function CheckoutContainer({
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-base font-semibold">
                   <CreditCard className="size-4 text-primary" />
-                  <span>Payment Method</span>
+                  <span>{t('payment.title')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Check, Clock, Package, Truck, CheckCircle2, XCircle } from 'lucide-react';
 import { Typography } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -9,14 +10,6 @@ import type { OrderStatus } from '../types';
 interface OrderTrackingStepperProps {
   status: OrderStatus;
 }
-
-const STEPS: { status: OrderStatus; label: string; icon: React.ElementType }[] = [
-  { status: 'PENDING', label: 'Order Placed', icon: Clock },
-  { status: 'CONFIRMED', label: 'Confirmed', icon: Check },
-  { status: 'PROCESSING', label: 'Processing', icon: Package },
-  { status: 'SHIPPING', label: 'Out for Delivery', icon: Truck },
-  { status: 'DELIVERED', label: 'Delivered', icon: CheckCircle2 },
-];
 
 const STATUS_ORDER: Record<OrderStatus, number> = {
   PENDING: 0,
@@ -28,16 +21,26 @@ const STATUS_ORDER: Record<OrderStatus, number> = {
 };
 
 export function OrderTrackingStepper({ status }: OrderTrackingStepperProps) {
+  const { t } = useTranslation('orders');
+
+  const steps: { status: OrderStatus; label: string; icon: React.ElementType }[] = [
+    { status: 'PENDING', label: t('stepper.placed'), icon: Clock },
+    { status: 'CONFIRMED', label: t('stepper.confirmed'), icon: Check },
+    { status: 'PROCESSING', label: t('stepper.processing'), icon: Package },
+    { status: 'SHIPPING', label: t('stepper.shipping'), icon: Truck },
+    { status: 'DELIVERED', label: t('stepper.delivered'), icon: CheckCircle2 },
+  ];
+
   if (status === 'CANCELLED') {
     return (
       <div className="flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-destructive">
         <XCircle className="size-6 shrink-0" />
         <div>
           <Typography.Label as="p" className="text-destructive font-semibold">
-            Order Cancelled
+            {t('stepper.cancelledTitle')}
           </Typography.Label>
           <Typography.Caption as="p" className="mt-0.5 block">
-            This order was cancelled and inventory reservations were restored.
+            {t('stepper.cancelledDesc')}
           </Typography.Caption>
         </div>
       </div>
@@ -55,11 +58,11 @@ export function OrderTrackingStepper({ status }: OrderTrackingStepperProps) {
         <div
           className="absolute left-6 top-1/2 -translate-y-1/2 h-0.5 bg-primary transition-all duration-500 -z-0"
           style={{
-            width: `calc(${(currentStepIndex / (STEPS.length - 1)) * 100}% - 48px * ${currentStepIndex / (STEPS.length - 1)})`,
+            width: `calc(${(currentStepIndex / (steps.length - 1)) * 100}% - 48px * ${currentStepIndex / (steps.length - 1)})`,
           }}
         />
 
-        {STEPS.map((step, index) => {
+        {steps.map((step, index) => {
           const Icon = step.icon;
           const isCompleted = index < currentStepIndex;
           const isCurrent = index === currentStepIndex;

@@ -6,3 +6,4 @@ export * from './VerifyOtpForm';
 export * from './ForgotPasswordForm';
 export * from './ResetPasswordForm';
 export * from './UserNav';
+export * from './CustomerProfileContainer';

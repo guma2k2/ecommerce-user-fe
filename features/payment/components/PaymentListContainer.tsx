@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { CreditCard, Calendar, ExternalLink, ArrowRight, ShieldCheck } from 'lucide-react';
 import {
   Card,
@@ -23,6 +24,8 @@ import { PaymentLedgerDialog } from './PaymentLedgerDialog';
 import { RefundPaymentDialog } from './RefundPaymentDialog';
 
 export function PaymentListContainer() {
+  const { t, i18n } = useTranslation('payment');
+  const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
   const { data: payments, isLoading, isError, refetch } = usePayments();
 
   if (isLoading) {
@@ -48,12 +51,12 @@ export function PaymentListContainer() {
   if (isError) {
     return (
       <div className="max-w-2xl mx-auto py-16 text-center space-y-4">
-        <Typography.H2 className="text-xl font-bold">Failed to Load Payments</Typography.H2>
+        <Typography.H2 className="text-xl font-bold">{t('list.errorTitle')}</Typography.H2>
         <Typography.Muted className="text-sm">
-          An error occurred while fetching your payment history. Please try again.
+          {t('list.errorDescription')}
         </Typography.Muted>
         <Button onClick={() => refetch()} variant="outline" size="sm">
-          Try Again
+          {t('list.tryAgain')}
         </Button>
       </div>
     );
@@ -65,12 +68,12 @@ export function PaymentListContainer() {
         <div className="size-16 rounded-full bg-muted flex items-center justify-center mx-auto text-muted-foreground">
           <CreditCard className="size-8" />
         </div>
-        <Typography.H2 className="text-xl font-bold">No Payments Found</Typography.H2>
+        <Typography.H2 className="text-xl font-bold">{t('list.emptyTitle')}</Typography.H2>
         <Typography.Muted className="text-sm max-w-md mx-auto block">
-          You haven&apos;t completed any transactions yet. When you place an order, your payment history will appear here.
+          {t('list.emptyDescription')}
         </Typography.Muted>
         <Link href={ROUTES.SHOP.CATALOG} className={cn(buttonVariants(), 'mt-2 gap-2')}>
-          <span>Start Shopping</span>
+          <span>{t('list.viewOrder')}</span>
           <ArrowRight className="size-4" />
         </Link>
       </div>
@@ -82,8 +85,11 @@ export function PaymentListContainer() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <Typography.H1 className="text-2xl font-bold tracking-tight">
-            Payments & Invoices
+            {t('list.pageTitle')}
           </Typography.H1>
+          <Typography.Muted className="text-sm">
+            {t('list.pageDescription')}
+          </Typography.Muted>
         </div>
       </div>
 
@@ -111,18 +117,18 @@ export function PaymentListContainer() {
                     </div>
                     {payment.orderId && (
                       <CardDescription className="text-xs">
-                        Order: <span className="font-mono font-medium text-foreground">{payment.orderId}</span>
+                        {t('list.thOrder')}: <span className="font-mono font-medium text-foreground">{payment.orderId}</span>
                       </CardDescription>
                     )}
                   </div>
 
                   <div className="text-right">
                     <Typography.Tabular className="text-base font-bold text-foreground block">
-                      {formatCurrency(payment.amount, payment.currency || 'USD')}
+                      {formatCurrency(payment.amount, payment.currency || 'USD', locale)}
                     </Typography.Tabular>
                     {payment.refundedAmount > 0 && (
                       <span className="text-[11px] text-destructive block">
-                        Refunded: {formatCurrency(payment.refundedAmount, payment.currency || 'USD')}
+                        {t('refund.trigger')}: {formatCurrency(payment.refundedAmount, payment.currency || 'USD', locale)}
                       </span>
                     )}
                   </div>
@@ -134,14 +140,14 @@ export function PaymentListContainer() {
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="size-3.5 text-primary" />
                     <span>
-                      Method: <strong className="text-foreground">{paymentMethodLabel}</strong>
+                      {t('list.thMethod')}: <strong className="text-foreground">{paymentMethodLabel}</strong>
                     </span>
                   </div>
                   {payment.createdAt && (
                     <div className="flex items-center gap-2">
                       <Calendar className="size-3.5" />
                       <span>
-                        Created: {new Date(payment.createdAt).toLocaleDateString('en-US', {
+                        {t('list.thDate')}: {new Date(payment.createdAt).toLocaleDateString(locale, {
                           year: 'numeric',
                           month: 'short',
                           day: 'numeric',
@@ -170,7 +176,7 @@ export function PaymentListContainer() {
                       href={ROUTES.ACCOUNT.ORDER_DETAIL(payment.orderId)}
                       className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1.5 text-xs')}
                     >
-                      <span>View Order</span>
+                      <span>{t('list.viewOrder')}</span>
                       <ExternalLink className="size-3.5" />
                     </Link>
                   )}

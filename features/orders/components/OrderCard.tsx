@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { Calendar, Package, ArrowRight, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, Button, buttonVariants, Typography } from '@/components/ui';
 import { ROUTES } from '@/shared/constants';
@@ -17,10 +18,13 @@ interface OrderCardProps {
 }
 
 export function OrderCard({ order, onRefresh }: OrderCardProps) {
+  const { t, i18n } = useTranslation('orders');
+  const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
+  const currency = i18n.language === 'vi' ? 'VND' : 'USD';
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
 
   const formattedDate = order.createdAt
-    ? new Date(order.createdAt).toLocaleDateString('en-US', {
+    ? new Date(order.createdAt).toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -28,6 +32,9 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
         minute: '2-digit',
       })
     : '';
+
+  const paymentMethodLabel =
+    order.paymentMethod === 'STRIPE' ? t('card.stripe') : t('card.cod');
 
   return (
     <>
@@ -60,15 +67,16 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
               <div className="flex items-center gap-1.5">
                 <Package className="size-3.5 text-muted-foreground" />
                 <span>
-                  {order.totalItems} {order.totalItems === 1 ? 'item' : 'items'}
+                  {order.totalItems}{' '}
+                  {order.totalItems === 1 ? t('card.unitItem') : t('card.unitItems')}
                 </span>
                 <span>•</span>
-                <span>Payment: {order.paymentMethod === 'STRIPE' ? 'Credit / Debit Card' : 'Cash on Delivery'}</span>
+                <span>{t('card.paymentMethod', { method: paymentMethodLabel })}</span>
               </div>
               <div>
-                <span>Total: </span>
+                <span>{t('card.total')}</span>
                 <Typography.Tabular className="font-semibold text-sm text-primary">
-                  {formatCurrency(order.totalAmount)}
+                  {formatCurrency(order.totalAmount, currency, locale)}
                 </Typography.Tabular>
               </div>
             </div>
@@ -83,7 +91,7 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
                   className="gap-1.5 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
                 >
                   <XCircle className="size-3.5" />
-                  <span>Cancel</span>
+                  <span>{t('card.cancel')}</span>
                 </Button>
               )}
 
@@ -91,7 +99,7 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
                 href={ROUTES.ACCOUNT.ORDER_DETAIL(order.id)}
                 className={cn(buttonVariants({ size: 'sm' }), 'gap-1.5 text-xs')}
               >
-                <span>View Details</span>
+                <span>{t('card.viewDetails')}</span>
                 <ArrowRight className="size-3.5" />
               </Link>
             </div>
